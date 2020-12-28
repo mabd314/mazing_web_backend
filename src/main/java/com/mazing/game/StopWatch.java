@@ -34,6 +34,7 @@ public class StopWatch extends Thread {
   }
 
   public void stopTimer() {
+    interrupt();
     isTimerOn = false;
   }
 
@@ -48,7 +49,10 @@ public class StopWatch extends Thread {
   @Override
   public void run() {
     startCounting();
-    while (getRemainingSeconds() >= 0 && isTimerOn) {
+    try{
+      Thread.sleep(secondsNeeded*1000);
+    }catch(InterruptedException e){
+      //Interruption is expected
     }
     if (isTimerOn) {
       MessagePrinter.printTimeElapsedMessage();

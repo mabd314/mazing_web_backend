@@ -2,7 +2,6 @@
   "goldCount":20,
   "direction":"east",
   "items":[],
-  "currentRoom":1,
   "secondsNeeded": 1800,
   "rooms":
   [

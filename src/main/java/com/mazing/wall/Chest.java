@@ -59,12 +59,12 @@ public class Chest extends Wall {
     }
     toggleLocking();
     return new Response(
-        ResponseType.SUCCESS, "com.mazing.wall.Chest is " + (isLocked ? "locked" : "unlocked"));
+        ResponseType.SUCCESS, "Chest is " + (isLocked ? "locked" : "unlocked"));
   }
 
   @Override
   public String toString() {
-    return "a com.mazing.wall.Chest";
+    return "a Chest";
   }
 
   public static class Builder {
