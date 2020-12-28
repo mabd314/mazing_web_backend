@@ -1,0 +1,301 @@
+{
+  "goldCount":20,
+  "direction":"east",
+  "items":[],
+  "currentRoom":1,
+  "secondsNeeded": 1800,
+  "rooms":
+  [
+    {
+      "id":1,
+      "east":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 3,
+        "from": 1,
+        "to": 4
+      },
+      "west":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 6,
+        "from": 1,
+        "to": 9
+      },
+      "north":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 1,
+        "from": 1,
+        "to": 2
+      },
+      "south":
+      {
+        "type": "painting",
+        "behind": 1
+      },
+      "isLit":true,
+      "hasLight":true
+    },
+    {
+      "id":2,
+      "east":
+      {
+        "type": "door",
+        "locked": false,
+        "from": 2,
+        "to": 3
+      },
+      "west":
+      {
+        "type": "mirror",
+        "behind": null
+      },
+      "north":
+      {
+        "type": "chest",
+        "locked": false,
+        "inside":
+        [
+          {
+            "type": "key",
+            "keyId": 3
+          }
+        ]
+      },
+      "south":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 1,
+        "from": 2,
+        "to": 1
+      },
+      "isLit":true,
+      "hasLight":true
+    },
+    {
+      "id":3,
+      "east":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 2,
+        "from": 3,
+        "to": -1
+      },
+      "west":
+      {
+        "type": "door",
+        "locked": false,
+        "from": 3,
+        "to": 2
+      },
+      "north":
+      {
+        "type": "mirror",
+        "behind": null
+      },
+      "south":null,
+      "isLit":false,
+      "hasLight":true
+    },
+    {
+      "id":4,
+      "east":
+      {
+        "type": "door",
+        "locked": false,
+        "from": 4,
+        "to": 5
+      },
+      "west":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 3,
+        "from": 4,
+        "to": 1
+      },
+      "north": null,
+      "south":
+      {
+        "type": "chest",
+        "locked": true,
+        "keyId": 7,
+        "inside":
+        [
+          {
+            "type": "flashlight"
+          }
+        ]
+      },
+      "isLit":true,
+      "hasLight":true
+    },
+    {
+      "id":5,
+      "east":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 4,
+        "from": 5,
+        "to": 7
+      },
+      "west":
+      {
+        "type": "door",
+        "locked": false,
+        "from": 5,
+        "to": 4
+      },
+      "north":
+      {
+        "type": "seller",
+        "items":
+        [
+          {
+            "type": "flashlight",
+            "price": 7
+          },
+          {
+            "type": "key",
+            "keyId": 5,
+            "price": 25
+          },
+          {
+            "type": "key",
+            "keyId": 4
+          }
+        ]
+      },
+      "south":
+      {
+        "type": "door",
+        "locked": false,
+        "from": 5,
+        "to": 6
+      },
+      "isLit":true,
+      "hasLight":true
+    },
+    {
+      "id":6,
+      "east":
+      {
+        "type": "painting",
+        "behind": null
+      },
+      "west":
+      {
+        "type": "mirror",
+        "behind": 7
+      },
+      "north":
+      {
+        "type": "door",
+        "locked": false,
+        "from": 6,
+        "to": 5
+      },
+      "south":
+      {
+        "type": "mirror",
+        "behind": null
+      },
+      "isLit":true,
+      "hasLight":true
+    },
+    {
+      "id":7,
+      "east":
+      {
+        "type": "chest",
+        "locked": true,
+        "keyId": 8,
+        "inside":
+        [
+          {
+            "type": "key",
+            "keyId": 6
+          },
+          {
+            "type": "gold",
+            "count": 3
+          }
+        ]
+      },
+      "west":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 4,
+        "from": 7,
+        "to": 5
+      },
+      "north":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 5,
+        "from": 7,
+        "to": 8
+      },
+      "south":
+      {
+        "type": "mirror",
+        "behind": null
+      },
+      "isLit":false,
+      "hasLight":false
+    },
+    {
+      "id":8,
+      "east":null,
+      "west":
+      {
+        "type": "mirror",
+        "behind": 8
+      },
+      "north":null,
+      "south":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 5,
+        "from": 8,
+        "to": 7
+      },
+      "isLit":true,
+      "hasLight":true
+    },
+    {
+      "id":9,
+      "east":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 6,
+        "from": 9,
+        "to": 1
+      },
+      "west":
+      {
+        "type": "painting",
+        "behind": null
+      },
+      "north":
+      {
+        "type": "painting",
+        "behind": 2
+      },
+      "south":null,
+      "isLit":true,
+      "hasLight":true
+    }
+  ]
+}
