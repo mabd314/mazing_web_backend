@@ -20,16 +20,20 @@ public class StopWatch extends Thread {
     return getTimeString(getElapsedSeconds());
   }
 
-  public String getTimeString(long seconds) {
+  public String getRemainingSecondsString(){
+    return getTimeString(getRemainingSeconds());
+  }
+
+  private String getTimeString(long seconds) {
     return seconds / 60 + ":" + seconds % 60;
   }
 
-  public long getElapsedSeconds() {
+  private long getElapsedSeconds() {
     long now = System.currentTimeMillis();
     return (now - start) / 1000;
   }
 
-  public long getRemainingSeconds() {
+  private long getRemainingSeconds() {
     return secondsNeeded - getElapsedSeconds();
   }
 
@@ -40,15 +44,13 @@ public class StopWatch extends Thread {
 
   public String checkTime() {
     if (isTimerOn) {
-      return "Elapsed: " + getTimeString(getElapsedSeconds()) + ", Remaining: " + getTimeString(
-          getRemainingSeconds());
+      return "Elapsed: " + getElapsedSecondsString() + ", Remaining: " + getRemainingSecondsString();
     }
     return "You've won the game, the timer decided to take a break.";
   }
 
   @Override
   public void run() {
-    startCounting();
     try{
       Thread.sleep(secondsNeeded*1000);
     }catch(InterruptedException e){

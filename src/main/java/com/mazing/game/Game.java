@@ -81,6 +81,9 @@ public class Game {
   public String getElapsedSecondsString(){
     return stopWatch.getElapsedSecondsString();
   }
+  public String getRemainingSecondsString(){
+    return stopWatch.getRemainingSecondsString();
+  }
   public void start() {
     GameController.initializeGame(this);
     executeMainCommand();

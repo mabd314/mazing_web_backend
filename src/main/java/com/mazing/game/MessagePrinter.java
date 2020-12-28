@@ -28,7 +28,7 @@ public class MessagePrinter {
   }
 
   public static void printStartingMessage(Game game){
-    System.out.println("You have " + game.getStopWatch().getTimeString(game.getStopWatch().getRemainingSeconds())
+    System.out.println("You have " + game.getRemainingSecondsString()
         + " minutes to get out of the map\n" +
         "Type help at any time go get the list of commands\n" +
         game.getStopWatch().checkTime());

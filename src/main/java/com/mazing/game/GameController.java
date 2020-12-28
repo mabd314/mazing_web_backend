@@ -20,9 +20,11 @@ public class GameController {
       Maze maze = new JsonMaze("json/" + mapName + ".json");
       maze.setUpRooms(game);
       maze.setUpCharacter(game);
+      game.getStopWatch().startCounting();
       game.getStopWatch().start();
       MessagePrinter.printStartingMessage(game);
     } catch (IOException e) {
+      System.out.println("Map not Recognized");
       initializeGame(game);
     }
   }

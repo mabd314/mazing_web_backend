@@ -9,6 +9,7 @@ public class RestartCommand extends MainCommand {
   public void applyEffect() {
     getGame().getStopWatch().stopTimer();
     Door.clear();
+
     setResponse(new Response(ResponseType.LOST,
         "You restarted the game. YOU LOSE."));
   }
