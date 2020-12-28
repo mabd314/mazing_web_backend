@@ -7,5 +7,5 @@ public enum ResponseType {
   UNLOCKED,
   WON,
   STATUS,
-  LOST
+  LOST,
 }

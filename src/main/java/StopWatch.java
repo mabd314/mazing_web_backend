@@ -41,10 +41,11 @@ public class StopWatch extends Thread {
 
   @Override
   public void run() {
+    startCounting();
     while (getRemainingSeconds() >= 0 && isTimerOn) {
     }
     if (isTimerOn) {
-      System.out.println(Commands.timeElapsed());
+      MessagePrinter.printTimeElapsedMessage();
       System.exit(0);
     }
   }

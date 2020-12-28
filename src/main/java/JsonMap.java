@@ -1,19 +1,20 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class JsonMap implements Map {
 
   private final JSONParser jsonParser = new JSONParser();
-  private final String mapFileName;
   private JSONObject jsonMap;
 
-  public JsonMap(String mapFileName) {
-    this.mapFileName = mapFileName;
+  public JsonMap(String mapFileName) throws IOException {
+    parseJsonMap(mapFileName);
   }
 
   private int getIntFromObject(Object obj) {
@@ -132,20 +133,17 @@ public class JsonMap implements Map {
         .build();
   }
 
-  private void parseJsonMap() throws FileNotFoundException {
+  private void parseJsonMap(String mapFileName) throws IOException {
     try (FileReader reader = new FileReader(mapFileName)) {
       jsonMap = (JSONObject) jsonParser.parse(reader);
-    } catch (FileNotFoundException e) {
-      throw e;
-    } catch (Exception e) {
+    } catch (ParseException e) {
       System.out.println(e.getMessage());
     }
   }
 
   @Override
-  public void setUpRooms(Game game) throws FileNotFoundException {
+  public void setUpRooms(Game game) {
     List<Room> rooms = new ArrayList<>();
-    parseJsonMap();
     JSONArray jsonRooms = (JSONArray) jsonMap.get("rooms");
     for (Object roomObj : jsonRooms) {
       JSONObject jsonRoom = (JSONObject) roomObj;

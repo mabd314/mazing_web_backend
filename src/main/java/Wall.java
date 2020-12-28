@@ -5,6 +5,9 @@ public abstract class Wall {
 
   public abstract WallType getType();
 
+  public String getDescription(){
+    return getType().getDescription();
+  }
   public Response getThrough(Game game) {
     return new Response(ResponseType.INVALID,
         "You can only move through doors");

@@ -5,11 +5,6 @@ public class Commands {
 
   private static Game game;
 
-  public static void start(String mapName) throws FileNotFoundException {
-    game = new Game();
-    game.start(mapName);
-  }
-
   public static Response left() {
     game.getCharacter().turnLeft();
     return new Response(ResponseType.SUCCESS,
@@ -57,14 +52,14 @@ public class Commands {
           return new Response(ResponseType.INVALID,
               "There is no " + wallName + " in front of you");
       }
-    return wall.check(game);
+    return null;
   }
 
   public static Response printTradingList() {
-      if (game.getFacingWall().getType() != WallType.SELLER) {
-          return new Response(ResponseType.INVALID,
-              "You can only trade with a seller");
-      }
+    if (game.getFacingWall().getType() != WallType.SELLER) {
+        return new Response(ResponseType.INVALID,
+            "You can only trade with a seller");
+    }
     List<Item> items = game.getFacingWall().getTradingList();
     StringBuilder list = new StringBuilder();
     list.append("Seller Items:\n");
