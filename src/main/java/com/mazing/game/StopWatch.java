@@ -1,8 +1,4 @@
 package com.mazing.game;
-import com.mazing.item.*;
-import com.mazing.map.*;
-import com.mazing.command.*;
-import com.mazing.wall.*;
 
 public class StopWatch extends Thread {
 
@@ -18,6 +14,10 @@ public class StopWatch extends Thread {
   public StopWatch(long secondsNeeded) {
     isTimerOn = false;
     this.secondsNeeded = secondsNeeded;
+  }
+
+  public String getElapsedSecondsString(){
+    return getTimeString(getElapsedSeconds());
   }
 
   public String getTimeString(long seconds) {

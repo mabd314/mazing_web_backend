@@ -1,8 +1,5 @@
 package com.mazing.item;
 import com.mazing.game.*;
-import com.mazing.map.*;
-import com.mazing.command.*;
-import com.mazing.wall.*;
 
 public class FlashLight extends Item {
 
@@ -30,6 +27,5 @@ public class FlashLight extends Item {
         "Your flashlight is " +
             (game.getCharacter().isFlashLightOn() ? "ON" : "OFF"));
   }
-
 
 }

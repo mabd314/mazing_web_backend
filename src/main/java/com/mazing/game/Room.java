@@ -4,12 +4,8 @@ import com.mazing.item.FlashLight;
 import com.mazing.wall.Empty;
 import com.mazing.wall.Wall;
 import java.util.Objects;
-import com.mazing.item.*;
-import com.mazing.map.*;
-import com.mazing.command.*;
-import com.mazing.wall.*;
 
-public class Room implements Comparable<Room>{
+public class Room {
     private final int id;
     private Wall east;
     private Wall west;
@@ -53,10 +49,6 @@ public class Room implements Comparable<Room>{
         isLightOn=!isLightOn;
     }
 
-    public boolean isThereLight(){
-        return isThereLight;
-    }
-
     public boolean isLightOn() {
         return isLightOn;
     }
@@ -73,15 +65,33 @@ public class Room implements Comparable<Room>{
 
     public Wall getWall (Direction direction){
         switch(direction){
-            case EAST:
-                return east;
-            case WEST:
-                return west;
-            case NORTH:
-                return north;
-            default:
-                return south;
+            case EAST->{return east; }
+            case WEST->{return west;}
+            case NORTH->{return north;}
+            default->{return south;}
         }
+    }
+
+    public Response look(Game game){
+        if (isLit(game)) {
+            return new Response(ResponseType.STATUS,
+                game.getFacingWallDescription());
+        }
+        else{
+            return new Response(ResponseType.FAILURE,
+                "The room is dark, you can not see anything");
+        }
+    }
+
+    public Response switchLights(){
+        if (isThereLight) {
+            toggleLight();
+            return new Response(ResponseType.SUCCESS,
+                "Lights are " +
+                    (isLightOn() ? "ON" : "OFF"));
+        }
+        return new Response(ResponseType.FAILURE,
+            "There are no lights in this room");
     }
 
     public boolean checkWin(){
@@ -104,12 +114,7 @@ public class Room implements Comparable<Room>{
 
     @Override
     public String toString() {
-        return "com.mazing.game.Room";
-    }
-
-    @Override
-    public int compareTo(Room other) {
-        return this.id-other.id;
+        return "Room";
     }
 
 }

@@ -1,8 +1,6 @@
 package com.mazing.wall;
 import com.mazing.game.*;
 import com.mazing.item.*;
-import com.mazing.command.*;
-import com.mazing.map.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +17,24 @@ public abstract class Wall {
         "You can only move through doors");
   }
 
-  public Response check(Game game) {
+  public abstract Response wallSpecificCheck(Game game);
+
+  public Response list(){
     return new Response(ResponseType.INVALID,
-        "Cannot be checked");
+        "You can only trade with a seller");
+  }
+
+  public final Response check(Game game,String wallName) {
+    WallType wallType=WallType.getWallType(wallName);
+    if (wallType == WallType.NONE) {
+      return new Response(ResponseType.INVALID,
+          "There is no " + wallName + " in this game");
+    }
+    if (wallType != game.getFacingWallType()) {
+      return new Response(ResponseType.INVALID,
+          "There is no " + wallName + " in front of you");
+    }
+    return wallSpecificCheck(game);
   }
 
   public Response toggleWithKey(Key key) {

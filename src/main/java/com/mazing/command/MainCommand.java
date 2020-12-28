@@ -1,8 +1,5 @@
 package com.mazing.command;
-import com.mazing.item.*;
-import com.mazing.map.*;
 import com.mazing.game.*;
-import com.mazing.wall.*;
 
 public abstract class MainCommand implements Command  {
   private Game game;
@@ -47,6 +44,7 @@ public abstract class MainCommand implements Command  {
       case "right"->{return new RightCommand();}
       case "forward"->{return new ForwardCommand();}
       case "backward"->{return new BackwardCommand();}
+      case "help"->{return new MainHelpCommand();}
       default -> {return new NoMainCommand();}
     }
   }

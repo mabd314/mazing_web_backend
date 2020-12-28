@@ -4,6 +4,6 @@ public class BackwardCommand extends MainCommand {
 
   @Override
   public void applyEffect() {
-    setResponse(getGame().getThrough(getGame().getOppositeDirection()));
+    setResponse(getGame().getThroughWallAtDirection(getGame().getOppositeDirection()));
   }
 }

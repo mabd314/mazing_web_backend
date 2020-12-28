@@ -1,8 +1,5 @@
 package com.mazing.wall;
 import com.mazing.game.*;
-import com.mazing.item.*;
-import com.mazing.command.*;
-import com.mazing.map.*;
 
 public class Empty extends Wall {
 
@@ -30,13 +27,13 @@ public class Empty extends Wall {
   }
 
   @Override
-  public Response check(Game game) {
+  public Response wallSpecificCheck(Game game) {
     return new Response(ResponseType.INVALID,
-        "com.mazing.wall.Empty walls are just empty walls, do not try to be a genius");
+        "Empty walls are just empty walls, do not try to be a genius");
   }
 
   @Override
   public String toString() {
-    return "an com.mazing.wall.Empty com.mazing.wall.Wall";
+    return "an Empty Wall";
   }
 }

@@ -1,8 +1,4 @@
 package com.mazing.game;
-import com.mazing.item.*;
-import com.mazing.map.*;
-import com.mazing.command.*;
-import com.mazing.wall.*;
 
 public class Starter {
   public static void start(){

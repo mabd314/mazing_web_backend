@@ -1,10 +1,8 @@
 package com.mazing.game;
 
-import com.mazing.item.Gold;
-import com.mazing.item.Item;
-import com.mazing.item.ItemType;
-import java.util.ArrayList;
-import java.util.List;
+import com.mazing.item.*;
+import java.util.*;
+
 
 public class Character {
 
@@ -14,8 +12,8 @@ public class Character {
   private boolean isFlashLightOn;
 
   public Character(Direction direction) {
-    items = new ArrayList<>();
     this.direction = direction;
+    items = new ArrayList<>();
     gold = new Gold(0);
     isFlashLightOn = false;
   }
@@ -63,50 +61,15 @@ public class Character {
   }
 
   public void turnLeft() {
-    switch (direction) {
-      case EAST:
-        direction = Direction.NORTH;
-        break;
-      case WEST:
-        direction = Direction.SOUTH;
-        break;
-      case NORTH:
-        direction = Direction.WEST;
-        break;
-      case SOUTH:
-        direction = Direction.EAST;
-        break;
-    }
+    direction=direction.leftDirection();
   }
 
   public void turnRight() {
-    switch (direction) {
-      case EAST:
-        direction = Direction.SOUTH;
-        break;
-      case WEST:
-        direction = Direction.NORTH;
-        break;
-      case NORTH:
-        direction = Direction.EAST;
-        break;
-      case SOUTH:
-        direction = Direction.WEST;
-        break;
-    }
+    direction=direction.rightDirection();
   }
 
   public Direction getOppositeDirection() {
-    switch (getDirection()) {
-      case EAST:
-        return Direction.WEST;
-      case WEST:
-        return Direction.EAST;
-      case NORTH:
-        return Direction.SOUTH;
-      default:
-        return Direction.NORTH;
-    }
+    return direction.oppositeDirection();
   }
 
 

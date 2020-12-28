@@ -1,8 +1,6 @@
 package com.mazing.wall;
 import com.mazing.game.*;
 import com.mazing.item.*;
-import com.mazing.command.*;
-import com.mazing.map.*;
 
 public class Painting extends Wall {
 
@@ -27,7 +25,7 @@ public class Painting extends Wall {
   }
 
   @Override
-  public Response check(Game game) {
+  public Response wallSpecificCheck(Game game) {
       if (hidden == NoKey.getInstance()) {
           return new Response(ResponseType.EMPTY,
               "There is nothing behind this painting");

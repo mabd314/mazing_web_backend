@@ -1,8 +1,5 @@
 package com.mazing.item;
 import com.mazing.game.*;
-import com.mazing.map.*;
-import com.mazing.command.*;
-import com.mazing.wall.*;
 
 import java.util.List;
 
@@ -16,7 +13,7 @@ public abstract class Item {
 
   public static Item getItemFromList(String itemName, List<Item> items) {
     for (Item item : items) {
-        if (item.toString().equals(itemName.toUpperCase())) {
+        if (item.toString().equalsIgnoreCase(itemName)) {
             return item;
         }
     }
@@ -35,6 +32,24 @@ public abstract class Item {
     return new Response(ResponseType.INVALID,
         "This item is unusable");
   }
+
+  public Response buy(Game game){
+    if (game.getGold().payForItem(this)) {
+      game.getCharacter().addItem(this);
+      return new Response(ResponseType.SUCCESS, "You bought an item: " + this);
+    }
+      return new Response(ResponseType.FAILURE, "You do not have enough gold to buy this item");
+  }
+
+  public Response sell(Game game){
+    if (game.getCharacter().removeItem(this)) {
+      game.getGold().getPaidForItem(this);
+      return new Response(ResponseType.SUCCESS,
+              "You Sold an item: " + this + " for " + this.getPrice() + " gold");
+    }
+    return new Response(ResponseType.INVALID,
+        "How come you want to sell an item that you do not have?");
+    }
 
   public abstract ItemType getType();
 

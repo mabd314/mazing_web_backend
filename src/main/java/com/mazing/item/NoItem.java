@@ -1,8 +1,5 @@
 package com.mazing.item;
 import com.mazing.game.*;
-import com.mazing.map.*;
-import com.mazing.command.*;
-import com.mazing.wall.*;
 
 public class NoItem extends Item {
 
@@ -16,6 +13,23 @@ public class NoItem extends Item {
       instance = new NoItem();
     }
     return instance;
+  }
+  @Override
+  public Response use(Game game){
+    return new Response(ResponseType.INVALID,
+        "How come you want to use an item that you do not have?");
+  }
+
+  @Override
+  public Response buy(Game game){
+    return new Response(ResponseType.INVALID,
+        "The seller does not have what you desire");
+  }
+
+  @Override
+  public Response sell(Game game){
+    return new Response(ResponseType.INVALID,
+        "The seller does not want to buy this item");
   }
 
   @Override

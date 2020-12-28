@@ -1,8 +1,4 @@
 package com.mazing.wall;
-import com.mazing.game.*;
-import com.mazing.item.*;
-import com.mazing.command.*;
-import com.mazing.map.*;
 
 public enum WallType {
   CHEST("You see a CHEST"),
@@ -20,11 +16,11 @@ public enum WallType {
   }
 
   public static WallType getWallType(String wallName) {
-      if (wallName.toLowerCase().equals("wall")) {
+      if (wallName.equalsIgnoreCase("wall")) {
           wallName = "empty";
       }
       for (WallType type : WallType.values()) {
-          if (wallName.toUpperCase().equals(type.toString())) {
+          if (wallName.equalsIgnoreCase(type.toString())) {
               return type;
           }
       }

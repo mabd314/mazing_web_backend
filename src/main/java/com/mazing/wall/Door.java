@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import com.mazing.game.*;
 import com.mazing.item.*;
-import com.mazing.command.*;
-import com.mazing.map.*;
 
 public class Door extends Wall {
 
@@ -14,6 +12,7 @@ public class Door extends Wall {
   private final Key key;
   int[] connectingRoomsId;
   private boolean isLocked;
+
   public Door(Builder builder) {
     connectingRoomsId = builder.connectingRoomsId;
     isLocked = builder.isLocked;
@@ -37,6 +36,15 @@ public class Door extends Wall {
         : connectingRoomsId[0];
   }
 
+  public Response getWiningResponse(Game game){
+    String minutesElapsed = game.getElapsedSecondsString();
+    game.getStopWatch().stopTimer();
+    return new Response(ResponseType.WON, "Congratulation, You won the game!\n" +
+        "it took you " + minutesElapsed + " minutes to win this level\n" +
+        "You can still walk around and explore however you want!\n" +
+        "Have Fun!");
+  }
+
   @Override
   public WallType getType() {
     return WallType.DOOR;
@@ -44,47 +52,43 @@ public class Door extends Wall {
 
   @Override
   public Response getThrough(Game game) {
-      if (isLocked) {
-          return new Response(ResponseType.FAILURE, "The door is locked");
-      }
+    if (isLocked) {
+        return new Response(ResponseType.FAILURE,
+            "The door is locked");
+    }
     game.setCurrentRoomId(getRoomIdAcross(game));
     if (game.getCurrentRoom().checkWin()) {
-      String minutesElapsed = game.getStopWatch()
-          .getTimeString(game.getStopWatch().getElapsedSeconds());
-      game.getStopWatch().stopTimer();
-      return new Response(ResponseType.WON, "Congratulation, You won the game!\n" +
-          "it took you " + minutesElapsed + " minutes to win this level\n" +
-          "You can still walk around and explore however you want!\n" +
-          "Have Fun!");
+      return getWiningResponse(game);
     }
-    return new Response(ResponseType.SUCCESS, "You moved through the door");
+    return new Response(ResponseType.SUCCESS,
+        "You moved through the door");
   }
 
   @Override
-  public Response check(Game game) {
-      if (!isLocked) {
+  public Response wallSpecificCheck(Game game) {
+    if (!isLocked) {
           return new Response(ResponseType.UNLOCKED,
-              "com.mazing.wall.Door is unlocked");
+              "Door is unlocked");
       }
     return new Response(ResponseType.LOCKED,
-        "com.mazing.wall.Door is locked, " + key + " is needed to unlock");
+        "Door is locked, " + key + " is needed to unlock");
   }
 
   @Override
   public Response toggleWithKey(Key key) {
       if (!this.key.equals(key)) {
           return new Response(ResponseType.FAILURE,
-              "Wrong com.mazing.item.Key!");
+              "Wrong Key!");
       }
     toggleLocking();
     return new Response(ResponseType.SUCCESS,
-        "com.mazing.wall.Door is " +
+        "Door is " +
             (isLocked ? "locked" : "unlocked"));
   }
 
   @Override
   public String toString() {
-    return "a com.mazing.wall.Door";
+    return "Door";
   }
 
   @Override

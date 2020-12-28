@@ -1,8 +1,10 @@
 package com.mazing.wall;
-import com.mazing.game.*;
-import com.mazing.item.*;
-import com.mazing.command.*;
-import com.mazing.map.*;
+
+import com.mazing.game.Game;
+import com.mazing.game.Response;
+import com.mazing.game.ResponseType;
+import com.mazing.item.Key;
+import com.mazing.item.NoKey;
 
 public class Mirror extends Wall {
 
@@ -22,20 +24,21 @@ public class Mirror extends Wall {
   }
 
   @Override
-  public Response check(Game game) {
-      if (hidden == NoKey.getInstance()) {
-          return new Response(ResponseType.EMPTY,
-              "There is nothing behind this mirror");
-      }
+  public Response wallSpecificCheck(Game game) {
+    if (hidden == NoKey.getInstance()) {
+      return new Response(ResponseType.EMPTY,
+          "There is nothing behind this mirror");
+    }
     game.getCharacter().addItem(hidden);
-    Response status = new Response(ResponseType.SUCCESS,
-        "You found " + hidden + " behind this mirror");
+    Response status =
+        new Response(ResponseType.SUCCESS,
+            "You found " + hidden + " behind this mirror");
     clear();
     return status;
   }
 
   @Override
   public String toString() {
-    return "a com.mazing.wall.Mirror";
+    return "a Mirror";
   }
 }

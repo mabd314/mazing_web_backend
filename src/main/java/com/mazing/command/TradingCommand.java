@@ -1,8 +1,5 @@
 package com.mazing.command;
-import com.mazing.item.*;
-import com.mazing.map.*;
 import com.mazing.game.*;
-import com.mazing.wall.*;
 
 public abstract class TradingCommand implements Command {
   private Game game;
@@ -19,7 +16,7 @@ public abstract class TradingCommand implements Command {
 
   @Override
   public void executeNext(){
-    game.executeTradeCommand();
+    game.executeTradingCommand();
   }
 
   @Override
@@ -38,6 +35,7 @@ public abstract class TradingCommand implements Command {
       case "sell" ->{return new SellCommand(arg);}
       case "end" ->{return new EndTradingCommand();}
       case "list"->{return new ListCommand();}
+      case "help"->{return new TradingHelpCommand();}
       default -> {return new NoTradingCommand();}
     }
   }

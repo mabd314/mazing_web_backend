@@ -1,8 +1,5 @@
 package com.mazing.item;
 import com.mazing.game.*;
-import com.mazing.map.*;
-import com.mazing.command.*;
-import com.mazing.wall.*;
 
 import com.mazing.wall.Wall;
 import java.util.Objects;
@@ -22,7 +19,7 @@ public class Key extends Item {
 
   @Override
   public Response use(Game game) {
-    Wall facing = game.getCurrentRoom().getWall(game.getCharacter().getDirection());
+    Wall facing = game.getFacingWall();
     return facing.toggleWithKey(this);
   }
 

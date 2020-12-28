@@ -1,8 +1,5 @@
 package com.mazing.command;
 import com.mazing.item.*;
-import com.mazing.map.*;
-import com.mazing.game.*;
-import com.mazing.wall.*;
 
 public class UseCommand extends MainCommand {
   String itemName;
@@ -13,12 +10,6 @@ public class UseCommand extends MainCommand {
   @Override
   public void applyEffect() {
     Item item = Item.getItemFromList(itemName, getGame().getCharacterItems());
-    if (item == NoItem.getInstance()) {
-      setResponse(new Response(ResponseType.INVALID,
-          "How come you want to use an item that you do not have?"));
-    }
-    else{
-      setResponse(item.use(getGame()));
-    }
+    setResponse(item.use(getGame()));
   }
 }

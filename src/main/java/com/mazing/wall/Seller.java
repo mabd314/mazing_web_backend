@@ -1,8 +1,6 @@
 package com.mazing.wall;
 import com.mazing.game.*;
 import com.mazing.item.*;
-import com.mazing.command.*;
-import com.mazing.map.*;
 
 import java.util.List;
 
@@ -15,12 +13,23 @@ public class Seller extends Wall {
   }
 
   @Override
+  public Response list(){
+    StringBuilder list = new StringBuilder();
+    list.append("Seller Items:\n");
+    for (Item item : items) {
+      list.append(item).append(" : ").append(item.getPrice()).append(" Gold\n");
+    }
+    return new Response(ResponseType.STATUS,
+        list.toString());
+  }
+
+  @Override
   public WallType getType() {
     return WallType.SELLER;
   }
 
   @Override
-  public Response check(Game game) {
+  public Response wallSpecificCheck(Game game) {
     return new Response(ResponseType.INVALID,
         "You can not check the seller, pay some respect! You can trade though...");
   }

@@ -1,10 +1,12 @@
 package com.mazing.wall;
 
+import com.mazing.game.Game;
+import com.mazing.game.Response;
+import com.mazing.game.ResponseType;
+import com.mazing.item.Item;
+import com.mazing.item.Key;
+import com.mazing.item.NoKey;
 import java.util.List;
-import com.mazing.game.*;
-import com.mazing.item.*;
-import com.mazing.command.*;
-import com.mazing.map.*;
 
 public class Chest extends Wall {
 
@@ -36,32 +38,28 @@ public class Chest extends Wall {
   }
 
   @Override
-  public Response check(Game game) {
-      if (isLocked) {
-          return new Response(ResponseType.LOCKED,
-              "com.mazing.wall.Chest is locked, " + key + " is needed to unlock!");
-      }
-      if (inside.isEmpty()) {
-          return new Response(ResponseType.EMPTY,
-              "com.mazing.wall.Chest is empty!");
-      }
+  public Response wallSpecificCheck(Game game) {
+    if (isLocked) {
+      return new Response(ResponseType.LOCKED, "Chest is locked, " + key + " is needed to unlock!");
+    }
+    if (inside.isEmpty()) {
+      return new Response(ResponseType.EMPTY, "Chest is empty!");
+    }
     game.getCharacter().addItems(inside);
-    Response status = new Response(ResponseType.SUCCESS,
-        "Items acquired: " + inside);
+    Response status =
+        new Response(ResponseType.SUCCESS, "Chest is unlocked, Items acquired: " + inside);
     clearInside();
     return status;
   }
 
   @Override
   public Response toggleWithKey(Key key) {
-      if (!this.key.equals(key)) {
-          return new Response(ResponseType.FAILURE,
-              "Wrong key!");
-      }
+    if (!this.key.equals(key)) {
+      return new Response(ResponseType.FAILURE, "Wrong key!");
+    }
     toggleLocking();
-    return new Response(ResponseType.SUCCESS,
-        "com.mazing.wall.Chest is " +
-            (isLocked ? "locked" : "unlocked"));
+    return new Response(
+        ResponseType.SUCCESS, "com.mazing.wall.Chest is " + (isLocked ? "locked" : "unlocked"));
   }
 
   @Override

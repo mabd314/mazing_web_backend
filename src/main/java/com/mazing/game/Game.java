@@ -2,20 +2,11 @@ package com.mazing.game;
 
 import com.mazing.item.Gold;
 import com.mazing.item.Item;
-import com.mazing.map.JsonMap;
-import com.mazing.map.Map;
-import com.mazing.command.Command;
-import com.mazing.command.MainCommand;
-import com.mazing.command.TradingCommand;
 import com.mazing.wall.Wall;
 import com.mazing.wall.WallType;
-import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
-
 
 public class Game {
-  private static final Scanner scanner=new Scanner(System.in);
 
   private Character character;
   private int currentRoomId;
@@ -38,41 +29,38 @@ public class Game {
   public void setCharacter(Character character) {
     this.character = character;
   }
-  public boolean isCurrentRoomLit(){
-    return getCurrentRoom().isLit(this);
-  }
 
-  public String getFacingWallDescription(){
+  public String getFacingWallDescription() {
     return getFacingWall().getDescription();
   }
 
-  public List<Item> getCharacterItems(){
+  public List<Item> getCharacterItems() {
     return character.getItems();
   }
+
   public Room getCurrentRoom() {
     return getRoomFromId(currentRoomId);
   }
 
-  public Direction getDirection(){
+  public Direction getDirection() {
     return character.getDirection();
   }
 
-  public Direction getOppositeDirection(){
+  public Direction getOppositeDirection() {
     return character.getOppositeDirection();
   }
 
-  public List<Item> getFacingWallTradingList(){
+  public List<Item> getFacingWallTradingList() {
     return getFacingWall().getTradingList();
   }
 
-  public Gold getGold(){
+  public Gold getGold() {
     return getCharacter().getGold();
   }
 
-  public WallType getFacingWallType(){
+  public WallType getFacingWallType() {
     return getFacingWall().getType();
   }
-
 
   public void setCurrentRoomId(int currentRoomId) {
     this.currentRoomId = currentRoomId;
@@ -90,29 +78,11 @@ public class Game {
     this.rooms = rooms;
   }
 
-  private String chooseMap() {
-    System.out.println("Choose Map (hard,medium,custom)");
-    System.out.print("Map: ");
-    String mapName= scanner.nextLine();
-    return mapName;
+  public String getElapsedSecondsString(){
+    return stopWatch.getElapsedSecondsString();
   }
-
-  public void initializeGame(){
-    String mapName=chooseMap();
-    try{
-      Map map = new JsonMap("json/" + mapName + ".json");
-      map.setUpRooms(this);
-      map.setUpCharacter(this);
-      stopWatch.start();
-      MessagePrinter.printStartingMessage(this);
-    }catch(IOException e){
-      System.out.println("com.mazing.map.Map not recognized");
-      initializeGame();
-    }
-  }
-
-  public void start(){
-    initializeGame();
+  public void start() {
+    GameController.initializeGame(this);
     executeMainCommand();
   }
 
@@ -120,32 +90,16 @@ public class Game {
     return getCurrentRoom().getWall(getCharacter().getDirection());
   }
 
-  public Response getThrough(Direction direction) {
+  public Response getThroughWallAtDirection(Direction direction) {
     Wall wall = getCurrentRoom().getWall(direction);
     return wall.getThrough(this);
   }
 
   public void executeMainCommand() {
-    System.out.print("$ ");
-    String line = scanner.nextLine();
-    String[] parts = line.split(" ");
-    String commandString = parts[0];
-    String arg = parts.length == 1 ? " " : parts[1];
-    Command command= MainCommand.getCommand(commandString,arg);
-    command.setGame(this);
-    command.execute();
+    GameController.executeMainCommand(this);
   }
 
-  public void executeTradeCommand() {
-    System.out.print(">> ");
-    String line = scanner.nextLine();
-    String[] parts = line.split(" ");
-    String commandString = parts[0];
-    String arg = parts.length == 1 ? " " : parts[1];
-    Command command= TradingCommand.getCommand(commandString,arg);
-    command.setGame(this);
-    command.execute();
+  public void executeTradingCommand() {
+    GameController.executeTradingCommand(this);
   }
-
-
 }
