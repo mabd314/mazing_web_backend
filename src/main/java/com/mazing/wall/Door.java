@@ -57,7 +57,8 @@ public class Door extends Wall {
             "The door is locked");
     }
     game.setCurrentRoomId(getRoomIdAcross(game));
-    if (game.getCurrentRoom().checkWin()) {
+    if (game.getCurrentRoom().checkWin() &&!game.isWon()) {
+      game.setWon(true);
       return getWiningResponse(game);
     }
     return new Response(ResponseType.SUCCESS,

@@ -44,19 +44,16 @@
       "east":
       {
         "type": "door",
-        "locked": false,
         "from": 2,
         "to": 3
       },
       "west":
       {
-        "type": "mirror",
-        "behind": null
+        "type": "mirror"
       },
       "north":
       {
         "type": "chest",
-        "locked": false,
         "inside":
         [
           {
@@ -89,16 +86,13 @@
       "west":
       {
         "type": "door",
-        "locked": false,
         "from": 3,
         "to": 2
       },
       "north":
       {
-        "type": "mirror",
-        "behind": null
+        "type": "mirror"
       },
-      "south":null,
       "isLit":false,
       "hasLight":true
     },
@@ -107,7 +101,6 @@
       "east":
       {
         "type": "door",
-        "locked": false,
         "from": 4,
         "to": 5
       },
@@ -119,7 +112,6 @@
         "from": 4,
         "to": 1
       },
-      "north": null,
       "south":
       {
         "type": "chest",
@@ -148,7 +140,6 @@
       "west":
       {
         "type": "door",
-        "locked": false,
         "from": 5,
         "to": 4
       },
@@ -175,7 +166,6 @@
       "south":
       {
         "type": "door",
-        "locked": false,
         "from": 5,
         "to": 6
       },
@@ -186,8 +176,7 @@
       "id":6,
       "east":
       {
-        "type": "painting",
-        "behind": null
+        "type": "painting"
       },
       "west":
       {
@@ -197,14 +186,12 @@
       "north":
       {
         "type": "door",
-        "locked": false,
         "from": 6,
         "to": 5
       },
       "south":
       {
-        "type": "mirror",
-        "behind": null
+        "type": "mirror"
       },
       "isLit":true,
       "hasLight":true
@@ -246,21 +233,18 @@
       },
       "south":
       {
-        "type": "mirror",
-        "behind": null
+        "type": "mirror"
       },
       "isLit":false,
       "hasLight":false
     },
     {
       "id":8,
-      "east":null,
       "west":
       {
         "type": "mirror",
         "behind": 8
       },
-      "north":null,
       "south":
       {
         "type": "door",
@@ -284,15 +268,27 @@
       },
       "west":
       {
-        "type": "painting",
-        "behind": null
+        "type": "painting"
       },
       "north":
       {
         "type": "painting",
         "behind": 2
       },
-      "south":null,
+      "isLit":true,
+      "hasLight":true
+    }
+    ,
+    {
+      "id":-1,
+      "west":
+      {
+        "type": "door",
+        "locked": true,
+        "keyId": 2,
+        "from": -1,
+        "to": 3
+      },
       "isLit":true,
       "hasLight":true
     }

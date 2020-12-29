@@ -13,14 +13,12 @@
                 "to":3,
                 "from":1
             },
-            "west": null,
             "north":{
                 "type": "painting",
                 "behind": 1
             },
             "south":{
                 "type":"door",
-                "locked":false,
                 "to":2,
                 "from":1
             },
@@ -31,7 +29,6 @@
             "id":2,
             "east":{
                 "type":"door",
-                "locked":false,
                 "to":4,
                 "from":2
             },
@@ -46,11 +43,9 @@
             },
             "north":{
                 "type":"door",
-                "locked":false,
                 "to":1,
                 "from":2
             },
-            "south":null,
             "isLit":false,
             "hasLight":true
         },
@@ -70,8 +65,6 @@
                 "to":1,
                 "from":3
             },
-            "north":null,
-            "south":null,
             "isLit":false,
             "hasLight":false
         },
@@ -86,7 +79,6 @@
             },
             "west":{
                 "type":"door",
-                "locked":false,
                 "to":2,
                 "from":4
             },
@@ -115,7 +107,6 @@
             "id":5,
             "east":{
                 "type":"chest",
-                "locked":false,
                 "inside":[{
                     "type":"key",
                     "keyId":3
@@ -129,15 +120,27 @@
                 "from":5
             },
             "north":{
-                "type":"mirror",
-                "behind":null
+                "type":"mirror"
             },
             "south":{
-                "type":"painting",
-                "behind":null
+                "type":"painting"
             },
             "isLit":true,
             "hasLight":true
         }
+        ,
+        {
+            "id":-1,
+            "west":{
+                "type":"door",
+                "locked":true,
+                "keyId":3,
+                "to":3,
+                "from":-1
+            },
+            "isLit":true,
+            "hasLight":true
+        }
+
     ]
 }

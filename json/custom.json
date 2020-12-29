@@ -6,16 +6,23 @@
   "rooms":[
     {
       "id":1,
-      "east":null,
-      "west": null,
       "north":
       {
         "type": "door",
-        "locked": false,
         "from": 1,
         "to": -1
       },
-      "south":null,
+      "isLit":true,
+      "hasLight":true
+    },
+    {
+      "id":-1,
+      "south":
+      {
+        "type": "door",
+        "from": -1,
+        "to": 1
+      },
       "isLit":true,
       "hasLight":true
     }

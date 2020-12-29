@@ -95,7 +95,7 @@ public class Room {
     }
 
     public boolean checkWin(){
-        return false;
+        return id==-1;
     }
 
 

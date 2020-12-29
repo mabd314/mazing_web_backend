@@ -12,6 +12,7 @@ public class Game {
   private int currentRoomId;
   private StopWatch stopWatch;
   private List<Room> rooms;
+  private boolean isWon;
 
   public Room getRoomFromId(int id) {
     for (Room room : rooms) {
@@ -19,7 +20,15 @@ public class Game {
         return room;
       }
     }
-    return new End();
+    throw new IllegalArgumentException("No room with such id");
+  }
+
+  public boolean isWon() {
+    return isWon;
+  }
+
+  public void setWon(boolean won) {
+    isWon = won;
   }
 
   public Character getCharacter() {
