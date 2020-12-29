@@ -11,50 +11,42 @@ import com.mazing.wall.Painting;
 import com.mazing.wall.Seller;
 import com.mazing.wall.Wall;
 import java.util.List;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import static com.mazing.map.JsonMaze.*;
 public class WallBuilder {
 
 
-  public static Wall buildWallFromJson(JSONObject jsonWall) {
-    switch ((String) jsonWall.get("type")) {
-      case "door":
-        return buildDoorFromJson(jsonWall);
-      case "seller":
-        return buildSellerFromJson(jsonWall);
-      case "chest":
-        return buildChestFromJson(jsonWall);
-      case "painting":
-        return buildPaintingFromJson(jsonWall);
-      case "mirror":
-        return buildMirrorFromJson(jsonWall);
+  public static Wall buildWallFromJson(JSONObjectWrapper jsonWall) {
+    switch (jsonWall.getString("type")) {
+      case "door"->{return buildDoorFromJson(jsonWall);}
+      case "seller"->{return buildSellerFromJson(jsonWall);}
+      case "chest"->{return buildChestFromJson(jsonWall);}
+      case "painting"->{return buildPaintingFromJson(jsonWall);}
+      case "mirror"->{return buildMirrorFromJson(jsonWall);}
+      default -> {return Empty.getInstance(); }
     }
-    return Empty.getInstance();
   }
 
-  private static Wall buildMirrorFromJson(JSONObject jsonMirror) {
-    if (jsonMirror.get("behind") == null) {
+  private static Wall buildMirrorFromJson(JSONObjectWrapper jsonMirror) {
+    if (jsonMirror.getInt("behind") == 0) {
       return new Mirror(NoKey.getInstance());
     }
-    Key key = new Key(getIntFromObject(jsonMirror.get("behind")));
+    Key key = new Key(jsonMirror.getInt("behind"));
     return new Mirror(key);
   }
 
-  private static Wall buildPaintingFromJson(JSONObject jsonPainting) {
-    if (jsonPainting.get("behind") == null) {
+  private static Wall buildPaintingFromJson(JSONObjectWrapper jsonPainting) {
+    if (jsonPainting.getInt("behind") == 0) {
       return new Painting(NoKey.getInstance());
     }
-    Key key = new Key(getIntFromObject(jsonPainting.get("behind")));
+    Key key = new Key(jsonPainting.getInt("behind"));
     return new Painting(key);
   }
 
-  private static Wall buildChestFromJson(JSONObject jsonChest) {
-    JSONArray jsonItems = (JSONArray) jsonChest.get("inside");
+  private static Wall buildChestFromJson(JSONObjectWrapper jsonChest) {
+    JSONArrayWrapper jsonItems = jsonChest.getJsonArray("inside");
     List<Item> items = ItemBuilder.buildItemsFromJson(jsonItems);
-    if ((Boolean) jsonChest.get("locked")) {
+    if (jsonChest.getBoolean("locked")) {
       return new Chest.Builder(items)
-          .lockedWithKey(getIntFromObject(jsonChest.get("keyId")))
+          .lockedWithKey(jsonChest.getInt("keyId"))
           .build();
     }
 
@@ -62,22 +54,19 @@ public class WallBuilder {
         .build();
   }
 
-  private static Wall buildSellerFromJson(JSONObject jsonSeller) {
-    JSONArray jsonItems = (JSONArray) jsonSeller.get("items");
+  private static Wall buildSellerFromJson(JSONObjectWrapper jsonSeller) {
+    JSONArrayWrapper jsonItems = jsonSeller.getJsonArray("items");
     List<Item> items = ItemBuilder.buildItemsFromJson(jsonItems);
     return new Seller(items);
   }
 
-  private static Wall buildDoorFromJson(JSONObject jsonDoor) {
-    if ((Boolean) jsonDoor.get("locked")) {
-      return new Door.Builder(getIntFromObject(jsonDoor.get("from")),
-          getIntFromObject(jsonDoor.get("to")))
-          .lockedWithKey(getIntFromObject(jsonDoor.get("keyId")))
+  private static Wall buildDoorFromJson(JSONObjectWrapper jsonDoor) {
+    if (jsonDoor.getBoolean("locked")) {
+      return new Door.Builder(jsonDoor.getInt("from"),jsonDoor.getInt("to"))
+          .lockedWithKey(jsonDoor.getInt("keyId"))
           .build();
     }
-
-    return new Door.Builder(getIntFromObject(jsonDoor.get("from")),
-        getIntFromObject(jsonDoor.get("to")))
+    return new Door.Builder(jsonDoor.getInt("from"),jsonDoor.getInt("to"))
         .build();
   }
 

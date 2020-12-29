@@ -7,56 +7,44 @@ import com.mazing.item.Key;
 import com.mazing.item.NoItem;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import static com.mazing.map.JsonMaze.*;
 
 public class ItemBuilder {
 
-  public static List<Item> buildItemsFromJson(JSONArray jsonItems) {
+  public static List<Item> buildItemsFromJson(JSONArrayWrapper jsonItems) {
     List<Item> items = new ArrayList<>();
-    for (Object objectItem : jsonItems) {
-      JSONObject jsonItem = (JSONObject) objectItem;
+    for (JSONObjectWrapper jsonItem : jsonItems.getList()) {
       Item item = buildItemFromJson(jsonItem);
       items.add(item);
     }
     return items;
   }
 
-  public static Item buildItemFromJson(JSONObject jsonItem) {
-    switch ((String) jsonItem.get("type")) {
-      case "key":
-        return buildKeyFromJson(jsonItem);
-      case "flashlight":
-        return buildFlashLightFromJson(jsonItem);
-      case "gold":
-        return buildGoldFromJson(jsonItem);
+  public static Item buildItemFromJson(JSONObjectWrapper jsonItem) {
+    switch (jsonItem.getString("type")) {
+      case "key"->{return buildKeyFromJson(jsonItem); }
+      case "flashlight"->{return buildFlashLightFromJson(jsonItem); }
+      case "gold"->{return buildGoldFromJson(jsonItem); }
+      default -> {return NoItem.getInstance();}
     }
-    return NoItem.getInstance();
   }
 
-  private static Item buildGoldFromJson(JSONObject jsonGold) {
-    int count = getIntFromObject(jsonGold.get("count"));
+  private static Item buildGoldFromJson(JSONObjectWrapper jsonGold) {
+    int count = jsonGold.getInt("count");
     Item item = new Gold(count);
-    if (jsonGold.get("price") != null) {
-      item.setPrice(getIntFromObject(jsonGold.get("price")));
-    }
+    item.setPrice(jsonGold.getInt("price"));
     return item;
   }
 
-  private static Item buildFlashLightFromJson(JSONObject jsonFlashLight) {
+  private static Item buildFlashLightFromJson(JSONObjectWrapper jsonFlashLight) {
     Item item = FlashLight.getInstance();
-    if (jsonFlashLight.get("price") != null) {
-      item.setPrice(getIntFromObject(jsonFlashLight.get("price")));
-    }
+    item.setPrice(jsonFlashLight.getInt("price"));
     return item;
   }
 
-  private static Item buildKeyFromJson(JSONObject jsonKey) {
-    Item item = new Key(getIntFromObject(jsonKey.get("keyId")));
-    if (jsonKey.get("price") != null) {
-      item.setPrice(getIntFromObject(jsonKey.get("price")));
-    }
+  private static Item buildKeyFromJson(JSONObjectWrapper jsonKey) {
+    Item item = new Key(jsonKey.getInt("keyId"));
+    item.setPrice(jsonKey.getInt("price"));
     return item;
   }
 

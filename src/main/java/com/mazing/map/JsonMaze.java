@@ -13,19 +13,15 @@ import static com.mazing.map.WallBuilder.*;
 public class JsonMaze implements Maze {
 
   private final JSONParser jsonParser = new JSONParser();
-  private JSONObject jsonMap;
+  private JSONObjectWrapper jsonMap;
 
   public JsonMaze(String mapFileName) throws IOException {
     parseJsonMap(mapFileName);
   }
 
-  public static int getIntFromObject(Object obj) {
-    return (int) (long) obj;
-  }
-
   private void parseJsonMap(String mapFileName) throws IOException {
     try (FileReader reader = new FileReader(mapFileName)) {
-      jsonMap = (JSONObject) jsonParser.parse(reader);
+      jsonMap = new JSONObjectWrapper((JSONObject) jsonParser.parse(reader));
     } catch (ParseException e) {
       System.out.println(e.getMessage());
     }
@@ -34,31 +30,21 @@ public class JsonMaze implements Maze {
   @Override
   public void setUpRooms(Game game) {
     List<Room> rooms = new ArrayList<>();
-    JSONArray jsonRooms = (JSONArray) jsonMap.get("rooms");
-    for (Object roomObj : jsonRooms) {
-      JSONObject jsonRoom = (JSONObject) roomObj;
-      Room room = new Room(getIntFromObject(jsonRoom.get("id")));
-      JSONObject jsonWall = (JSONObject) jsonRoom.get("east");
-        if (jsonWall != null) {
-            room.setEast(buildWallFromJson(jsonWall));
-        }
-      jsonWall = (JSONObject) jsonRoom.get("west");
-        if (jsonWall != null) {
-            room.setWest(buildWallFromJson(jsonWall));
-        }
-      jsonWall = (JSONObject) jsonRoom.get("north");
-        if (jsonWall != null) {
-            room.setNorth(buildWallFromJson(jsonWall));
-        }
-      jsonWall = (JSONObject) jsonRoom.get("south");
-        if (jsonWall != null) {
-            room.setSouth(buildWallFromJson(jsonWall));
-        }
-
-        if (!((Boolean) jsonRoom.get("isLit"))) {
+    JSONArrayWrapper jsonRooms = jsonMap.getJsonArray("rooms");
+    for (JSONObjectWrapper jsonRoom : jsonRooms.getList()) {
+      Room room = new Room(jsonRoom.getInt("id"));
+      JSONObjectWrapper jsonWall = jsonRoom.getJsonObject("east");
+      room.setEast(buildWallFromJson(jsonWall));
+      jsonWall = jsonRoom.getJsonObject("west");
+      room.setWest(buildWallFromJson(jsonWall));
+      jsonWall = jsonRoom.getJsonObject("north");
+      room.setNorth(buildWallFromJson(jsonWall));
+      jsonWall = jsonRoom.getJsonObject("south");
+      room.setSouth(buildWallFromJson(jsonWall));
+        if (!jsonRoom.getBoolean("isLit")) {
             room.toggleLight();
         }
-        if (!((Boolean) jsonRoom.get("hasLight"))) {
+        if (!jsonRoom.getBoolean("hasLight")) {
             room.removeLight();
         }
       rooms.add(room);
@@ -70,11 +56,11 @@ public class JsonMaze implements Maze {
   @Override
   public void setUpCharacter(Game game) {
     Character character;
-    String directionString = (String) jsonMap.get("direction");
+    String directionString = jsonMap.getString("direction");
     Direction direction = Direction.valueOf(directionString.toUpperCase());
-    int goldCount = getIntFromObject(jsonMap.get("goldCount"));
-    long secondsNeeded = (long) jsonMap.get("secondsNeeded");
-    List<Item> items = buildItemsFromJson((JSONArray) jsonMap.get("items"));
+    int goldCount = jsonMap.getInt("goldCount");
+    long secondsNeeded = jsonMap.getInt("secondsNeeded");
+    List<Item> items = buildItemsFromJson(jsonMap.getJsonArray("items"));
 
     character = new Character(direction);
     character.getGold().increment(goldCount);
