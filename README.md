@@ -1,5 +1,5 @@
 # Mazing
-Mazing is a command-line game where you start the game in a certain room, and you gather item and use them to make your way out of the maze on time!  
+Mazing is a command-line game where you start the game in a certain room, and you gather items and use them to make your way out of the maze on time!  
 The maze is made up of several rooms connected by locked or unlocked doors.  
 You win if you make your way out of the maze and reach the end room.  
 You lose if you decide to quit or restart the game, or if the time needed to win elapses.  
@@ -17,18 +17,18 @@ This project is not deployed, but you can easily set it on your local device fol
 ## How to play
 #### Note: You "choose" a certain command [COMMAND] by writing the name of command "COMMAND_NAME" in the console and clicking enter. 
 
-- When the map is chosen, your character starts in a certain room, with a certain amount of gold and certain orientation direction.
+- When the map is chosen, your character starts in a certain room, with a certain amount of gold and a certain orientation direction.
 - Each room is defined as a block, with 4 surrounding walls, each wall could be empty, or have one of the 5 wall objects (seller,chest,door,painting,mirror). 
 - Chests and doors could be locked, and if they are, you could open them with their corresponding keys.  
 - Chests could have keys, flashlights and gold.  
-- Sellers buy and sell certain item for a certain amount of gold.
+- Sellers buy and sell certain items for a certain amount of gold.
 - A painting or a mirror could have a key hidden behind it.
 - Time needed, starting gold ,starting room and all other maze features are specified in the chosen map along with the exact structure of the maze.
-- The goal of the game is to get your character out of the maze to the "END" room on time.  
+- The goal of the game is to get your character out of the maze to the end room on time.  
 
 
 - **Choosing the map**: When you first open the game, it will ask you to choose a map.  
-    - There are two predifined maps; hard and medium, you can choose either one of them
+    - There are two predefined maps; hard and medium, you can choose either one of them
     - You can also choose custom, which is an almost empty map, that you can define yourself, more on this below
     - You can also choose any map name if you already create one with that name in folder "json", more on this below
     
@@ -41,7 +41,7 @@ This project is not deployed, but you can easily set it on your local device fol
         - **backward**: If there is an open door behind the character, he walks through the door to the room behind it.
         
     - Status:
-        - **playerstatus**: Prints the character's oreintation direction, gold count and item
+        - **status**: Prints the character's orientation direction, gold count and item
     
     - Time:
         - **time**: Prints elapsed time since the game started as well as the remaining time you have until you finish.
@@ -72,7 +72,7 @@ This project is not deployed, but you can easily set it on your local device fol
             - **buy [itemName]**: will buy the item corresponding to [itemName] from the seller if it is listed in the seller's item, and your character has enough gold
             - **sell [itemName]**: will sell the item corresponding to [itemName] from the seller, if it is listed in the seller's item, and your character has it
             - **list**: will list the seller's item again
-            - **end trade**: will exit the trading mode and go back to accepting main commands
+            - **end**: will exit the trading mode and go back to accepting main commands
             
     - Help:
         - **help**: choosing [help] will list all of the available commands and describe their usage
