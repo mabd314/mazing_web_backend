@@ -26,13 +26,11 @@ public class Mirror extends Wall {
   @Override
   public Response wallSpecificCheck(Game game) {
     if (hidden == NoKey.getInstance()) {
-      return new Response(ResponseType.EMPTY,
-          "There is nothing behind this mirror");
+      return new Response(ResponseType.EMPTY, "There is nothing behind this mirror");
     }
     game.getCharacter().addItem(hidden);
     Response status =
-        new Response(ResponseType.SUCCESS,
-            "You found " + hidden + " behind this mirror");
+        new Response(ResponseType.SUCCESS, "You found " + hidden + " behind this mirror");
     clear();
     return status;
   }

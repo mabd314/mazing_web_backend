@@ -155,13 +155,13 @@ In the json file, you will define exactly how the map is constructed using the f
 ```
 {
   "type": "seller",
-  "item": 
+  "items": 
   [
 
   ]
 }
 ```
-- item: **list of jsonItem(jsonKey,jsonFlashlight)**; item on sale by this seller
+- items: **list of jsonItem(jsonKey,jsonFlashlight)**; item on sale by this seller
 
 
 ### jsonChest:

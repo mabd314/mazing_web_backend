@@ -5,8 +5,7 @@ public class Response {
   private final ResponseType type;
   private final String description;
 
-  public Response(ResponseType type,
-      String description) {
+  public Response(ResponseType type, String description) {
     this.type = type;
     this.description = description;
   }
@@ -20,4 +19,3 @@ public class Response {
     return type + "\n" + description;
   }
 }
-

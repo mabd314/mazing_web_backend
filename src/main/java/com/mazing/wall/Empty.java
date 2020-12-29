@@ -1,12 +1,14 @@
 package com.mazing.wall;
-import com.mazing.game.*;
+
+import com.mazing.game.Game;
+import com.mazing.game.Response;
+import com.mazing.game.ResponseType;
 
 public class Empty extends Wall {
 
   private static Empty instance;
 
-  private Empty() {
-  }
+  private Empty() {}
 
   public static synchronized Empty getInstance() {
     if (instance == null) {
@@ -22,14 +24,15 @@ public class Empty extends Wall {
 
   @Override
   public Response getThrough(Game game) {
-    return new Response(ResponseType.INVALID,
+    return new Response(
+        ResponseType.INVALID,
         "You can not move through an empty wall. Unfortunately you are not a ghost");
   }
 
   @Override
   public Response wallSpecificCheck(Game game) {
-    return new Response(ResponseType.INVALID,
-        "Empty walls are just empty walls, do not try to be a genius");
+    return new Response(
+        ResponseType.INVALID, "Empty walls are just empty walls, do not try to be a genius");
   }
 
   @Override

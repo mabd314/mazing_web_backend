@@ -6,5 +6,4 @@ public class ForwardCommand extends MainCommand {
   public void applyEffect() {
     setResponse(getGame().getThroughWallAtDirection(getGame().getDirection()));
   }
-
 }

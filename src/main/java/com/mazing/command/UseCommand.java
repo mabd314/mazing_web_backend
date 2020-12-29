@@ -1,10 +1,12 @@
 package com.mazing.command;
-import com.mazing.item.*;
+
+import com.mazing.item.Item;
 
 public class UseCommand extends MainCommand {
   String itemName;
+
   public UseCommand(String itemName) {
-    this.itemName=itemName;
+    this.itemName = itemName;
   }
 
   @Override

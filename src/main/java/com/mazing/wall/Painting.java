@@ -1,6 +1,10 @@
 package com.mazing.wall;
-import com.mazing.game.*;
-import com.mazing.item.*;
+
+import com.mazing.game.Game;
+import com.mazing.game.Response;
+import com.mazing.game.ResponseType;
+import com.mazing.item.Key;
+import com.mazing.item.NoKey;
 
 public class Painting extends Wall {
 
@@ -26,13 +30,12 @@ public class Painting extends Wall {
 
   @Override
   public Response wallSpecificCheck(Game game) {
-      if (hidden == NoKey.getInstance()) {
-          return new Response(ResponseType.EMPTY,
-              "There is nothing behind this painting");
-      }
+    if (hidden == NoKey.getInstance()) {
+      return new Response(ResponseType.EMPTY, "There is nothing behind this painting");
+    }
     game.getCharacter().addItem(hidden);
-    Response status = new Response(ResponseType.SUCCESS,
-        "You found " + hidden + " behind this painting");
+    Response status =
+        new Response(ResponseType.SUCCESS, "You found " + hidden + " behind this painting");
     clear();
     return status;
   }

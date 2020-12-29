@@ -9,23 +9,23 @@ public class StopWatch extends TimerTask {
   private long start;
   private boolean isTimerOn;
 
-  public void startCounting() {
-    Timer timer = new Timer();
-    timer.schedule(this,secondsNeeded*1000);
-    start = System.currentTimeMillis();
-    isTimerOn = true;
-  }
-
   public StopWatch(long secondsNeeded) {
     isTimerOn = false;
     this.secondsNeeded = secondsNeeded;
   }
 
-  public String getElapsedSecondsString(){
+  public void startCounting() {
+    Timer timer = new Timer();
+    timer.schedule(this, secondsNeeded * 1000);
+    start = System.currentTimeMillis();
+    isTimerOn = true;
+  }
+
+  public String getElapsedSecondsString() {
     return getTimeString(getElapsedSeconds());
   }
 
-  public String getRemainingSecondsString(){
+  public String getRemainingSecondsString() {
     return getTimeString(getRemainingSeconds());
   }
 
@@ -49,7 +49,10 @@ public class StopWatch extends TimerTask {
 
   public String checkTime() {
     if (isTimerOn) {
-      return "Elapsed: " + getElapsedSecondsString() + ", Remaining: " + getRemainingSecondsString();
+      return "Elapsed: "
+          + getElapsedSecondsString()
+          + ", Remaining: "
+          + getRemainingSecondsString();
     }
     return "You've won the game, the timer decided to take a break.";
   }

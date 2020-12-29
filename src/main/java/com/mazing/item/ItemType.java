@@ -14,5 +14,4 @@ public enum ItemType {
     }
     return ItemType.NOITEM;
   }
-
 }

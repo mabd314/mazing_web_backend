@@ -7,7 +7,6 @@ import com.mazing.item.Key;
 import com.mazing.item.NoItem;
 import java.util.ArrayList;
 import java.util.List;
-import static com.mazing.map.JsonMaze.*;
 
 public class ItemBuilder {
 
@@ -29,10 +28,9 @@ public class ItemBuilder {
     }
   }
 
-  private static Item buildGoldFromJson(JSONObjectWrapper jsonGold) {
-    int count = jsonGold.getInt("count");
-    Item item = new Gold(count);
-    item.setPrice(jsonGold.getInt("price"));
+  private static Item buildKeyFromJson(JSONObjectWrapper jsonKey) {
+    Item item = new Key(jsonKey.getInt("keyId"));
+    item.setPrice(jsonKey.getInt("price"));
     return item;
   }
 
@@ -42,10 +40,12 @@ public class ItemBuilder {
     return item;
   }
 
-  private static Item buildKeyFromJson(JSONObjectWrapper jsonKey) {
-    Item item = new Key(jsonKey.getInt("keyId"));
-    item.setPrice(jsonKey.getInt("price"));
+  private static Item buildGoldFromJson(JSONObjectWrapper jsonGold) {
+    Item item = new Gold(jsonGold.getInt("count"));
+    item.setPrice(jsonGold.getInt("price"));
     return item;
   }
+
+
 
 }

@@ -1,10 +1,13 @@
 package com.mazing.wall;
 
+import com.mazing.game.Game;
+import com.mazing.game.Response;
+import com.mazing.game.ResponseType;
+import com.mazing.item.Key;
+import com.mazing.item.NoKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.mazing.game.*;
-import com.mazing.item.*;
 
 public class Door extends Wall {
 
@@ -32,17 +35,22 @@ public class Door extends Wall {
   }
 
   public int getRoomIdAcross(Game game) {
-    return connectingRoomsId[0] == (game.getCurrentRoom().getId()) ? connectingRoomsId[1]
+    return connectingRoomsId[0] == (game.getCurrentRoom().getId())
+        ? connectingRoomsId[1]
         : connectingRoomsId[0];
   }
 
-  public Response getWiningResponse(Game game){
+  public Response getWiningResponse(Game game) {
     String minutesElapsed = game.getElapsedSecondsString();
     game.getStopWatch().stopTimer();
-    return new Response(ResponseType.WON, "Congratulation, You won the game!\n" +
-        "it took you " + minutesElapsed + " minutes to win this level\n" +
-        "You can still walk around and explore however you want!\n" +
-        "Have Fun!");
+    return new Response(
+        ResponseType.WON,
+        "Congratulation, You won the game!\n"
+            + "it took you "
+            + minutesElapsed
+            + " minutes to win this level\n"
+            + "You can still walk around and explore however you want!\n"
+            + "Have Fun!");
   }
 
   @Override
@@ -53,38 +61,35 @@ public class Door extends Wall {
   @Override
   public Response getThrough(Game game) {
     if (isLocked) {
-        return new Response(ResponseType.FAILURE,
-            "The door is locked");
+      return new Response(ResponseType.FAILURE, "The door is locked");
     }
     game.setCurrentRoomId(getRoomIdAcross(game));
-    if (game.getCurrentRoom().checkWin() &&!game.isWon()) {
+    if (isGameWonNowAndWasNotWonBefore(game)) {
       game.setWon(true);
       return getWiningResponse(game);
     }
-    return new Response(ResponseType.SUCCESS,
-        "You moved through the door");
+    return new Response(ResponseType.SUCCESS, "You moved through the door");
+  }
+
+  private boolean isGameWonNowAndWasNotWonBefore(Game game){
+    return game.getCurrentRoom().checkWin() && !game.isWon();
   }
 
   @Override
   public Response wallSpecificCheck(Game game) {
     if (!isLocked) {
-          return new Response(ResponseType.UNLOCKED,
-              "Door is unlocked");
-      }
-    return new Response(ResponseType.LOCKED,
-        "Door is locked, " + key + " is needed to unlock");
+      return new Response(ResponseType.UNLOCKED, "Door is unlocked");
+    }
+    return new Response(ResponseType.LOCKED, "Door is locked, " + key + " is needed to unlock");
   }
 
   @Override
   public Response toggleWithKey(Key key) {
-      if (!this.key.equals(key)) {
-          return new Response(ResponseType.FAILURE,
-              "Wrong Key!");
-      }
+    if (!this.key.equals(key)) {
+      return new Response(ResponseType.FAILURE, "Wrong Key!");
+    }
     toggleLocking();
-    return new Response(ResponseType.SUCCESS,
-        "Door is " +
-            (isLocked ? "locked" : "unlocked"));
+    return new Response(ResponseType.SUCCESS, "Door is " + (isLocked ? "locked" : "unlocked"));
   }
 
   @Override
@@ -94,12 +99,12 @@ public class Door extends Wall {
 
   @Override
   public boolean equals(Object o) {
-      if (this == o) {
-          return true;
-      }
-      if (o == null || getClass() != o.getClass()) {
-          return false;
-      }
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     Door door = (Door) o;
     Arrays.sort(door.connectingRoomsId);
     Arrays.sort(connectingRoomsId);
@@ -118,7 +123,7 @@ public class Door extends Wall {
     private Key key;
 
     public Builder(int from, int to) {
-      connectingRoomsId = new int[]{from, to};
+      connectingRoomsId = new int[] {from, to};
       isLocked = false;
       key = NoKey.getInstance();
     }
@@ -132,9 +137,9 @@ public class Door extends Wall {
     public Door build() {
       Door newDoor = new Door(this);
       int index = doors.indexOf(newDoor);
-        if (index != -1) {
-            return doors.get(index);
-        }
+      if (index != -1) {
+        return doors.get(index);
+      }
       doors.add(newDoor);
       return newDoor;
     }

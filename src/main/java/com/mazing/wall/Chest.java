@@ -14,6 +14,29 @@ public class Chest extends Wall {
   private final Key key;
   private boolean isLocked;
 
+  public static class Builder {
+
+    private final List<Item> inside;
+    private boolean isLocked;
+    private Key key;
+
+    public Builder(List<Item> inside) {
+      this.inside = inside;
+      isLocked = false;
+      key = NoKey.getInstance();
+    }
+
+    public Builder lockedWithKey(int keyId) {
+      this.isLocked = true;
+      this.key = new Key(keyId);
+      return this;
+    }
+
+    public Chest build() {
+      return new Chest(this);
+    }
+  }
+
   public Chest(Builder builder) {
     inside = builder.inside;
     key = builder.key;
@@ -58,35 +81,11 @@ public class Chest extends Wall {
       return new Response(ResponseType.FAILURE, "Wrong key!");
     }
     toggleLocking();
-    return new Response(
-        ResponseType.SUCCESS, "Chest is " + (isLocked ? "locked" : "unlocked"));
+    return new Response(ResponseType.SUCCESS, "Chest is " + (isLocked ? "locked" : "unlocked"));
   }
 
   @Override
   public String toString() {
     return "a Chest";
-  }
-
-  public static class Builder {
-
-    private final List<Item> inside;
-    private boolean isLocked;
-    private Key key;
-
-    public Builder(List<Item> inside) {
-      this.inside = inside;
-      isLocked = false;
-      key = NoKey.getInstance();
-    }
-
-    public Builder lockedWithKey(int keyId) {
-      this.isLocked = true;
-      this.key = new Key(keyId);
-      return this;
-    }
-
-    public Chest build() {
-      return new Chest(this);
-    }
   }
 }

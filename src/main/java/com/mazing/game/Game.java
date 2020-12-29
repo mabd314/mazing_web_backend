@@ -1,5 +1,6 @@
 package com.mazing.game;
 
+import com.mazing.item.FlashLight;
 import com.mazing.item.Gold;
 import com.mazing.item.Item;
 import com.mazing.wall.Wall;
@@ -8,13 +9,38 @@ import java.util.List;
 
 public class Game {
 
-  private Character character;
-  private int currentRoomId;
-  private StopWatch stopWatch;
   private List<Room> rooms;
+  private int currentRoomId;
+  private Character character;
+  private StopWatch stopWatch;
   private boolean isWon;
 
-  public Room getRoomFromId(int id) {
+  public WallType getFacingWallType() {
+    return getFacingWall().getType();
+  }
+
+  public String getFacingWallDescription() {
+    return getFacingWall().getDescription();
+  }
+
+  public List<Item> getFacingWallTradingList() {
+    return getFacingWall().getTradingList();
+  }
+
+  public Wall getFacingWall() {
+    return getCurrentRoom().getWallAtDirection(getCharacter().getDirection());
+  }
+
+  public Response getThroughWallAtDirection(Direction direction) {
+    Wall wall = getCurrentRoom().getWallAtDirection(direction);
+    return wall.getThrough(this);
+  }
+
+  public Room getCurrentRoom() {
+    return getRoomFromId(currentRoomId);
+  }
+
+  private Room getRoomFromId(int id) {
     for (Room room : rooms) {
       if (room.getId() == id) {
         return room;
@@ -23,12 +49,17 @@ public class Game {
     throw new IllegalArgumentException("No room with such id");
   }
 
-  public boolean isWon() {
-    return isWon;
+  public void setCurrentRoomId(int currentRoomId) {
+    this.currentRoomId = currentRoomId;
   }
 
-  public void setWon(boolean won) {
-    isWon = won;
+  public void setRooms(List<Room> rooms) {
+    this.rooms = rooms;
+  }
+
+  public boolean isCurrentRoomLit() {
+    return getCurrentRoom().isLightOn()
+        || (character.isFlashLightOn() && character.hasItem(FlashLight.getInstance()));
   }
 
   public Character getCharacter() {
@@ -39,16 +70,12 @@ public class Game {
     this.character = character;
   }
 
-  public String getFacingWallDescription() {
-    return getFacingWall().getDescription();
+  public Gold getGold() {
+    return getCharacter().getGold();
   }
 
   public List<Item> getCharacterItems() {
     return character.getItems();
-  }
-
-  public Room getCurrentRoom() {
-    return getRoomFromId(currentRoomId);
   }
 
   public Direction getDirection() {
@@ -59,20 +86,12 @@ public class Game {
     return character.getOppositeDirection();
   }
 
-  public List<Item> getFacingWallTradingList() {
-    return getFacingWall().getTradingList();
+  public boolean isWon() {
+    return isWon;
   }
 
-  public Gold getGold() {
-    return getCharacter().getGold();
-  }
-
-  public WallType getFacingWallType() {
-    return getFacingWall().getType();
-  }
-
-  public void setCurrentRoomId(int currentRoomId) {
-    this.currentRoomId = currentRoomId;
+  public void setWon(boolean won) {
+    isWon = won;
   }
 
   public StopWatch getStopWatch() {
@@ -83,35 +102,11 @@ public class Game {
     this.stopWatch = stopWatch;
   }
 
-  public void setRooms(List<Room> rooms) {
-    this.rooms = rooms;
-  }
-
-  public String getElapsedSecondsString(){
+  public String getElapsedSecondsString() {
     return stopWatch.getElapsedSecondsString();
   }
-  public String getRemainingSecondsString(){
+
+  public String getRemainingSecondsString() {
     return stopWatch.getRemainingSecondsString();
-  }
-  public void start() {
-    GameController.initializeGame(this);
-    executeMainCommand();
-  }
-
-  public Wall getFacingWall() {
-    return getCurrentRoom().getWall(getCharacter().getDirection());
-  }
-
-  public Response getThroughWallAtDirection(Direction direction) {
-    Wall wall = getCurrentRoom().getWall(direction);
-    return wall.getThrough(this);
-  }
-
-  public void executeMainCommand() {
-    GameController.executeMainCommand(this);
-  }
-
-  public void executeTradingCommand() {
-    GameController.executeTradingCommand(this);
   }
 }

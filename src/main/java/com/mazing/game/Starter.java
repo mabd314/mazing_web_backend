@@ -1,12 +1,12 @@
 package com.mazing.game;
 
 public class Starter {
-  public static void start(){
+  public static void start() {
     Game game = new Game();
-    game.start();
+    Console.initializeGame(game);
   }
 
-  public static void main(String[] args){
+  public static void main(String[] args) {
     start();
   }
 }

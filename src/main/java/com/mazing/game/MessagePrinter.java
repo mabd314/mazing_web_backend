@@ -27,15 +27,19 @@ public class MessagePrinter {
         "Trading Commands, used in trading mode, after trade command:\n  buy <item>\n  sell <item>\n  list\n  end trade\n");
   }
 
-  public static void printStartingMessage(Game game){
-    System.out.println("You have " + game.getRemainingSecondsString()
-        + " minutes to get out of the map\n" +
-        "Type help at any time go get the list of commands\n" +
-        game.getStopWatch().checkTime());
+  public static void printStartingMessage(Game game) {
+    System.out.println(
+        "You have "
+            + game.getRemainingSecondsString()
+            + " minutes to get out of the map\n"
+            + "Type help at any time go get the list of commands\n"
+            + game.getStopWatch().checkTime());
   }
 
   public static void printTimeElapsedMessage() {
-    System.out.println(new Response(ResponseType.LOST,
-        "Time elapsed. You could not get out in time. YOU LOSE!\nTry again by starting the game."));
+    System.out.println(
+        new Response(
+            ResponseType.LOST,
+            "Time elapsed. You could not get out in time. YOU LOSE!\nTry again by starting the game."));
   }
 }

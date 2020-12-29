@@ -16,14 +16,14 @@ public enum WallType {
   }
 
   public static WallType getWallType(String wallName) {
-      if (wallName.equalsIgnoreCase("wall")) {
-          wallName = "empty";
+    if (wallName.equalsIgnoreCase("wall")) {
+      wallName = "empty";
+    }
+    for (WallType type : WallType.values()) {
+      if (wallName.equalsIgnoreCase(type.toString())) {
+        return type;
       }
-      for (WallType type : WallType.values()) {
-          if (wallName.equalsIgnoreCase(type.toString())) {
-              return type;
-          }
-      }
+    }
     return WallType.NONE;
   }
 

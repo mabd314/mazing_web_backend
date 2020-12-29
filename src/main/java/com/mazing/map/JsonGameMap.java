@@ -1,21 +1,29 @@
 package com.mazing.map;
-import com.mazing.game.*;
+
+import static com.mazing.map.ItemBuilder.buildItemsFromJson;
+import static com.mazing.map.WallBuilder.buildWallFromJson;
+
 import com.mazing.game.Character;
-import com.mazing.item.*;
-import java.io.*;
-import java.util.*;
-import org.json.simple.*;
-import org.json.simple.parser.*;
+import com.mazing.game.Direction;
+import com.mazing.game.Game;
+import com.mazing.game.Room;
+import com.mazing.game.StopWatch;
+import com.mazing.item.Gold;
+import com.mazing.item.Item;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import static com.mazing.map.ItemBuilder.*;
-import static com.mazing.map.WallBuilder.*;
-
-public class JsonMaze implements Maze {
+public class JsonGameMap implements GameMap {
 
   private final JSONParser jsonParser = new JSONParser();
   private JSONObjectWrapper jsonMap;
 
-  public JsonMaze(String mapFileName) throws IOException {
+  public JsonGameMap(String mapFileName) throws IOException {
     parseJsonMap(mapFileName);
   }
 
@@ -41,15 +49,14 @@ public class JsonMaze implements Maze {
       room.setNorth(buildWallFromJson(jsonWall));
       jsonWall = jsonRoom.getJsonObject("south");
       room.setSouth(buildWallFromJson(jsonWall));
-        if (!jsonRoom.getBoolean("isLit")) {
-            room.toggleLight();
-        }
-        if (!jsonRoom.getBoolean("hasLight")) {
-            room.removeLight();
-        }
+      if (!jsonRoom.getBoolean("isLit")) {
+        room.toggleLight();
+      }
+      if (!jsonRoom.getBoolean("hasLight")) {
+        room.removeLight();
+      }
       rooms.add(room);
     }
-    game.setCurrentRoomId(1);
     game.setRooms(rooms);
   }
 
@@ -59,13 +66,16 @@ public class JsonMaze implements Maze {
     String directionString = jsonMap.getString("direction");
     Direction direction = Direction.valueOf(directionString.toUpperCase());
     int goldCount = jsonMap.getInt("goldCount");
-    long secondsNeeded = jsonMap.getInt("secondsNeeded");
     List<Item> items = buildItemsFromJson(jsonMap.getJsonArray("items"));
-
     character = new Character(direction);
-    character.getGold().increment(goldCount);
+    character.getGold().merge(new Gold(goldCount));
     character.addItems(items);
     game.setCharacter(character);
+  }
+
+  @Override
+  public void setUpStopWatch(Game game) {
+    long secondsNeeded = jsonMap.getInt("secondsNeeded");
     game.setStopWatch(new StopWatch(secondsNeeded));
   }
 }

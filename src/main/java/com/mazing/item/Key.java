@@ -1,6 +1,7 @@
 package com.mazing.item;
-import com.mazing.game.*;
 
+import com.mazing.game.Game;
+import com.mazing.game.Response;
 import com.mazing.wall.Wall;
 import java.util.Objects;
 
@@ -25,12 +26,12 @@ public class Key extends Item {
 
   @Override
   public boolean equals(Object o) {
-      if (this == o) {
-          return true;
-      }
-      if (o == null || getClass() != o.getClass()) {
-          return false;
-      }
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     Key key = (Key) o;
     return id == key.id;
   }
@@ -44,5 +45,4 @@ public class Key extends Item {
   public String toString() {
     return super.toString() + id;
   }
-
 }

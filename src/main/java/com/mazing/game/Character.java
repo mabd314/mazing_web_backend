@@ -1,8 +1,10 @@
 package com.mazing.game;
 
-import com.mazing.item.*;
-import java.util.*;
-
+import com.mazing.item.Gold;
+import com.mazing.item.Item;
+import com.mazing.item.ItemType;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Character {
 
@@ -18,19 +20,24 @@ public class Character {
     isFlashLightOn = false;
   }
 
-  public void addItem(Item item) {
-    if (item.getType() != ItemType.GOLD) {
-      items.add(item);
-    } else {
-      gold.merge((Gold) item);
-    }
-  }
-
-  public void addItems(List<Item> items) {
+  public void addItems(List<? extends Item> items) {
     for (Item item : items) {
       addItem(item);
     }
   }
+
+  public void addItem(Item item) {
+    if (itemIsGold(item)) {
+      gold.merge((Gold) item);
+    } else {
+      items.add(item);
+    }
+  }
+
+  private boolean itemIsGold(Item item){
+    return item.getType()==ItemType.GOLD;
+  }
+
 
   public boolean hasItem(Item item) {
     return items.contains(item);
@@ -61,16 +68,14 @@ public class Character {
   }
 
   public void turnLeft() {
-    direction=direction.leftDirection();
+    direction = direction.leftDirection();
   }
 
   public void turnRight() {
-    direction=direction.rightDirection();
+    direction = direction.rightDirection();
   }
 
   public Direction getOppositeDirection() {
     return direction.oppositeDirection();
   }
-
-
 }

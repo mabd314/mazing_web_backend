@@ -1,17 +1,19 @@
 package com.mazing.item;
-import com.mazing.game.*;
+
+import com.mazing.game.Game;
+import com.mazing.game.Response;
+import com.mazing.game.ResponseType;
 
 public class FlashLight extends Item {
 
   private static FlashLight instance;
 
-  private FlashLight() {
-  }
+  private FlashLight() {}
 
   public static synchronized FlashLight getInstance() {
-      if (instance == null) {
-          instance = new FlashLight();
-      }
+    if (instance == null) {
+      instance = new FlashLight();
+    }
     return instance;
   }
 
@@ -23,9 +25,8 @@ public class FlashLight extends Item {
   @Override
   public Response use(Game game) {
     game.getCharacter().setFlashLightOn(!game.getCharacter().isFlashLightOn());
-    return new Response(ResponseType.SUCCESS,
-        "Your flashlight is " +
-            (game.getCharacter().isFlashLightOn() ? "ON" : "OFF"));
+    return new Response(
+        ResponseType.SUCCESS,
+        "Your flashlight is " + (game.getCharacter().isFlashLightOn() ? "ON" : "OFF"));
   }
-
 }

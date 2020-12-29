@@ -1,6 +1,5 @@
 package com.mazing.game;
 
-import com.mazing.item.FlashLight;
 import com.mazing.wall.Empty;
 import com.mazing.wall.Wall;
 import java.util.Objects;
@@ -24,6 +23,9 @@ public class Room {
         isLightOn=true;
     }
 
+    public int getId() {
+        return id;
+    }
 
     public void setEast(Wall east) {
         this.east = east;
@@ -53,33 +55,12 @@ public class Room {
         return isLightOn;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public boolean isLit(Game game) {
-        return isLightOn||
-                (game.getCharacter().isFlashLightOn()
-                        &&game.getCharacter().hasItem(FlashLight.getInstance()));
-    }
-
-    public Wall getWall (Direction direction){
+    public Wall getWallAtDirection(Direction direction){
         switch(direction){
             case EAST->{return east; }
             case WEST->{return west;}
             case NORTH->{return north;}
             default->{return south;}
-        }
-    }
-
-    public Response look(Game game){
-        if (isLit(game)) {
-            return new Response(ResponseType.STATUS,
-                game.getFacingWallDescription());
-        }
-        else{
-            return new Response(ResponseType.FAILURE,
-                "The room is dark, you can not see anything");
         }
     }
 

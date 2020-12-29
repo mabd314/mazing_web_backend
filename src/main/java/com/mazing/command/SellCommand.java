@@ -1,5 +1,6 @@
 package com.mazing.command;
-import com.mazing.item.*;
+
+import com.mazing.item.Item;
 
 public class SellCommand extends TradingCommand {
   String itemName;
