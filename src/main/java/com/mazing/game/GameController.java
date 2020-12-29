@@ -21,7 +21,6 @@ public class GameController {
       maze.setUpRooms(game);
       maze.setUpCharacter(game);
       game.getStopWatch().startCounting();
-      game.getStopWatch().start();
       MessagePrinter.printStartingMessage(game);
     } catch (IOException e) {
       System.out.println("Map not Recognized");

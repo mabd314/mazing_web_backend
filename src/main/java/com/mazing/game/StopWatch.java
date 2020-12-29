@@ -1,12 +1,17 @@
 package com.mazing.game;
 
-public class StopWatch extends Thread {
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class StopWatch extends TimerTask {
 
   private final long secondsNeeded;
   private long start;
   private boolean isTimerOn;
 
   public void startCounting() {
+    Timer timer = new Timer();
+    timer.schedule(this,secondsNeeded*1000);
     start = System.currentTimeMillis();
     isTimerOn = true;
   }
@@ -38,7 +43,7 @@ public class StopWatch extends Thread {
   }
 
   public void stopTimer() {
-    interrupt();
+    this.cancel();
     isTimerOn = false;
   }
 
@@ -51,14 +56,7 @@ public class StopWatch extends Thread {
 
   @Override
   public void run() {
-    try{
-      Thread.sleep(secondsNeeded*1000);
-    }catch(InterruptedException e){
-      //Interruption is expected
-    }
-    if (isTimerOn) {
-      MessagePrinter.printTimeElapsedMessage();
-      System.exit(0);
-    }
+    MessagePrinter.printTimeElapsedMessage();
+    System.exit(0);
   }
 }
