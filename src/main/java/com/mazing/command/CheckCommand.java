@@ -14,9 +14,7 @@ public class CheckCommand extends MainCommand {
   @Override
   public void applyEffect() {
     Wall wall = getGame().getFacingWall();
-    if(wallName.equals(" "))
-      setResponse(new Response(ResponseType.INVALID,"wrong command"));
-    else
-    setResponse(wall.check(getGame(), wallName));
+    if (wallName.equals(" ")) setResponse(new Response(ResponseType.INVALID, "wrong command"));
+    else setResponse(wall.check(getGame(), wallName));
   }
 }

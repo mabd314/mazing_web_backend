@@ -34,10 +34,9 @@ public class Character {
     }
   }
 
-  private boolean itemIsGold(Item item){
-    return item.getType()==ItemType.GOLD;
+  private boolean itemIsGold(Item item) {
+    return item.getType() == ItemType.GOLD;
   }
-
 
   public boolean hasItem(Item item) {
     return items.contains(item);

@@ -88,4 +88,5 @@ public class Chest extends Wall {
   public String toString() {
     return "a Chest";
   }
+
 }

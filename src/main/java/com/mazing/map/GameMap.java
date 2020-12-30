@@ -4,7 +4,7 @@ import com.mazing.game.Game;
 
 public interface GameMap {
 
-  default void setUp(Game game){
+  default void setUp(Game game) {
     setUpRooms(game);
     setUpCharacter(game);
     setUpStopWatch(game);
