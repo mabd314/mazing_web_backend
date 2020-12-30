@@ -50,6 +50,6 @@ public class Seller extends Wall {
 
   @Override
   public String toString() {
-    return "a com.mazing.wall.Seller";
+    return "a Seller";
   }
 }

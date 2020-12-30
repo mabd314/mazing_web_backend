@@ -6,12 +6,12 @@ public class MessagePrinter {
     System.out.println("  buy <item> : buy a certain item");
     System.out.println("  sell <item> : sell a certain item");
     System.out.println("  list : list seller items again");
-    System.out.println("  end trade : get out of trading mode");
+    System.out.println("  end : get out of trading mode");
   }
 
   public static void printMainHelp() {
     System.out.println("Navigation:\n  left\n  right\n  forward\n  backward\n");
-    System.out.println("To check your status(Orientation,gold and items):\n  playerstatus\n");
+    System.out.println("To check your status(Orientation,gold and items):\n  status\n");
     System.out.println("To get how much time you have left:\n  time\n");
     System.out.println("To close or restart the game:\n  quit\n  restart\n");
     System.out.println("To know what is in front of you:\n  look\n");
@@ -24,7 +24,7 @@ public class MessagePrinter {
     System.out.println(
         "To initiate trading with a seller, when there is a seller in front of you:\n  trade\n");
     System.out.println(
-        "Trading Commands, used in trading mode, after trade command:\n  buy <item>\n  sell <item>\n  list\n  end trade\n");
+        "Trading Commands, used in trading mode, after trade command:\n  buy <item>\n  sell <item>\n  list\n  end\n");
   }
 
   public static void printStartingMessage(Game game) {

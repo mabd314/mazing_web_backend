@@ -19,10 +19,6 @@ public class Game {
     return getFacingWall().getType();
   }
 
-  public String getFacingWallDescription() {
-    return getFacingWall().getDescription();
-  }
-
   public List<Item> getFacingWallTradingList() {
     return getFacingWall().getTradingList();
   }

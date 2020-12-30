@@ -42,6 +42,6 @@ public class Painting extends Wall {
 
   @Override
   public String toString() {
-    return "a com.mazing.wall.Painting";
+    return "a Painting";
   }
 }
