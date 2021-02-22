@@ -1,0 +1,20 @@
+[33mdf018b3[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m deployment try
+[33mbfbfd3e[m started deploying, fixed home and about
+[33m3fefccd[m Fixed some bugs with form validation
+[33m3dec39d[m fixed home page, added the files for the downloadable dynamodb server
+[33mdf9be57[m added Home and About, deleted contact us, fixed tooltips
+[33m0917d03[m fixed user profile implementation, front and back
+[33m3f0f0ba[m implemented profile page, still needs some work
+[33mba3a48c[m fixed carousels, again!
+[33m82b22c5[m forgot to say, in last commit we also implemented renting table process, and started working on home,abot,contact pages
+[33m5a9b5f2[m deleted users database, everything is smoother, fixed some bugs
+[33m2f00cb5[m fixed carousel
+[33ma0d7b6a[m deleted fake database from front end, added a file that seeds fake database in back-end, front now gets all its data from back end, expect users
+[33m61c34b0[m minor edits
+[33mb0737f5[m worked more on back-end, still did not connect it well to front-end, needs some more work
+[33m6938eb0[m started initializing back-end, added required infrastructure, and a mechanism to seed fake data, changed layout of tables, still did not complete it
+[33m7eefa4b[m implemented functionality for editing seller\s tables, modified the internal structure to be more practical,implemented adding new items, pictures still not working because we need a real db
+[33m5a141a4[m implemented tables, implemented functionality for buying, put everything in store, store reads directly from fake database
+[33mc1e5ddc[m fixed carousels: where connected together, added a redux store fo
+[33m7dee96c[m Layout, and few features tests
+[33m7a399ea[m Initialize project using Create React App
