@@ -6,8 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Mazing" />
+        <module name="mazing" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mazing" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="mazing" options="-parameters" />
+    </option>
   </component>
 </project>
