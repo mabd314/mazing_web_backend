@@ -1,4 +1,4 @@
-package com.mazing.mazing;
+package com.mazing;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
