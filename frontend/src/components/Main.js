@@ -1,7 +1,7 @@
 import react,{Component} from 'react';
 
+import Game from './Game';
 import Play from './Play';
-
 import {Switch,
     Redirect,
     Route,
@@ -10,17 +10,21 @@ import {Switch,
 
 import {connect} from 'react-redux';
 
-import {enable,
-        disable} from '../redux/actionCreators'
+import {startGame,
+        executeCommand,
+        editCommand} from '../redux/actionCreators'
 
 
 const mapStateToProps=state=>({
-    working:state.working
+    game:state.game,
+    response:state.response,
+    commandText:state.commandText
 })
 
 const mapDispatchToProps=dispatch=>({
-    enable: ()=>dispatch(enable),
-    diable: ()=>dispatch(disable)
+    startGame: ()=>dispatch(startGame()),
+    executeCommand: query=>dispatch(executeCommand(query)),
+    editCommand: newCommandText=>dispatch(editCommand(newCommandText))
 })
         
 class Main extends Component{
@@ -28,8 +32,8 @@ class Main extends Component{
     render(){
         return(
             <Switch>
-                <Route path='/play'>
-                    <Play/>
+                <Route path='/game'>
+                    <Game executeCommand={this.props.executeCommand} commandText={this.props.commandText} editCommand={this.props.editCommand} response={this.props.response} startGame={this.props.startGame} game={this.props.game}/>
                 </Route>
             <Route path='/home'>
                 {/* <Home/> */}
@@ -62,7 +66,7 @@ class Main extends Component{
                  addItem={this.props.addItem} items={this.props.items}  /> */}
             </Route>
             {/* <Route path='/bazaar/:tableId' component={TableWithId}/> */}
-            <Redirect to='/play'/>
+            <Redirect to='/game'/>
         </Switch>
         )
     }

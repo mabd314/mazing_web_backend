@@ -1,8 +1,9 @@
 package com.mazing.logic.wall;
 
-import com.mazing.logic.game.Game;
-import com.mazing.logic.game.Response;
-import com.mazing.logic.game.ResponseType;
+import com.mazing.Response;
+import com.mazing.ResponseType;
+import com.mazing.WallEntity;
+import com.mazing.logic.game.Player;
 import com.mazing.logic.item.Item;
 import com.mazing.logic.item.Key;
 
@@ -27,12 +28,20 @@ public class Seller extends Wall {
   }
 
   @Override
+  public WallEntity getWallEntity() {
+    WallEntity wallEntity=new WallEntity();
+    wallEntity.setWallId(getWallId());
+    wallEntity.setWallType(WallType.SELLER);
+    return wallEntity;
+  }
+
+  @Override
   public WallType getType() {
     return WallType.SELLER;
   }
 
   @Override
-  public Response wallSpecificCheck(Game game) {
+  public Response wallSpecificCheck(Player player) {
     return new Response(
         ResponseType.INVALID,
         "You can not check the seller, pay some respect! You can trade though...");

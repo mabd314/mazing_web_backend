@@ -10,8 +10,10 @@ public class BuyCommand extends TradingCommand {
   }
 
   @Override
-  public void applyEffect() {
-    Item item = Item.getItemFromList(itemName, getGame().getFacingWallTradingList());
-    setResponse(item.buy(getGame()));
+  public void execute() {
+    Item item = Item.getItemFromList(itemName, getPlayer().facingWallTradingList());
+    setResponse(item.buy(getPlayer()));
+    getPlayer().getPlayerEntity().save();
+    item.getItemEntity().save();
   }
 }

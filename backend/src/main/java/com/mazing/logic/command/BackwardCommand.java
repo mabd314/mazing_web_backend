@@ -3,7 +3,8 @@ package com.mazing.logic.command;
 public class BackwardCommand extends MainCommand {
 
   @Override
-  public void applyEffect() {
-    setResponse(getGame().getThroughWallAtDirection(getGame().getOppositeDirection()));
+  public void execute() {
+    setResponse(getPlayer().throughWallAtDirection(getPlayer().oppositeDirection()));
+    getPlayer().getPlayerEntity().save();
   }
 }

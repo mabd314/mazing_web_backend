@@ -1,11 +1,12 @@
 package com.mazing.logic.command;
 
-import com.mazing.logic.game.Console;
+import com.mazing.Response;
 import com.mazing.logic.game.Game;
-import com.mazing.logic.game.Response;
+import com.mazing.logic.game.Player;
 
 public abstract class MainCommand implements Command  {
   private Game game;
+  private Player player;
   private Response response;
 
   public static MainCommand getCommand(String command,String arg){
@@ -17,13 +18,12 @@ public abstract class MainCommand implements Command  {
       case "use" ->{return new UseCommand(arg);}
       case "trade"->{return new TradeCommand();}
       case "quit" ->{return new QuitCommand();}
-      case "restart"->{return new RestartCommand();}
       case "switchlights"->{return new SwitchLightsCommand();}
       case "left"->{return new LeftCommand();}
       case "right"->{return new RightCommand();}
       case "forward"->{return new ForwardCommand();}
       case "backward"->{return new BackwardCommand();}
-      case "help"->{return new MainHelpCommand();}
+//      case "help"->{return new MainHelpCommand();}
       default -> {return new NoMainCommand();}
     }
   }
@@ -34,13 +34,14 @@ public abstract class MainCommand implements Command  {
   }
 
   @Override
-  public void setGame(Game game) {
-    this.game = game;
+  public Player getPlayer(){
+    return player;
   }
 
   @Override
-  public void executeNext(){
-    Console.executeMainCommand(game);
+  public void setPlayer(Player player){
+    this.player=player;
+    game=player.getGame();
   }
 
   @Override

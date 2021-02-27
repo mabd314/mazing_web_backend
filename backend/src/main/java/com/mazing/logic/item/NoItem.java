@@ -1,14 +1,22 @@
 package com.mazing.logic.item;
 
-import com.mazing.logic.game.Game;
-import com.mazing.logic.game.Response;
-import com.mazing.logic.game.ResponseType;
+import com.mazing.ItemEntity;
+import com.mazing.Response;
+import com.mazing.ResponseType;
+import com.mazing.logic.game.Player;
 
 public class NoItem extends Item {
 
   private static NoItem instance;
 
   private NoItem() {}
+
+  @Override
+  public ItemEntity getItemEntity() {
+    ItemEntity itemEntity=new ItemEntity();
+    itemEntity.setItemType(ItemType.NOITEM);
+    return itemEntity;
+  }
 
   public static synchronized NoItem getInstance() {
     if (instance == null) {
@@ -18,18 +26,18 @@ public class NoItem extends Item {
   }
 
   @Override
-  public Response use(Game game) {
+  public Response use(Player player) {
     return new Response(
         ResponseType.INVALID, "How come you want to use an item that you do not have?");
   }
 
   @Override
-  public Response buy(Game game) {
+  public Response buy(Player player) {
     return new Response(ResponseType.INVALID, "The seller does not have what you desire");
   }
 
   @Override
-  public Response sell(Game game) {
+  public Response sell(Player player) {
     return new Response(ResponseType.INVALID, "The seller does not want to buy this item");
   }
 

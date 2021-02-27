@@ -1,13 +1,14 @@
 package com.mazing.logic.command;
 
-import com.mazing.logic.game.Response;
-import com.mazing.logic.game.ResponseType;
+import com.mazing.Response;
+import com.mazing.ResponseType;
 
 public class LeftCommand extends MainCommand {
 
   @Override
-  public void applyEffect() {
-    getGame().getCharacter().turnLeft();
+  public void execute() {
+    getPlayer().turnLeft();
     setResponse(new Response(ResponseType.SUCCESS, "You turned left"));
+    getPlayer().getPlayerEntity().save();
   }
 }

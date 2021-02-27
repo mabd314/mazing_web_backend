@@ -1,16 +1,14 @@
 package com.mazing.logic.command;
 
-import com.mazing.logic.game.Response;
-import com.mazing.logic.game.ResponseType;
+import com.mazing.Response;
+import com.mazing.ResponseType;
 
 public class QuitCommand extends MainCommand {
 
   @Override
-  public void applyEffect() {
+  public void execute() {
     setResponse(new Response(ResponseType.LOST, "You quit the game. YOU LOSE."));
-  }
-
-  public void executeNext() {
-    System.exit(1);
+    getPlayer().setGameId(0);
+    getPlayer().getPlayerEntity().save();
   }
 }

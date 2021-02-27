@@ -1,5 +1,6 @@
 package com.mazing.logic.map;
 
+import com.mazing.ItemEntity;
 import com.mazing.logic.item.*;
 
 import java.util.ArrayList;
@@ -7,39 +8,48 @@ import java.util.List;
 
 public class ItemBuilder {
 
-  public static List<Item> buildItemsFromJson(JSONArrayWrapper jsonItems) {
+  public static List<Item> buildItemsFromEntity(List<ItemEntity> itemEntities) {
     List<Item> items = new ArrayList<>();
-    for (JSONObjectWrapper jsonItem : jsonItems.getList()) {
-      Item item = buildItemFromJson(jsonItem);
+    for (ItemEntity itemEntity : itemEntities) {
+      Item item = buildItemFromEntity(itemEntity);
       items.add(item);
     }
     return items;
   }
 
-  public static Item buildItemFromJson(JSONObjectWrapper jsonItem) {
-    switch (jsonItem.getString("type")) {
-      case "key"->{return buildKeyFromJson(jsonItem); }
-      case "flashlight"->{return buildFlashLightFromJson(jsonItem); }
-      case "gold"->{return buildGoldFromJson(jsonItem); }
+  public static Item buildItemFromEntity(ItemEntity itemEntity) {
+    switch (itemEntity.getItemType()) {
+      case KEY->{return buildKeyFromEntity(itemEntity); }
+      case FLASHLIGHT->{return buildFlashLightFromEntity(itemEntity); }
+      case GOLD->{return buildGoldFromEntity(itemEntity); }
       default -> {return NoItem.getInstance();}
     }
   }
 
-  private static Item buildKeyFromJson(JSONObjectWrapper jsonKey) {
-    Item item = new Key(jsonKey.getInt("keyId"));
-    item.setPrice(jsonKey.getInt("price"));
+  private static Item buildKeyFromEntity(ItemEntity itemEntity) {
+    Item item = new Key(itemEntity.getKeyId());
+    item.setPrice(itemEntity.getPrice());
+    item.setItemId(itemEntity.getItemId());
+    item.setPlayerName(itemEntity.getPlayerName());
+    item.setWallId(itemEntity.getWallId());
     return item;
   }
 
-  private static Item buildFlashLightFromJson(JSONObjectWrapper jsonFlashLight) {
-    Item item = FlashLight.getInstance();
-    item.setPrice(jsonFlashLight.getInt("price"));
+  private static Item buildFlashLightFromEntity(ItemEntity itemEntity) {
+    Item item = new FlashLight();
+    item.setPrice(itemEntity.getPrice());
+    item.setItemId(itemEntity.getItemId());
+    item.setPlayerName(itemEntity.getPlayerName());
+    item.setWallId(itemEntity.getWallId());
     return item;
   }
 
-  private static Item buildGoldFromJson(JSONObjectWrapper jsonGold) {
-    Item item = new Gold(jsonGold.getInt("count"));
-    item.setPrice(jsonGold.getInt("price"));
+  private static Item buildGoldFromEntity(ItemEntity itemEntity) {
+    Item item = new Gold(itemEntity.getGoldCount());
+    item.setPrice(itemEntity.getPrice());
+    item.setItemId(itemEntity.getItemId());
+    item.setPlayerName(itemEntity.getPlayerName());
+    item.setWallId(itemEntity.getWallId());
     return item;
   }
 

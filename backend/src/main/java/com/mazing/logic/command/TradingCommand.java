@@ -1,12 +1,13 @@
 package com.mazing.logic.command;
 
-import com.mazing.logic.game.Console;
+import com.mazing.Response;
 import com.mazing.logic.game.Game;
-import com.mazing.logic.game.Response;
+import com.mazing.logic.game.Player;
 
 public abstract class TradingCommand implements Command {
   private Game game;
   private Response response;
+  private Player player;
 
   public static TradingCommand getCommand(String command,String arg){
     switch(command.toLowerCase()){
@@ -14,7 +15,7 @@ public abstract class TradingCommand implements Command {
       case "sell" ->{return new SellCommand(arg);}
       case "end" ->{return new EndTradingCommand();}
       case "list"->{return new ListCommand();}
-      case "help"->{return new TradingHelpCommand();}
+//      case "help"->{return new TradingHelpCommand();}
       default -> {return new NoTradingCommand();}
     }
   }
@@ -25,13 +26,14 @@ public abstract class TradingCommand implements Command {
   }
 
   @Override
-  public void setGame(Game game) {
-    this.game = game;
+  public Player getPlayer(){
+    return player;
   }
 
   @Override
-  public void executeNext(){
-    Console.executeTradingCommand(game);
+  public void setPlayer(Player player){
+    this.player=player;
+    game=player.getGame();
   }
 
   @Override

@@ -10,8 +10,11 @@ public class UseCommand extends MainCommand {
   }
 
   @Override
-  public void applyEffect() {
-    Item item = Item.getItemFromList(itemName, getGame().getCharacterItems());
-    setResponse(item.use(getGame()));
+  public void execute() {
+    Item item = Item.getItemFromList(itemName, getPlayer().getItems());
+    setResponse(item.use(getPlayer()));
+
+    item.getItemEntity().save();
+    getPlayer().getPlayerEntity().save();
   }
 }

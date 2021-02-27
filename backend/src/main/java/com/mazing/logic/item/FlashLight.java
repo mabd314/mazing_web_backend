@@ -1,20 +1,21 @@
 package com.mazing.logic.item;
 
-import com.mazing.logic.game.Game;
-import com.mazing.logic.game.Response;
-import com.mazing.logic.game.ResponseType;
+import com.mazing.ItemEntity;
+import com.mazing.Response;
+import com.mazing.ResponseType;
+import com.mazing.logic.game.Player;
 
 public class FlashLight extends Item {
 
-  private static FlashLight instance;
-
-  private FlashLight() {}
-
-  public static synchronized FlashLight getInstance() {
-    if (instance == null) {
-      instance = new FlashLight();
-    }
-    return instance;
+  @Override
+  public ItemEntity getItemEntity() {
+    ItemEntity itemEntity=new ItemEntity();
+    itemEntity.setWallId(getWallId());
+    itemEntity.setItemType(getType());
+    itemEntity.setPrice(getPrice());
+    itemEntity.setPlayerName(getPlayerName());
+    itemEntity.setItemId(getItemId());
+    return itemEntity;
   }
 
   @Override
@@ -23,10 +24,10 @@ public class FlashLight extends Item {
   }
 
   @Override
-  public Response use(Game game) {
-    game.getCharacter().setFlashLightOn(!game.getCharacter().isFlashLightOn());
+  public Response use(Player player) {
+    player.setFlashLightOn(!player.isFlashLightOn());
     return new Response(
         ResponseType.SUCCESS,
-        "Your flashlight is " + (game.getCharacter().isFlashLightOn() ? "ON" : "OFF"));
+        "Your flashlight is " + (player.isFlashLightOn() ? "ON" : "OFF"));
   }
 }

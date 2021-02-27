@@ -1,109 +1,130 @@
 package com.mazing.logic.game;
 
-import com.mazing.logic.item.FlashLight;
-import com.mazing.logic.item.Gold;
-import com.mazing.logic.item.Item;
-import com.mazing.logic.wall.Wall;
-import com.mazing.logic.wall.WallType;
+import com.mazing.*;
 
-import java.util.List;
+import java.util.Objects;
 
 public class Game {
+  private boolean hasEnded;
+  private boolean hasStarted;
+  private long startTime;
+  private int gameId;
+  private int secondsNeeded;
+  private String winnerName;
 
-  private List<Room> rooms;
-  private int currentRoomId;
-  private Character character;
-  private StopWatch stopWatch;
-  private boolean isWon;
-
-  public WallType getFacingWallType() {
-    return getFacingWall().getType();
+  public Game(){}
+  public Game(GameEntity gameEntity){
+    gameId=gameEntity.getGameId();
+    hasEnded =gameEntity.isHasEnded();
+    hasStarted=gameEntity.isHasStarted();
+    startTime=gameEntity.getStartTime();
+    secondsNeeded=gameEntity.getSecondsNeeded();
+    winnerName=gameEntity.getWinnerName();
   }
 
-  public List<Item> getFacingWallTradingList() {
-    return getFacingWall().getTradingList();
+  public int getGameId() {
+    return gameId;
   }
 
-  public Wall getFacingWall() {
-    return getCurrentRoom().getWallAtDirection(getCharacter().getDirection());
+  public GameEntity getGameEntity(){
+    GameEntity gameEntity=new GameEntity();
+    gameEntity.setHasEnded(hasEnded);
+    gameEntity.setGameId(gameId);
+    gameEntity.setHasStarted(hasStarted);
+    gameEntity.setStartTime(startTime);
+    gameEntity.setSecondsNeeded(secondsNeeded);
+    gameEntity.setWinnerName(winnerName);
+    return gameEntity;
   }
 
-  public Response getThroughWallAtDirection(Direction direction) {
-    Wall wall = getCurrentRoom().getWallAtDirection(direction);
-    return wall.getThrough(this);
+  public boolean isTimeOut(){
+    System.out.println((System.currentTimeMillis()-startTime)/1000);
+    return (((System.currentTimeMillis()-startTime)/1000)>secondsNeeded);
   }
 
-  public Room getCurrentRoom() {
-    return getRoomFromId(currentRoomId);
+  public void startGame(){
+    hasStarted=true;
+    startTime=System.currentTimeMillis();
+    getGameEntity().save();
   }
 
-  private Room getRoomFromId(int id) {
-    for (Room room : rooms) {
-      if (room.getId() == id) {
-        return room;
-      }
-    }
-    throw new IllegalArgumentException("No room with such id");
+  public void winGame(String playerName){
+    hasEnded=true;
+    winnerName=playerName;
+    getGameEntity().save();
   }
 
-  public void setCurrentRoomId(int currentRoomId) {
-    this.currentRoomId = currentRoomId;
+  public void endGame(){
+    hasEnded=true;
+    getGameEntity().save();
   }
 
-  public void setRooms(List<Room> rooms) {
-    this.rooms = rooms;
+  public Room getRoomFromId(int id) {
+    return new Room(Repositories.roomRepo.getOne(id));
   }
 
-  public boolean isCurrentRoomLit() {
-    return getCurrentRoom().isLightOn()
-        || (character.isFlashLightOn() && character.hasItem(FlashLight.getInstance()));
+  public boolean isHasStarted() {
+    return hasStarted;
   }
 
-  public Character getCharacter() {
-    return character;
+  public long getStartTime() {
+    return startTime;
   }
 
-  public void setCharacter(Character character) {
-    this.character = character;
+  public int getSecondsNeeded() {
+    return secondsNeeded;
   }
 
-  public Gold getGold() {
-    return getCharacter().getGold();
+  public String getWinnerName() {
+    return winnerName;
   }
 
-  public List<Item> getCharacterItems() {
-    return character.getItems();
+  public boolean isHasEnded() {
+    return hasEnded;
   }
 
-  public Direction getDirection() {
-    return character.getDirection();
+  public void setHasEnded(boolean hasEnded) {
+    this.hasEnded = hasEnded;
   }
 
-  public Direction getOppositeDirection() {
-    return character.getOppositeDirection();
-  }
-
-  public boolean isWon() {
-    return isWon;
-  }
-
-  public void setWon(boolean won) {
-    isWon = won;
-  }
-
-  public StopWatch getStopWatch() {
-    return stopWatch;
-  }
-
-  public void setStopWatch(StopWatch stopWatch) {
-    this.stopWatch = stopWatch;
-  }
-
-  public String getElapsedSecondsString() {
-    return stopWatch.getElapsedSecondsString();
+    public String getElapsedSecondsString() {
+    return getTimeString(getElapsedSeconds());
   }
 
   public String getRemainingSecondsString() {
-    return stopWatch.getRemainingSecondsString();
+    return getTimeString(getRemainingSeconds());
+  }
+
+  private String getTimeString(long seconds) {
+    return seconds / 60 + ":" + seconds % 60;
+  }
+
+  private long getElapsedSeconds() {
+    long now = System.currentTimeMillis();
+    return (now - startTime) / 1000;
+  }
+
+  private long getRemainingSeconds() {
+    return secondsNeeded - getElapsedSeconds();
+  }
+
+  public Response checkTime() {
+    return new Response(ResponseType.STATUS,"Elapsed: "
+        + getElapsedSecondsString()
+        + ", Remaining: "
+        + getRemainingSecondsString());
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Game game = (Game) o;
+    return gameId == game.gameId;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(gameId);
   }
 }

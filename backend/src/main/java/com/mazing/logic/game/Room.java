@@ -1,51 +1,65 @@
 package com.mazing.logic.game;
 
-import com.mazing.logic.wall.Empty;
+import com.mazing.*;
+import com.mazing.logic.map.WallBuilder;
 import com.mazing.logic.wall.Wall;
+import com.mazing.logic.wall.WallType;
 
 import java.util.Objects;
 
 public class Room {
-    private final int id;
+    private int id;
     private Wall east;
     private Wall west;
     private Wall north;
     private Wall south;
     private boolean isThereLight;
     private boolean isLightOn;
+    private int gameId;
+    private boolean endRoom;
 
-    public Room(int id){
-        this.id=id;
-        east= Empty.getInstance();
-        west=Empty.getInstance();
-        north= Empty.getInstance();
-        south=Empty.getInstance();
-        isThereLight=true;
-        isLightOn=true;
+    public Room(RoomEntity roomEntity){
+        id=roomEntity.getId();
+        isThereLight=roomEntity.isThereLight();
+        isLightOn=roomEntity.isLightOn();
+        endRoom =roomEntity.isEndRoom();
+        gameId=roomEntity.getGameId();
+        WallEntity empty=new WallEntity();
+        empty.setWallType(WallType.EMPTY);
+        WallEntity eastEntity= Repositories.wallRepo.findById(roomEntity.getEastWallId()).orElse(empty);
+        east= WallBuilder.buildWallFromWallEntity(eastEntity);
+        WallEntity westEntity= Repositories.wallRepo.findById(roomEntity.getWestWallId()).orElse(empty);
+        west= WallBuilder.buildWallFromWallEntity(westEntity);
+        WallEntity northEntity= Repositories.wallRepo.findById(roomEntity.getNorthWallId()).orElse(empty);
+        north= WallBuilder.buildWallFromWallEntity(northEntity);
+        WallEntity southEntity= Repositories.wallRepo.findById(roomEntity.getSouthWallId()).orElse(empty);
+        south= WallBuilder.buildWallFromWallEntity(southEntity);
+    }
+
+    public RoomEntity getRoomEntity(){
+        RoomEntity roomEntity=new RoomEntity();
+        roomEntity.setId(id);
+        roomEntity.setLightOn(isLightOn);
+        roomEntity.setThereLight(isThereLight);
+        roomEntity.setEndRoom(endRoom);
+        roomEntity.setGameId(gameId);
+        roomEntity.setEastWallId(east.getWallId());
+        roomEntity.setWestWallId(west.getWallId());
+        roomEntity.setSouthWallId(south.getWallId());
+        roomEntity.setNorthWallId(north.getWallId());
+        return roomEntity;
+    }
+
+    public int getGameId() {
+        return gameId;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setEast(Wall east) {
-        this.east = east;
-    }
-
-    public void setWest(Wall west) {
-        this.west = west;
-    }
-
-    public void setNorth(Wall north) {
-        this.north = north;
-    }
-
-    public void setSouth(Wall south) {
-        this.south = south;
-    }
-
-    public void removeLight(){
-        isThereLight=false;
+    public boolean isEndRoom() {
+        return endRoom;
     }
 
     public void toggleLight(){
@@ -74,10 +88,6 @@ public class Room {
         }
         return new Response(ResponseType.FAILURE,
             "There are no lights in this room");
-    }
-
-    public boolean checkWin(){
-        return id==-1;
     }
 
 

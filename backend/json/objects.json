@@ -1,0 +1,92 @@
+{"examples":
+[
+  {
+    "type": "key",
+    "keyId": 1,
+    "price": 5
+  }
+  ,
+  {
+    "type": "flashlight",
+    "price": 10
+  }
+  ,
+  {
+    "type": "gold",
+    "count": 10
+  }
+  ,
+
+
+
+  {
+    "type": "door",
+    "locked": true,
+    "keyId": 3,
+    "from": 1,
+    "to": 4
+  }
+  ,
+  {
+    "type": "chest",
+    "locked": true,
+    "keyId": 6,
+    "inside": [
+
+    ]
+  }
+  ,
+  {
+    "type": "seller",
+    "items": [
+
+    ]
+  }
+  ,
+  {
+    "type": "painting"
+  }
+  ,
+  {
+    "type": "mirror",
+    "behind": 2
+  }
+  ,
+
+
+
+
+
+  {
+    "id":1,
+    "east":
+    {
+    },
+    "west":
+    {
+    },
+    "north":
+    {
+    },
+    "south":
+    {
+    },
+    "isLit":true,
+    "hasLight":true
+  }
+  ,
+
+
+
+  {
+    "goldCount":0,
+    "direction":"east",
+    "items":[],
+    "secondsNeeded": 120,
+    "rooms":
+    [
+    ]
+  }
+
+]
+}

@@ -6,13 +6,13 @@ public interface GameMap {
 
   default void setUp(Game game) {
     setUpRooms(game);
-    setUpCharacter(game);
+    setUpPlayers(game);
     setUpStopWatch(game);
   }
 
   void setUpRooms(Game game);
 
-  void setUpCharacter(Game game);
+  void setUpPlayers(Game game);
 
   void setUpStopWatch(Game game);
 }

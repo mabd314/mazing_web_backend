@@ -1,21 +1,21 @@
 package com.mazing.logic.command;
 
-import com.mazing.logic.game.Response;
-import com.mazing.logic.game.ResponseType;
+import com.mazing.Response;
+import com.mazing.ResponseType;
 
 public class PlayerStatusCommand extends MainCommand {
 
   @Override
-  public void applyEffect() {
+  public void execute() {
     setResponse(
-        new Response(
-            ResponseType.STATUS,
-            "Player is facing: "
-                + getGame().getDirection()
-                + "\n"
-                + getGame().getGold()
-                + "\n"
-                + "Items: "
-                + getGame().getCharacterItems()));
+            new Response(
+                    ResponseType.STATUS,
+                    "Player is facing: "
+                            + getPlayer().getDirection()
+                            + "\n"
+                            + getPlayer().getGold()
+                            + "\n"
+                            + "Items: "
+                            + getPlayer().getItems()));
   }
 }

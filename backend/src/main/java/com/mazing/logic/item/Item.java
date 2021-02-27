@@ -1,17 +1,49 @@
 package com.mazing.logic.item;
 
-import com.mazing.logic.game.Game;
-import com.mazing.logic.game.Response;
-import com.mazing.logic.game.ResponseType;
+import com.mazing.ItemEntity;
+import com.mazing.Response;
+import com.mazing.ResponseType;
+import com.mazing.logic.game.Player;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Item {
 
   private int price;
+  private int itemId;
+  private int wallId;
+  private String playerName;
+
 
   public Item() {
-    this.price = 0;
+    price = 0;
+  }
+
+  public abstract ItemEntity getItemEntity();
+
+  public int getWallId() {
+    return wallId;
+  }
+
+  public void setWallId(int wallId) {
+    this.wallId = wallId;
+  }
+
+  public String getPlayerName() {
+    return playerName;
+  }
+
+  public void setPlayerName(String playerName) {
+    this.playerName = playerName;
+  }
+
+  public int getItemId() {
+    return itemId;
+  }
+
+  public void setItemId(int itemId) {
+    this.itemId = itemId;
   }
 
   public static Item getItemFromList(String itemName, List<Item> items) {
@@ -31,21 +63,25 @@ public abstract class Item {
     this.price = price;
   }
 
-  public Response use(Game game) {
+  public Response use(Player player) {
     return new Response(ResponseType.INVALID, "This item is unusable");
   }
 
-  public Response buy(Game game) {
-    if (game.getGold().payForItem(this)) {
-      game.getCharacter().addItem(this);
+  public Response buy(Player player) {
+    if (player.getGold().payForItem(this)) {
+      player.addItem(this);
+      wallId=0;
+      playerName=player.getPlayerName();
       return new Response(ResponseType.SUCCESS, "You bought an item: " + this);
     }
     return new Response(ResponseType.FAILURE, "You do not have enough gold to buy this item");
   }
 
-  public Response sell(Game game) {
-    if (game.getCharacter().removeItem(this)) {
-      game.getGold().getPaidForItem(this);
+  public Response sell(Player player) {
+    if (player.removeItem(this)) {
+      player.getGold().getPaidForItem(this);
+      playerName="";
+      wallId=player.facingWall().getWallId();
       return new Response(
           ResponseType.SUCCESS, "You Sold an item: " + this + " for " + this.getPrice() + " gold");
     }
@@ -54,6 +90,19 @@ public abstract class Item {
   }
 
   public abstract ItemType getType();
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Item item = (Item) o;
+    return itemId == item.itemId;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(itemId);
+  }
 
   @Override
   public String toString() {

@@ -1,12 +1,12 @@
 package com.mazing.logic.command;
 
-import com.mazing.logic.game.Response;
-import com.mazing.logic.game.ResponseType;
+import com.mazing.Response;
+import com.mazing.ResponseType;
 
 public class NoTradingCommand extends TradingCommand {
 
   @Override
-  public void applyEffect() {
+  public void execute() {
     setResponse(new Response(ResponseType.INVALID, "Command not recognized"));
   }
 }

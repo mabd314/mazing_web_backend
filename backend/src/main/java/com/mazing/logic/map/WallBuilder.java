@@ -1,5 +1,8 @@
 package com.mazing.logic.map;
 
+import com.mazing.ItemEntity;
+import com.mazing.Repositories;
+import com.mazing.WallEntity;
 import com.mazing.logic.item.Item;
 import com.mazing.logic.item.Key;
 import com.mazing.logic.item.NoKey;
@@ -10,22 +13,32 @@ import java.util.List;
 public class WallBuilder {
 
 
-  public static Wall buildWallFromJson(JSONObjectWrapper jsonWall) {
-    switch (jsonWall.getString("type")) {
-      case "door" -> {
-        return buildDoorFromJson(jsonWall);
+  public static Wall buildWallFromWallEntity(WallEntity wallEntity) {
+    switch (wallEntity.getWallType()) {
+      case DOOR -> {
+        Wall wall=buildDoorFromEntity(wallEntity);
+        wall.setWallId(wallEntity.getWallId());
+        return wall;
       }
-      case "seller" -> {
-        return buildSellerFromJson(jsonWall);
+      case SELLER -> {
+        Wall wall=buildSellerFromEntity(wallEntity);
+        wall.setWallId(wallEntity.getWallId());
+        return wall;
       }
-      case "chest" -> {
-        return buildChestFromJson(jsonWall);
+      case CHEST -> {
+        Wall wall=buildChestFromEntity(wallEntity);
+        wall.setWallId(wallEntity.getWallId());
+        return wall;
       }
-      case "painting" -> {
-        return buildPaintingFromJson(jsonWall);
+      case PAINTING -> {
+        Wall wall= buildPaintingFromEntity(wallEntity);
+        wall.setWallId(wallEntity.getWallId());
+        return wall;
       }
-      case "mirror" -> {
-        return buildMirrorFromJson(jsonWall);
+      case MIRROR -> {
+        Wall wall= buildMirrorFromEntity(wallEntity);
+        wall.setWallId(wallEntity.getWallId());
+        return wall;
       }
       default -> {
         return Empty.getInstance();
@@ -33,28 +46,28 @@ public class WallBuilder {
     }
   }
 
-  private static Wall buildDoorFromJson(JSONObjectWrapper jsonDoor) {
-    if (jsonDoor.getBoolean("locked")) {
-      return new Door.Builder(jsonDoor.getInt("from"), jsonDoor.getInt("to"))
-          .lockedWithKey(jsonDoor.getInt("keyId"))
+  private static Wall buildDoorFromEntity(WallEntity wallEntity) {
+    if (wallEntity.isLocked()) {
+      return new Door.Builder(wallEntity.getRoomId1(), wallEntity.getRoomId2())
+          .lockedWithKey(wallEntity.getLockingKeyId())
           .build();
     }
-    return new Door.Builder(jsonDoor.getInt("from"), jsonDoor.getInt("to"))
+    return new Door.Builder(wallEntity.getRoomId1(), wallEntity.getRoomId2())
         .build();
   }
 
-  private static Wall buildSellerFromJson(JSONObjectWrapper jsonSeller) {
-    JSONArrayWrapper jsonItems = jsonSeller.getJsonArray("items");
-    List<Item> items = ItemBuilder.buildItemsFromJson(jsonItems);
+  private static Wall buildSellerFromEntity(WallEntity wallEntity) {
+    List<ItemEntity> itemEntities=Repositories.itemRepo.findByWallId(wallEntity.getWallId());
+    List<Item> items = ItemBuilder.buildItemsFromEntity(itemEntities);
     return new Seller(items);
   }
 
-  private static Wall buildChestFromJson(JSONObjectWrapper jsonChest) {
-    JSONArrayWrapper jsonItems = jsonChest.getJsonArray("inside");
-    List<Item> items = ItemBuilder.buildItemsFromJson(jsonItems);
-    if (jsonChest.getBoolean("locked")) {
+  private static Wall buildChestFromEntity(WallEntity wallEntity) {
+    List<ItemEntity> itemEntities=Repositories.itemRepo.findByWallId(wallEntity.getWallId());
+    List<Item> items = ItemBuilder.buildItemsFromEntity(itemEntities);
+    if (wallEntity.isLocked()) {
       return new Chest.Builder(items)
-          .lockedWithKey(jsonChest.getInt("keyId"))
+          .lockedWithKey(wallEntity.getLockingKeyId())
           .build();
     }
 
@@ -62,19 +75,19 @@ public class WallBuilder {
         .build();
   }
 
-  private static Wall buildPaintingFromJson(JSONObjectWrapper jsonPainting) {
-    if (jsonPainting.getInt("behind") == 0) {
+  private static Wall buildPaintingFromEntity(WallEntity wallEntity) {
+    if (wallEntity.getHiddenKeyId() == 0) {
       return new Painting(NoKey.getInstance());
     }
-    Key key = new Key(jsonPainting.getInt("behind"));
+    Key key = new Key(wallEntity.getHiddenKeyId());
     return new Painting(key);
   }
 
-  private static Wall buildMirrorFromJson(JSONObjectWrapper jsonMirror) {
-    if (jsonMirror.getInt("behind") == 0) {
+  private static Wall buildMirrorFromEntity(WallEntity wallEntity) {
+    if (wallEntity.getHiddenKeyId() == 0) {
       return new Mirror(NoKey.getInstance());
     }
-    Key key = new Key(jsonMirror.getInt("behind"));
+    Key key = new Key(wallEntity.getHiddenKeyId());
     return new Mirror(key);
   }
 

@@ -1,2 +1,7 @@
-export const DISABLE='DISABLE';
-export const ENABLE='ENABLE';
+export const GAME_ON="GAME_ON";
+export const GAME_OFF="GAME_OFF";
+export const GAME_FAILED="GAME_FAILED";
+export const GAME_LOADING="GAME_LOADING";
+export const EDIT_RESPONSE="EDIT_RESPONSE";
+export const EDIT_COMMAND="EDIT_COMMAND";
+export const RESPONSE_LOADING="RESPONSE_LOADING";

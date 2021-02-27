@@ -1,15 +1,17 @@
 package com.mazing.logic.item;
 
+import com.mazing.ItemEntity;
+
 public class Gold extends Item {
 
-  private int count;
+  private int goldCount;
 
-  public Gold(int count) {
-    this.count = count;
+  public Gold(int goldCount) {
+    this.goldCount = goldCount;
   }
 
   public void merge(Gold gold) {
-    increment(gold.count);
+    increment(gold.goldCount);
   }
 
   public void getPaidForItem(Item item) {
@@ -17,19 +19,35 @@ public class Gold extends Item {
   }
 
   private void increment(int inc) {
-    count += inc;
+    goldCount += inc;
   }
 
   public boolean payForItem(Item item) {
     return decrement(item.getPrice());
   }
 
+  public int getGoldCount() {
+    return goldCount;
+  }
+
   private boolean decrement(int dec) {
-    if (count - dec >= 0) {
-      count -= dec;
+    if (goldCount - dec >= 0) {
+      goldCount -= dec;
       return true;
     }
     return false;
+  }
+
+  @Override
+  public ItemEntity getItemEntity() {
+    ItemEntity itemEntity=new ItemEntity();
+    itemEntity.setWallId(getWallId());
+    itemEntity.setItemType(getType());
+    itemEntity.setPrice(getPrice());
+    itemEntity.setPlayerName(getPlayerName());
+    itemEntity.setItemId(getItemId());
+    itemEntity.setGoldCount(goldCount);
+    return itemEntity;
   }
 
   @Override
@@ -39,6 +57,6 @@ public class Gold extends Item {
 
   @Override
   public String toString() {
-    return super.toString() + ": " + count;
+    return super.toString() + ": " + goldCount;
   }
 }

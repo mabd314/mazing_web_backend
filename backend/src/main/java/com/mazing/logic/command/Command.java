@@ -1,28 +1,19 @@
 package com.mazing.logic.command;
 
+import com.mazing.Response;
 import com.mazing.logic.game.Game;
-import com.mazing.logic.game.Response;
+import com.mazing.logic.game.Player;
 
 public interface Command {
   Game getGame();
 
-  void setGame(Game game);
+  Player getPlayer();
+
+  void setPlayer(Player player);
 
   Response getResponse();
 
   void setResponse(Response response);
 
-  default void execute() {
-    applyEffect();
-    printResponse();
-    executeNext();
-  }
-
-  void applyEffect();
-
-  default void printResponse() {
-    System.out.println(getResponse());
-  }
-
-  void executeNext();
+  void execute();
 }

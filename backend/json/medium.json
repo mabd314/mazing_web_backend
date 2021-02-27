@@ -1,0 +1,173 @@
+{
+    "players": [
+        {
+            "goldCount": 0,
+            "direction": "north",
+            "items": [],
+            "currentRoomId": 1,
+            "playerName": "player1"
+        },
+        {
+            "goldCount": 0,
+            "direction": "north",
+            "items": [],
+            "currentRoomId": 1,
+            "playerName": "player2"
+        },
+        {
+            "goldCount": 0,
+            "direction": "north",
+            "items": [],
+            "currentRoomId": 1,
+            "playerName": "player3"
+        },
+        {
+            "goldCount": 0,
+            "direction": "north",
+            "items": [],
+            "currentRoomId": 1,
+            "playerName": "player4"
+        }
+    ],
+    "secondsNeeded": 900,
+    "rooms":[
+        {
+            "id":1,
+            "east":{
+                "type":"door",
+                "locked":true,
+                "keyId":1,
+                "to":3,
+                "from":1
+            },
+            "north":{
+                "type": "painting",
+                "behind": 1
+            },
+            "south":{
+                "type":"door",
+                "to":2,
+                "from":1
+            },
+            "isLit":true,
+            "hasLight":true
+        },
+        {
+            "id":2,
+            "east":{
+                "type":"door",
+                "to":4,
+                "from":2
+            },
+            "west":{
+                "type":"chest",
+                "locked":true,
+                "keyId":2,
+                "inside":[{
+                    "type":"gold",
+                    "count":10
+                }]
+            },
+            "north":{
+                "type":"door",
+                "to":1,
+                "from":2
+            },
+            "isLit":false,
+            "hasLight":true
+        },
+        {
+            "id":3,
+            "east":{
+                "type":"door",
+                "locked":true,
+                "keyId":3,
+                "to":-1,
+                "from":3
+            },
+            "west":{
+                "type":"door",
+                "locked":true,
+                "keyId":1,
+                "to":1,
+                "from":3
+            },
+            "isLit":false,
+            "hasLight":false
+        },
+        {
+            "id":4,
+            "east":{
+                "type":"door",
+                "locked":true,
+                "keyId":4,
+                "to":5,
+                "from":4
+            },
+            "west":{
+                "type":"door",
+                "to":2,
+                "from":4
+            },
+            "north":{
+                "type":"seller",
+                "items":[
+                    {
+                        "type":"flashlight",
+                        "price":5
+                    },
+                    {
+                        "type":"key",
+                        "keyId":4,
+                        "price":5
+                    }
+                ]
+            },
+            "south":{
+                "type":"mirror",
+                "behind":2
+            },
+            "isLit":true,
+            "hasLight":true
+        },
+        {
+            "id":5,
+            "east":{
+                "type":"chest",
+                "inside":[{
+                    "type":"key",
+                    "keyId":3
+                }]
+            },
+            "west":{
+                "type":"door",
+                "locked":true,
+                "keyId":4,
+                "to":4,
+                "from":5
+            },
+            "north":{
+                "type":"mirror"
+            },
+            "south":{
+                "type":"painting"
+            },
+            "isLit":true,
+            "hasLight":true
+        }
+        ,
+        {
+            "id":-1,
+            "west":{
+                "type":"door",
+                "locked":true,
+                "keyId":3,
+                "to":3,
+                "from":-1
+            },
+            "isLit":true,
+            "hasLight":true
+        }
+
+    ]
+}

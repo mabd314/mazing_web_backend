@@ -1,8 +1,10 @@
 package com.mazing.logic.wall;
 
+import com.mazing.Response;
+import com.mazing.ResponseType;
+import com.mazing.WallEntity;
 import com.mazing.logic.game.Game;
-import com.mazing.logic.game.Response;
-import com.mazing.logic.game.ResponseType;
+import com.mazing.logic.game.Player;
 import com.mazing.logic.item.Key;
 import com.mazing.logic.item.NoKey;
 
@@ -64,15 +66,14 @@ public class Door extends Wall {
     return key;
   }
 
-  public int getRoomIdAcross(Game game) {
-    return connectingRoomsId[0] == (game.getCurrentRoom().getId())
+  public int getRoomIdAcross(Player player) {
+    return connectingRoomsId[0] == (player.currentRoom().getId())
         ? connectingRoomsId[1]
         : connectingRoomsId[0];
   }
 
   public Response getWiningResponse(Game game) {
     String minutesElapsed = game.getElapsedSecondsString();
-    game.getStopWatch().stopTimer();
     return new Response(
         ResponseType.WON,
         "Congratulation, You won the game!\n"
@@ -84,29 +85,37 @@ public class Door extends Wall {
   }
 
   @Override
+  public WallEntity getWallEntity() {
+    WallEntity wallEntity = new WallEntity();
+    wallEntity.setWallId(getWallId());
+    wallEntity.setLockingKeyId(key.getKeyId());
+    wallEntity.setLocked(isLocked);
+    wallEntity.setRoomId1(connectingRoomsId[0]);
+    wallEntity.setRoomId2(connectingRoomsId[1]);
+    wallEntity.setWallType(WallType.DOOR);
+    return wallEntity;
+  }
+
+  @Override
   public WallType getType() {
     return WallType.DOOR;
   }
 
   @Override
-  public Response getThrough(Game game) {
+  public Response getThrough(Player player) {
     if (isLocked) {
       return new Response(ResponseType.FAILURE, "The door is locked");
     }
-    game.setCurrentRoomId(getRoomIdAcross(game));
-    if (isGameWonNowAndWasNotWonBefore(game)) {
-      game.setWon(true);
-      return getWiningResponse(game);
+    player.setCurrentRoomId(getRoomIdAcross(player));
+    if(player.getGame().getRoomFromId(player.getCurrentRoomId()).isEndRoom()){
+      player.getGame().winGame(player.getPlayerName());
+      return getWiningResponse(player.getGame());
     }
     return new Response(ResponseType.SUCCESS, "You moved through the door");
   }
 
-  private boolean isGameWonNowAndWasNotWonBefore(Game game) {
-    return game.getCurrentRoom().checkWin() && !game.isWon();
-  }
-
   @Override
-  public Response wallSpecificCheck(Game game) {
+  public Response wallSpecificCheck(Player player) {
     if (!isLocked) {
       return new Response(ResponseType.UNLOCKED, "Door is unlocked");
     }
@@ -119,6 +128,7 @@ public class Door extends Wall {
       return new Response(ResponseType.FAILURE, "Wrong Key!");
     }
     toggleLocking();
+    getWallEntity().save();
     return new Response(ResponseType.SUCCESS, "Door is " + (isLocked ? "locked" : "unlocked"));
   }
 

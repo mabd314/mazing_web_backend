@@ -1,8 +1,9 @@
 package com.mazing.logic.wall;
 
-import com.mazing.logic.game.Game;
-import com.mazing.logic.game.Response;
-import com.mazing.logic.game.ResponseType;
+import com.mazing.Response;
+import com.mazing.ResponseType;
+import com.mazing.WallEntity;
+import com.mazing.logic.game.Player;
 import com.mazing.logic.item.Item;
 import com.mazing.logic.item.Key;
 import com.mazing.logic.item.NoKey;
@@ -44,6 +45,16 @@ public class Chest extends Wall {
     isLocked = builder.isLocked;
   }
 
+  @Override
+  public WallEntity getWallEntity() {
+    WallEntity wallEntity=new WallEntity();
+    wallEntity.setWallId(getWallId());
+    wallEntity.setWallType(WallType.CHEST);
+    wallEntity.setLocked(isLocked);
+    wallEntity.setLockingKeyId(key.getKeyId());
+    return wallEntity;
+  }
+
   public void clearInside() {
     inside.clear();
   }
@@ -62,14 +73,19 @@ public class Chest extends Wall {
   }
 
   @Override
-  public Response wallSpecificCheck(Game game) {
+  public Response wallSpecificCheck(Player player) {
     if (isLocked) {
       return new Response(ResponseType.LOCKED, "Chest is locked, " + key + " is needed to unlock!");
     }
     if (inside.isEmpty()) {
       return new Response(ResponseType.EMPTY, "Chest is empty!");
     }
-    game.getCharacter().addItems(inside);
+    player.addItems(inside);
+    for(Item item:inside){
+      item.setPlayerName(player.getPlayerName());
+      item.setWallId(0);
+      item.getItemEntity().save();
+    }
     Response status =
         new Response(ResponseType.SUCCESS, "Chest is unlocked, Items acquired: " + inside);
     clearInside();
@@ -82,6 +98,7 @@ public class Chest extends Wall {
       return new Response(ResponseType.FAILURE, "Wrong key!");
     }
     toggleLocking();
+    getWallEntity().save();
     return new Response(ResponseType.SUCCESS, "Chest is " + (isLocked ? "locked" : "unlocked"));
   }
 

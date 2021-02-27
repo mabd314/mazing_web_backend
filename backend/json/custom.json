@@ -1,0 +1,30 @@
+{
+  "goldCount":0,
+  "direction":"north",
+  "items":[],
+  "secondsNeeded": 180,
+  "rooms":[
+    {
+      "id":1,
+      "north":
+      {
+        "type": "door",
+        "from": 1,
+        "to": -1
+      },
+      "isLit":true,
+      "hasLight":true
+    },
+    {
+      "id":-1,
+      "south":
+      {
+        "type": "door",
+        "from": -1,
+        "to": 1
+      },
+      "isLit":true,
+      "hasLight":true
+    }
+  ]
+}
