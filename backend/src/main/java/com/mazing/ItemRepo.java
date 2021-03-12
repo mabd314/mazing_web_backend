@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ItemRepo extends JpaRepository<ItemEntity,Integer> {
     List<ItemEntity> findByWallId(int itemId);
-    List<ItemEntity> findByPlayerName(String playerName);
+    List<ItemEntity> findByUserName(String userName);
 }

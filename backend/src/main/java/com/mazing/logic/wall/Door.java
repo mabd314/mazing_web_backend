@@ -108,7 +108,7 @@ public class Door extends Wall {
     }
     player.setCurrentRoomId(getRoomIdAcross(player));
     if(player.getGame().getRoomFromId(player.getCurrentRoomId()).isEndRoom()){
-      player.getGame().winGame(player.getPlayerName());
+      player.getGame().winGame(player.getUserName());
       return getWiningResponse(player.getGame());
     }
     return new Response(ResponseType.SUCCESS, "You moved through the door");

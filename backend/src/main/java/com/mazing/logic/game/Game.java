@@ -44,13 +44,14 @@ public class Game {
 
   public void startGame(){
     hasStarted=true;
+    hasEnded=false;
     startTime=System.currentTimeMillis();
     getGameEntity().save();
   }
 
-  public void winGame(String playerName){
+  public void winGame(String userName){
     hasEnded=true;
-    winnerName=playerName;
+    winnerName=userName;
     getGameEntity().save();
   }
 

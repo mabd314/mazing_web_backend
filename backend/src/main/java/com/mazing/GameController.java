@@ -6,16 +6,18 @@ import com.mazing.logic.game.Player;
 import org.springframework.web.bind.annotation.*;
 
 import static com.mazing.Repositories.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin()
 @RestController
 public class GameController {
 
-    @RequestMapping(value="/execute/{playerName}",method = RequestMethod.GET)
-    public Response executeCommand(@PathVariable("playerName") String playerName,@RequestParam String query){
+    @RequestMapping(value="games/execute/{userName}",method = RequestMethod.GET)
+    public Response executeCommand(@PathVariable("userName") String userName,@RequestParam String query){
         try{
-            PlayerEntity playerEntity=playerRepo.getOne(playerName);
+            PlayerEntity playerEntity=playerRepo.getOne(userName);
             Player player=new Player(playerEntity);
             Game game=player.getGame();
             if(game.isTimeOut())
@@ -35,30 +37,30 @@ public class GameController {
         }
     }
 
-    @RequestMapping(value="/start/{gameId}",method = RequestMethod.GET)
+    @RequestMapping(value="games/{gameId}/start",method = RequestMethod.GET)
     public void startGame(@PathVariable("gameId") int gameId){
         Game game=new Game(gameRepo.findById(gameId).get());
         game.startGame();
     }
 
-    @RequestMapping(value="/players",method = RequestMethod.GET)
-    public List<PlayerEntity> getPlayers(){
-        return playerRepo.findAll();
-    }
-
-//    @RequestMapping(value="/players",method=RequestMethod.POST)
-//    public PlayerEntity postPlayer(@RequestBody PlayerEntity playerEntity){
-//        return playerRepo.save(playerEntity);
-//    }
-
-    @RequestMapping(value="/players",method=RequestMethod.POST)
-    public List<PlayerEntity> postPlayers(@RequestBody List<PlayerEntity> playerEntities){
-        return playerRepo.saveAll(playerEntities);
+    @RequestMapping(value="games/{gameId}/playersNames",method = RequestMethod.GET)
+    public List<PlayerName> getPlayerNames(@PathVariable int gameId){
+        List<PlayerEntity> playerEntities = playerRepo.findByGameId(gameId);
+        List<PlayerName> playerNames=new ArrayList<>();
+        for(PlayerEntity playerEntity: playerEntities){
+            playerNames.add(new PlayerName(playerEntity.getUserName()));
+        }
+        return playerNames;
     }
 
     @RequestMapping(value="/games",method = RequestMethod.GET)
     public List<GameEntity> getGames(){
         return gameRepo.findAll();
+    }
+
+    @RequestMapping(value="/games/{gameId}",method = RequestMethod.GET)
+    public GameEntity getGame(@PathVariable int gameId){
+        return gameRepo.findById(gameId).get();
     }
 
 //    @RequestMapping(value="/games",method=RequestMethod.POST)
@@ -71,54 +73,9 @@ public class GameController {
         return gameRepo.saveAll(gameEntities);
     }
 
-
-    @RequestMapping(value="/items",method = RequestMethod.GET)
-    public List<ItemEntity> getItems(){
-        return itemRepo.findAll();
+    @RequestMapping(value="/games/{gameId}",method = RequestMethod.DELETE)
+    public void deleteGame(@PathVariable int gameId){
+        gameRepo.deleteById(gameId);
     }
-
-//    @RequestMapping(value="/items",method=RequestMethod.POST)
-//    public ItemEntity postItem(@RequestBody ItemEntity itemEntity){
-//        return itemRepo.save(itemEntity);
-//    }
-
-    @RequestMapping(value="/items",method=RequestMethod.POST)
-    public List<ItemEntity> postItems(@RequestBody List<ItemEntity> itemEntities){
-        return itemRepo.saveAll(itemEntities);
-    }
-
-
-    @RequestMapping(value="/walls",method = RequestMethod.GET)
-    public List<WallEntity> getWalls(){
-        return wallRepo.findAll();
-    }
-
-//    @RequestMapping(value="/walls",method=RequestMethod.POST)
-//    public WallEntity postWall(@RequestBody WallEntity wallEntity){
-//        return wallRepo.save(wallEntity);
-//    }
-
-    @RequestMapping(value="/walls",method=RequestMethod.POST)
-    public List<WallEntity> postWalls(@RequestBody List<WallEntity> wallEntities){
-        return wallRepo.saveAll(wallEntities);
-    }
-
-
-    @RequestMapping(value="/rooms",method = RequestMethod.GET)
-    public List<RoomEntity> getRooms(){
-        return roomRepo.findAll();
-    }
-
-//    @RequestMapping(value="/rooms",method=RequestMethod.POST)
-//    public RoomEntity postPlayer(@RequestBody RoomEntity roomEntity){
-//        return roomRepo.save(roomEntity);
-//    }
-
-    @RequestMapping(value="/rooms",method=RequestMethod.POST)
-    public List<RoomEntity> postRooms(@RequestBody List<RoomEntity> roomEntities){
-        return roomRepo.saveAll(roomEntities);
-    }
-
-
 }
 

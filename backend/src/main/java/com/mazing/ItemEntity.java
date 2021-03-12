@@ -15,7 +15,7 @@ public class ItemEntity {
     @Enumerated(EnumType.STRING)
     private ItemType itemType;
     private int wallId;
-    private String playerName;
+    private String userName;
 
     public int getItemId() {
         return itemId;
@@ -65,12 +65,12 @@ public class ItemEntity {
         this.wallId = wallId;
     }
 
-    public String getPlayerName() {
-        return playerName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void save(){

@@ -30,7 +30,7 @@ public class Key extends Item {
     itemEntity.setWallId(getWallId());
     itemEntity.setItemType(getType());
     itemEntity.setPrice(getPrice());
-    itemEntity.setPlayerName(getPlayerName());
+    itemEntity.setUserName(getUserName());
     itemEntity.setItemId(getItemId());
     itemEntity.setKeyId(keyId);
     return itemEntity;

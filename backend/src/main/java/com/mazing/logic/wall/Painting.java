@@ -44,7 +44,7 @@ public class Painting extends Wall {
       return new Response(ResponseType.EMPTY, "There is nothing behind this painting");
     }
     player.addItem(hidden);
-    hidden.setPlayerName(player.getPlayerName());
+    hidden.setUserName(player.getUserName());
     hidden.setWallId(0);
     hidden.getItemEntity().save();
     Response status =

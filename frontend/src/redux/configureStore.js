@@ -2,18 +2,19 @@ import {createStore,combineReducers,applyMiddleware} from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import game from './game';
+import games from './games';
 import response from './response';
 import commandText from './commandText';
-
+import activePlayer from './activePlayer';
 
 
 export const configureStore=()=>{
     const store=createStore(
         combineReducers({
-            game,
+            games,
             response,
-            commandText
+            commandText,
+            activePlayer,
         }),composeWithDevTools(applyMiddleware(thunk,logger))
     )
     return store;

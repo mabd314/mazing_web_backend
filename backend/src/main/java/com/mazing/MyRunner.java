@@ -17,6 +17,8 @@ public class MyRunner implements CommandLineRunner {
     ItemRepo itemRepo;
     @Autowired
     RoomRepo roomRepo;
+    @Autowired
+    GameSettingsRepo gameSettingsRepo;
 
     @Override
     public void run(String... args) {
@@ -25,6 +27,7 @@ public class MyRunner implements CommandLineRunner {
         Repositories.roomRepo=roomRepo;
         Repositories.itemRepo=itemRepo;
         Repositories.wallRepo=wallRepo;
+        Repositories.gameSettingsRepo=gameSettingsRepo;
     }
 }
 

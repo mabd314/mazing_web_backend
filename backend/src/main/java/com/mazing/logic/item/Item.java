@@ -13,7 +13,7 @@ public abstract class Item {
   private int price;
   private int itemId;
   private int wallId;
-  private String playerName;
+  private String userName;
 
 
   public Item() {
@@ -30,12 +30,12 @@ public abstract class Item {
     this.wallId = wallId;
   }
 
-  public String getPlayerName() {
-    return playerName;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setPlayerName(String playerName) {
-    this.playerName = playerName;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
   public int getItemId() {
@@ -71,7 +71,7 @@ public abstract class Item {
     if (player.getGold().payForItem(this)) {
       player.addItem(this);
       wallId=0;
-      playerName=player.getPlayerName();
+      userName =player.getUserName();
       return new Response(ResponseType.SUCCESS, "You bought an item: " + this);
     }
     return new Response(ResponseType.FAILURE, "You do not have enough gold to buy this item");
@@ -80,7 +80,7 @@ public abstract class Item {
   public Response sell(Player player) {
     if (player.removeItem(this)) {
       player.getGold().getPaidForItem(this);
-      playerName="";
+      userName ="";
       wallId=player.facingWall().getWallId();
       return new Response(
           ResponseType.SUCCESS, "You Sold an item: " + this + " for " + this.getPrice() + " gold");

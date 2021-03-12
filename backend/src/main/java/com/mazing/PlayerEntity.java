@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @Entity
 public class PlayerEntity {
     @Id
-    private String playerName;
+    private String userName;
     @Enumerated(EnumType.STRING)
     private Direction direction;
     private boolean isFlashLightOn;
@@ -19,12 +19,12 @@ public class PlayerEntity {
     private int gameId;
     private boolean inTradeMode;
 
-    public String getPlayerName() {
-        return playerName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Direction getDirection() {
@@ -78,5 +78,4 @@ public class PlayerEntity {
     public void save(){
         Repositories.playerRepo.save(this);
     }
-
 }

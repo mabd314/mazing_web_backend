@@ -7,13 +7,17 @@ import com.mazing.logic.game.Player;
 
 public class FlashLight extends Item {
 
+  public static FlashLight getInstance() {
+    return new FlashLight();
+  }
+
   @Override
   public ItemEntity getItemEntity() {
     ItemEntity itemEntity=new ItemEntity();
     itemEntity.setWallId(getWallId());
     itemEntity.setItemType(getType());
     itemEntity.setPrice(getPrice());
-    itemEntity.setPlayerName(getPlayerName());
+    itemEntity.setUserName(getUserName());
     itemEntity.setItemId(getItemId());
     return itemEntity;
   }

@@ -30,7 +30,7 @@ public class ItemBuilder {
     Item item = new Key(itemEntity.getKeyId());
     item.setPrice(itemEntity.getPrice());
     item.setItemId(itemEntity.getItemId());
-    item.setPlayerName(itemEntity.getPlayerName());
+    item.setUserName(itemEntity.getUserName());
     item.setWallId(itemEntity.getWallId());
     return item;
   }
@@ -39,7 +39,7 @@ public class ItemBuilder {
     Item item = new FlashLight();
     item.setPrice(itemEntity.getPrice());
     item.setItemId(itemEntity.getItemId());
-    item.setPlayerName(itemEntity.getPlayerName());
+    item.setUserName(itemEntity.getUserName());
     item.setWallId(itemEntity.getWallId());
     return item;
   }
@@ -48,7 +48,7 @@ public class ItemBuilder {
     Item item = new Gold(itemEntity.getGoldCount());
     item.setPrice(itemEntity.getPrice());
     item.setItemId(itemEntity.getItemId());
-    item.setPlayerName(itemEntity.getPlayerName());
+    item.setUserName(itemEntity.getUserName());
     item.setWallId(itemEntity.getWallId());
     return item;
   }

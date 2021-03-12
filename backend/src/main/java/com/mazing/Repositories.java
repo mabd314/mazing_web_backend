@@ -6,4 +6,5 @@ public class Repositories {
     public static GameRepo gameRepo;
     public static RoomRepo roomRepo;
     public static WallRepo wallRepo;
+    public static GameSettingsRepo gameSettingsRepo;
 }

@@ -82,7 +82,7 @@ public class Chest extends Wall {
     }
     player.addItems(inside);
     for(Item item:inside){
-      item.setPlayerName(player.getPlayerName());
+      item.setUserName(player.getUserName());
       item.setWallId(0);
       item.getItemEntity().save();
     }

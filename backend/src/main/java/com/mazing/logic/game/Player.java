@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player {
-  private final String playerName;
+  private final String userName;
   private Direction direction;
   private boolean isFlashLightOn;
   private int currentRoomId;
@@ -25,14 +25,14 @@ public class Player {
   private boolean inTradeMode;
 
   public Player(PlayerEntity playerEntity){
-    playerName=playerEntity.getPlayerName();
+    userName =playerEntity.getUserName();
     direction=playerEntity.getDirection();
     isFlashLightOn=playerEntity.isFlashLightOn();
     currentRoomId=playerEntity.getCurrentRoomId();
     gold=new Gold(playerEntity.getGoldCount());
     GameEntity gameEntity= Repositories.gameRepo.getOne(playerEntity.getGameId());
     game=new Game(gameEntity);
-    List<ItemEntity> itemEntities=Repositories.itemRepo.findByPlayerName(playerEntity.getPlayerName());
+    List<ItemEntity> itemEntities=Repositories.itemRepo.findByUserName(playerEntity.getUserName());
     items= ItemBuilder.buildItemsFromEntity(itemEntities);
     gameId=playerEntity.getGameId();
     inTradeMode=playerEntity.isInTradeMode();
@@ -40,7 +40,7 @@ public class Player {
 
   public PlayerEntity getPlayerEntity(){
     PlayerEntity playerEntity=new PlayerEntity();
-    playerEntity.setPlayerName(playerName);
+    playerEntity.setUserName(userName);
     playerEntity.setDirection(direction);
     playerEntity.setGameId(gameId);
     playerEntity.setCurrentRoomId(currentRoomId);
@@ -129,8 +129,8 @@ public class Player {
   }
 
 
-  public String getPlayerName() {
-    return playerName;
+  public String getUserName() {
+    return userName;
   }
 
   public int getCurrentRoomId() {
@@ -175,11 +175,11 @@ public class Player {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Player player = (Player) o;
-    return playerName.equals(player.playerName);
+    return userName.equals(player.userName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(playerName);
+    return Objects.hash(userName);
   }
 }
