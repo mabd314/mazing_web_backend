@@ -40,10 +40,25 @@ export const chooseGame=(userName,gameId)=>async dispatch=>{
             return alert("can not enter this game");
         const jsonPlayer=await response.json();
         dispatch(getFetchedPlayer(jsonPlayer));
+        dispatch(fetchGames());
     }catch(err){
         alert(err.message);
     }
 }
+
+export const leaveGame=(userName)=>async dispatch=>{
+    try{
+        const response=await fetch(serverBase+`/players/${userName}/leaveGame`)
+        if(response.status>=400)
+            return alert("can not leave this game");
+        const jsonPlayer=await response.json();
+        dispatch(getFetchedPlayer(jsonPlayer));
+        dispatch(fetchGames());
+    }catch(err){
+        alert(err.message);
+    }
+}
+
 
 export const choosePlayer=(userName)=>async dispatch=>{
     try{

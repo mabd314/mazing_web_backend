@@ -18,12 +18,12 @@ public class WallController {
         return wallRepo.findById(wallId).get();
     }
 
-//    @RequestMapping(value="/walls",method=RequestMethod.POST)
-//    public WallEntity postWall(@RequestBody WallEntity wallEntity){
-//        return wallRepo.save(wallEntity);
-//    }
-
     @RequestMapping(value="/walls",method=RequestMethod.POST)
+    public WallEntity postWall(@RequestBody WallEntity wallEntity){
+        return wallRepo.save(wallEntity);
+    }
+
+    @RequestMapping(value="/walls/list",method=RequestMethod.POST)
     public List<WallEntity> postWalls(@RequestBody List<WallEntity> wallEntities){
         return wallRepo.saveAll(wallEntities);
     }

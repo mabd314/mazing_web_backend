@@ -63,12 +63,12 @@ public class GameController {
         return gameRepo.findById(gameId).get();
     }
 
-//    @RequestMapping(value="/games",method=RequestMethod.POST)
-//    public GameEntity postGame(@RequestBody GameEntity gameEntity){
-//        return gameRepo.save(gameEntity);
-//    }
+    @RequestMapping(value="/games/",method=RequestMethod.POST)
+    public GameEntity postGame(@RequestBody GameEntity gameEntity){
+        return gameRepo.save(gameEntity);
+    }
 
-    @RequestMapping(value="/games",method=RequestMethod.POST)
+    @RequestMapping(value="/games/list",method=RequestMethod.POST)
     public List<GameEntity> postGames(@RequestBody List<GameEntity> gameEntities){
         return gameRepo.saveAll(gameEntities);
     }

@@ -17,13 +17,13 @@ public class ItemController {
     public ItemEntity getItems(@PathVariable int itemId){
         return itemRepo.findById(itemId).get();
     }
-//
-//    @RequestMapping(value="/items",method=RequestMethod.POST)
-//    public ItemEntity postItem(@RequestBody ItemEntity itemEntity){
-//        return itemRepo.save(itemEntity);
-//    }
 
     @RequestMapping(value="/items",method=RequestMethod.POST)
+    public ItemEntity postItem(@RequestBody ItemEntity itemEntity){
+        return itemRepo.save(itemEntity);
+    }
+
+    @RequestMapping(value="/items/list",method=RequestMethod.POST)
     public List<ItemEntity> postItems(@RequestBody List<ItemEntity> itemEntities){
         return itemRepo.saveAll(itemEntities);
     }

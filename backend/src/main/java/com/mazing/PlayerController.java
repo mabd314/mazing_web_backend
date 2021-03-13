@@ -18,12 +18,12 @@ public class PlayerController {
         return playerRepo.findById(userName).get();
     }
 
-//    @RequestMapping(value="/players",method=RequestMethod.POST)
-//    public PlayerEntity postPlayer(@RequestBody PlayerEntity playerEntity){
-//        return playerRepo.save(playerEntity);
-//    }
-
     @RequestMapping(value="/players",method=RequestMethod.POST)
+    public PlayerEntity postPlayer(@RequestBody PlayerEntity playerEntity){
+        return playerRepo.save(playerEntity);
+    }
+
+    @RequestMapping(value="/players/list",method=RequestMethod.POST)
     public List<PlayerEntity> postPlayers(@RequestBody List<PlayerEntity> playerEntities){
         return playerRepo.saveAll(playerEntities);
     }
@@ -43,6 +43,18 @@ public class PlayerController {
         playerEntity.setDirection(gameSettingsEntity.getStartingDirection());
         playerEntity.setCurrentRoomId(gameSettingsEntity.getStartingCurrentRoomId());
         playerEntity.setFlashLightOn(gameSettingsEntity.isStartingFlashLightOn());
+        return playerRepo.save(playerEntity);
+    }
+
+    @RequestMapping(value="/players/{userName}/leaveGame", method=RequestMethod.GET)
+    public PlayerEntity leaveGame(@PathVariable String userName){
+        PlayerEntity playerEntity=playerRepo.getOne(userName);
+        playerEntity.setGameId(0);
+        playerEntity.setInTradeMode(false);
+        playerEntity.setGoldCount(0);
+        playerEntity.setDirection(null);
+        playerEntity.setCurrentRoomId(0);
+        playerEntity.setFlashLightOn(false);
         return playerRepo.save(playerEntity);
     }
 }

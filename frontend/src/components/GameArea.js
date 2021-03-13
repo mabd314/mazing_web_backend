@@ -13,6 +13,7 @@ import {
 
 import Start from './Start';
 import Response from './Response';
+import { leaveGame } from '../redux/actionCreators';
 function GameArea(props){
 
     const isKeyClickedIsEnter=(value)=>{
@@ -46,17 +47,50 @@ function GameArea(props){
                     </Form>
                 </Col>
             </Row>
-            <Response response={props.response}/>
+            <Row>
+                <Col xs='12'>
+                    <Response response={props.response}/>
+                </Col>
+            </Row>
+            <Row xs='1' className='m-5'>
+                <Col xs={{size:4,offset:4}}>
+                    <Button block outline color="danger" onClick={()=>props.leaveGame(props.activePlayer.player.userName)}>Leave</Button>
+                </Col>
+            </Row>
+            <Row className='m-5'>
+                {props.game.playersNames.map(playerName=>{
+                    return(
+                        <Col xs='12' md='6'><small>{playerName.userName}</small></Col>
+                    )
+                })}
+            </Row>
         </Container>
         )
 
     if(props.activePlayer.errMess)
     return <h1>{props.activePlayer.errMess}</h1>
 
-    if(props.activePlayer.isLoading)
+    if(props.activePlayer.isGameStarting)
     return <h1>Loading........</h1>
 
-    return <Start gameId={props.game.gameId} startGame={props.startGame}/>
+    return (
+        <>
+            <Start gameId={props.game.gameId} startGame={props.startGame}/>
+            <Row className='m-5'>
+                <Col xs={{size:4,offset:4}}>
+                    <Button block outline color="danger" onClick={()=>props.leaveGame(props.activePlayer.player.userName)}>Leave</Button>
+                </Col>
+            </Row>
+            <Row className='m-5'>
+                {props.game.playersNames.map(playerName=>{
+                    return(
+                        <Col xs='12' md='6'><small>{playerName.userName}</small></Col>
+                    )
+                })}
+            </Row>
+        </>
+    )
+
 }
 
 export default GameArea;

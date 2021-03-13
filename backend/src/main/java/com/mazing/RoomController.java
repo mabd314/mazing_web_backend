@@ -18,12 +18,12 @@ public class RoomController {
         return roomRepo.findById(roomId).get();
     }
 
-//    @RequestMapping(value="/rooms",method=RequestMethod.POST)
-//    public RoomEntity postRoom(@RequestBody RoomEntity roomEntity){
-//        return roomRepo.save(roomEntity);
-//    }
-
     @RequestMapping(value="/rooms",method=RequestMethod.POST)
+    public RoomEntity postRoom(@RequestBody RoomEntity roomEntity){
+        return roomRepo.save(roomEntity);
+    }
+
+    @RequestMapping(value="/rooms/list",method=RequestMethod.POST)
     public List<RoomEntity> postRooms(@RequestBody List<RoomEntity> roomEntities){
         return roomRepo.saveAll(roomEntities);
     }

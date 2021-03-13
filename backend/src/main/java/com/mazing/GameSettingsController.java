@@ -19,12 +19,12 @@ public class GameSettingsController {
         return gameSettingsRepo.findByGameId(gameId);
     }
 
-//    @RequestMapping(value="/games_settings",method=RequestMethod.POST)
-//    public GameSettingsEntity postGameSettings(@RequestBody GameSettingsEntity gameSettingsEntity){
-//        return gameSettingsRepo.save(gameSettingsEntity);
-//    }
-
     @RequestMapping(value="/games_settings",method=RequestMethod.POST)
+    public GameSettingsEntity postGameSettings(@RequestBody GameSettingsEntity gameSettingsEntity){
+        return gameSettingsRepo.save(gameSettingsEntity);
+    }
+
+    @RequestMapping(value="/games_settings/list",method=RequestMethod.POST)
     public List<GameSettingsEntity> postGamesSettings(@RequestBody List<GameSettingsEntity> gameSettingsEntities){
         return gameSettingsRepo.saveAll(gameSettingsEntities);
     }
