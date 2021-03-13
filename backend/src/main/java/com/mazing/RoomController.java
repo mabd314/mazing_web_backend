@@ -13,9 +13,9 @@ public class RoomController {
         return roomRepo.findAll();
     }
 
-    @RequestMapping(value="/rooms/{roomId}",method = RequestMethod.GET)
-    public RoomEntity getRooms(@PathVariable int roomId){
-        return roomRepo.findById(roomId).get();
+    @RequestMapping(value="/rooms/{roomNumber}/{gameId}",method = RequestMethod.GET)
+    public RoomEntity getRooms(@PathVariable int roomNumber,@PathVariable int gameId){
+        return roomRepo.findById(new RoomId(roomNumber,gameId)).get();
     }
 
     @RequestMapping(value="/rooms",method=RequestMethod.POST)
@@ -28,9 +28,9 @@ public class RoomController {
         return roomRepo.saveAll(roomEntities);
     }
 
-    @RequestMapping(value="/rooms/{roomId}",method = RequestMethod.DELETE)
-    public void deleteRoom(@PathVariable int roomId){
-        roomRepo.deleteById(roomId);
+    @RequestMapping(value="/rooms/{roomNumber}/{gameId}",method = RequestMethod.DELETE)
+    public void deleteRoom(@PathVariable int roomNumber,@PathVariable int gameId){
+        roomRepo.deleteById(new RoomId(roomNumber,gameId));
     }
 }
 

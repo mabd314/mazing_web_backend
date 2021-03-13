@@ -23,7 +23,7 @@ function Play(props){
 
     else if(props.activePlayer.player &&!props.activePlayer.gameId)
         return(
-            <GamesContainer chooseGame={props.chooseGame} activePlayer={props.activePlayer} games={props.games}></GamesContainer>
+            <GamesContainer createGame={props.createGame} chooseGame={props.chooseGame} activePlayer={props.activePlayer} games={props.games}></GamesContainer>
         ) 
 
     else 

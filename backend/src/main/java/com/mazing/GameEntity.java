@@ -16,6 +16,16 @@ public class GameEntity {
     private int secondsNeeded;
     private String winnerName;
 
+    public GameEntity() {
+    }
+
+    public GameEntity(boolean hasEnded, boolean hasStarted, long startTime, int secondsNeeded, String winnerName) {
+        this.hasEnded = hasEnded;
+        this.hasStarted = hasStarted;
+        this.startTime = startTime;
+        this.secondsNeeded = secondsNeeded;
+        this.winnerName = winnerName;
+    }
 
     public int getGameId() {
         return gameId;

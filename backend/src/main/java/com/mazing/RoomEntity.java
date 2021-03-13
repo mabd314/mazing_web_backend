@@ -1,27 +1,51 @@
 package com.mazing;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@IdClass(RoomId.class)
 public class RoomEntity {
     @Id
-    private int id;
+    private int roomNumber;
+    @Id
+    private int gameId;
     private int eastWallId;
     private int westWallId;
     private int northWallId;
     private int southWallId;
     private boolean isThereLight;
-    private boolean isLightOn;
-    private int gameId;
+    private boolean lightOn;
     private boolean endRoom;
 
-    public int getId() {
-        return id;
+    public RoomEntity() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public RoomEntity(int roomNumber, int gameId, int eastWallId, int westWallId, int northWallId, int southWallId, boolean isThereLight, boolean lightOn, boolean endRoom) {
+        this.roomNumber = roomNumber;
+        this.gameId = gameId;
+        this.eastWallId = eastWallId;
+        this.westWallId = westWallId;
+        this.northWallId = northWallId;
+        this.southWallId = southWallId;
+        this.isThereLight = isThereLight;
+        this.lightOn = lightOn;
+        this.endRoom = endRoom;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
     }
 
     public int getEastWallId() {
@@ -65,19 +89,11 @@ public class RoomEntity {
     }
 
     public boolean isLightOn() {
-        return isLightOn;
+        return lightOn;
     }
 
     public void setLightOn(boolean lightOn) {
-        isLightOn = lightOn;
-    }
-
-    public int getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
+        this.lightOn = lightOn;
     }
 
     public boolean isEndRoom() {

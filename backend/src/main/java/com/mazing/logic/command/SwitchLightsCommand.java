@@ -1,10 +1,13 @@
 package com.mazing.logic.command;
 
+import com.mazing.logic.game.Room;
+
 public class SwitchLightsCommand extends MainCommand {
 
   @Override
   public void execute() {
-    setResponse(getPlayer().currentRoom().switchLights());
-    getPlayer().currentRoom().getRoomEntity().save();
+    Room currentRoom= getPlayer().currentRoom();
+    setResponse(currentRoom.switchLights());
+    currentRoom.getRoomEntity().save();
   }
 }

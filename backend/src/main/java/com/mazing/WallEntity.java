@@ -12,10 +12,24 @@ public class WallEntity {
     private int lockingKeyId;
     private int hiddenKeyId;
     private boolean isLocked;
-    private int roomId1;
-    private int roomId2;
+    private int room1Number;
+    private int room2Number;
+    private int gameId;
     @Enumerated(EnumType.STRING)
     private WallType wallType;
+
+    public WallEntity() {
+    }
+
+    public WallEntity(int lockingKeyId, int hiddenKeyId, boolean isLocked, int room1Number, int room2Number, int gameId, WallType wallType) {
+        this.lockingKeyId = lockingKeyId;
+        this.hiddenKeyId = hiddenKeyId;
+        this.isLocked = isLocked;
+        this.room1Number = room1Number;
+        this.room2Number = room2Number;
+        this.gameId = gameId;
+        this.wallType = wallType;
+    }
 
     public int getWallId() {
         return wallId;
@@ -49,22 +63,6 @@ public class WallEntity {
         isLocked = locked;
     }
 
-    public int getRoomId1() {
-        return roomId1;
-    }
-
-    public void setRoomId1(int roomId1) {
-        this.roomId1 = roomId1;
-    }
-
-    public int getRoomId2() {
-        return roomId2;
-    }
-
-    public void setRoomId2(int roomId2) {
-        this.roomId2 = roomId2;
-    }
-
     public WallType getWallType() {
         return wallType;
     }
@@ -73,8 +71,36 @@ public class WallEntity {
         this.wallType = wallType;
     }
 
+    public int getRoom1Number() {
+        return room1Number;
+    }
+
+    public void setRoom1Number(int room1Number) {
+        this.room1Number = room1Number;
+    }
+
+    public int getRoom2Number() {
+        return room2Number;
+    }
+
+    public void setRoom2Number(int room2Number) {
+        this.room2Number = room2Number;
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
+
+
+
     public void save(){
         Repositories.wallRepo.save(this);
     }
+
+
 
 }

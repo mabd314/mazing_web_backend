@@ -17,7 +17,7 @@ public class Player {
   private final String userName;
   private Direction direction;
   private boolean isFlashLightOn;
-  private int currentRoomId;
+  private int currentRoomNumber;
   private final Gold gold;
   private final Game game;
   private List<Item> items;
@@ -28,7 +28,7 @@ public class Player {
     userName =playerEntity.getUserName();
     direction=playerEntity.getDirection();
     isFlashLightOn=playerEntity.isFlashLightOn();
-    currentRoomId=playerEntity.getCurrentRoomId();
+    currentRoomNumber=playerEntity.getCurrentRoomNumber();
     gold=new Gold(playerEntity.getGoldCount());
     GameEntity gameEntity= Repositories.gameRepo.getOne(playerEntity.getGameId());
     game=new Game(gameEntity);
@@ -43,7 +43,7 @@ public class Player {
     playerEntity.setUserName(userName);
     playerEntity.setDirection(direction);
     playerEntity.setGameId(gameId);
-    playerEntity.setCurrentRoomId(currentRoomId);
+    playerEntity.setCurrentRoomNumber(currentRoomNumber);
     playerEntity.setFlashLightOn(isFlashLightOn);
     playerEntity.setGoldCount(gold.getGoldCount());
     playerEntity.setInTradeMode(inTradeMode);
@@ -82,11 +82,11 @@ public class Player {
   }
 
   public Room currentRoom() {
-    return game.getRoomFromId(currentRoomId);
+    return game.getRoomFromNumber(currentRoomNumber);
   }
 
-  public void setCurrentRoomId(int currentRoomId) {
-    this.currentRoomId = currentRoomId;
+  public void setCurrentRoomNumber(int currentRoomNumber) {
+    this.currentRoomNumber = currentRoomNumber;
   }
 
   public boolean currentRoomIsLit() {
@@ -133,8 +133,8 @@ public class Player {
     return userName;
   }
 
-  public int getCurrentRoomId() {
-    return currentRoomId;
+  public int getCurrentRoomNumber() {
+    return currentRoomNumber;
   }
 
   @Transient

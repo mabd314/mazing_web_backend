@@ -16,17 +16,20 @@ public class Door extends Wall {
 
   public static List<Door> doors = new ArrayList<>();
   private final Key key;
-  int[] connectingRoomsId;
+  private int[] connectingRoomsNumbers;
   private boolean isLocked;
+  private int gameId;
 
   public static class Builder {
 
-    int[] connectingRoomsId;
+    int[] connectingRoomsNumbers;
     private boolean isLocked;
     private Key key;
+    private int gameId;
 
-    public Builder(int from, int to) {
-      connectingRoomsId = new int[] {from, to};
+    public Builder(int from, int to, int gameId) {
+      connectingRoomsNumbers = new int[] {from, to};
+      this.gameId=gameId;
       isLocked = false;
       key = NoKey.getInstance();
     }
@@ -49,7 +52,8 @@ public class Door extends Wall {
   }
 
   public Door(Builder builder) {
-    connectingRoomsId = builder.connectingRoomsId;
+    connectingRoomsNumbers = builder.connectingRoomsNumbers;
+    gameId=builder.gameId;
     isLocked = builder.isLocked;
     key = builder.key;
   }
@@ -66,10 +70,10 @@ public class Door extends Wall {
     return key;
   }
 
-  public int getRoomIdAcross(Player player) {
-    return connectingRoomsId[0] == (player.currentRoom().getId())
-        ? connectingRoomsId[1]
-        : connectingRoomsId[0];
+  public int getRoomNumberAcross(Player player) {
+    return connectingRoomsNumbers[0] == (player.currentRoom().getRoomNumber())
+        ? connectingRoomsNumbers[1]
+        : connectingRoomsNumbers[0];
   }
 
   public Response getWiningResponse(Game game) {
@@ -90,8 +94,9 @@ public class Door extends Wall {
     wallEntity.setWallId(getWallId());
     wallEntity.setLockingKeyId(key.getKeyId());
     wallEntity.setLocked(isLocked);
-    wallEntity.setRoomId1(connectingRoomsId[0]);
-    wallEntity.setRoomId2(connectingRoomsId[1]);
+    wallEntity.setRoom1Number(connectingRoomsNumbers[0]);
+    wallEntity.setRoom2Number(connectingRoomsNumbers[1]);
+    wallEntity.setGameId(gameId);
     wallEntity.setWallType(WallType.DOOR);
     return wallEntity;
   }
@@ -106,8 +111,8 @@ public class Door extends Wall {
     if (isLocked) {
       return new Response(ResponseType.FAILURE, "The door is locked");
     }
-    player.setCurrentRoomId(getRoomIdAcross(player));
-    if(player.getGame().getRoomFromId(player.getCurrentRoomId()).isEndRoom()){
+    player.setCurrentRoomNumber(getRoomNumberAcross(player));
+    if(player.getGame().getRoomFromNumber(player.getCurrentRoomNumber()).isEndRoom()){
       player.getGame().winGame(player.getUserName());
       return getWiningResponse(player.getGame());
     }
@@ -146,14 +151,14 @@ public class Door extends Wall {
       return false;
     }
     Door door = (Door) o;
-    Arrays.sort(door.connectingRoomsId);
-    Arrays.sort(connectingRoomsId);
-    return Arrays.equals(connectingRoomsId, door.connectingRoomsId);
+    Arrays.sort(door.connectingRoomsNumbers);
+    Arrays.sort(connectingRoomsNumbers);
+    return Arrays.equals(connectingRoomsNumbers, door.connectingRoomsNumbers);
   }
 
   @Override
   public int hashCode() {
-    return Arrays.hashCode(connectingRoomsId);
+    return Arrays.hashCode(connectingRoomsNumbers);
   }
 
 }

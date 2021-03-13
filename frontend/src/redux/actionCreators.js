@@ -1,4 +1,6 @@
 import * as actionTypes from './actionTypes';
+import * as configs from '../requestBodies/configs';
+import * as difficulties from '../util/difficulties';
 import serverBase from './serverBase';
 
 export const gameStarting=()=>({
@@ -32,6 +34,37 @@ export const getFetchedPlayer=(jsonPlayer)=>({
 export const gameStartingFinished=()=>({
     type:actionTypes.GAME_STARTING_FINISHED,
 })
+
+export const createGame=(userName,difficulty)=>async dispatch=>{
+    try{
+        let data="";
+        switch(difficulty){
+            case difficulties.EASY:
+                data=configs.easyConfig;
+                break;
+            case difficulties.MEDIUM:
+                data=configs.mediumConfig;
+                break;
+            case difficulties.HARD:
+                data=configs.hardConfig;
+                break;
+        }
+        const response=await fetch(serverBase+"/games/create",{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        if(response.status>=400)
+            return alert("can not create a game");
+        const gameId=await response.json();
+        dispatch(fetchGames());
+        dispatch(chooseGame(userName,gameId));
+    }catch(err){
+        alert(err.message);
+    }
+}
 
 export const chooseGame=(userName,gameId)=>async dispatch=>{
     try{

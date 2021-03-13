@@ -36,12 +36,12 @@ public class PlayerController {
     @RequestMapping(value="/players/{userName}/chooseGame/{gameId}", method=RequestMethod.GET)
     public PlayerEntity chooseGame(@PathVariable String userName,@PathVariable int gameId){
         PlayerEntity playerEntity=playerRepo.getOne(userName);
-        GameSettingsEntity gameSettingsEntity=gameSettingsRepo.findByGameId(gameId);
+        GameSettingsEntity gameSettingsEntity=gameSettingsRepo.getOne(gameId);
         playerEntity.setGameId(gameId);
         playerEntity.setInTradeMode(false);
         playerEntity.setGoldCount(gameSettingsEntity.getStartingGoldCount());
         playerEntity.setDirection(gameSettingsEntity.getStartingDirection());
-        playerEntity.setCurrentRoomId(gameSettingsEntity.getStartingCurrentRoomId());
+        playerEntity.setCurrentRoomNumber(gameSettingsEntity.getStartingCurrentRoomNumber());
         playerEntity.setFlashLightOn(gameSettingsEntity.isStartingFlashLightOn());
         return playerRepo.save(playerEntity);
     }
@@ -53,7 +53,7 @@ public class PlayerController {
         playerEntity.setInTradeMode(false);
         playerEntity.setGoldCount(0);
         playerEntity.setDirection(null);
-        playerEntity.setCurrentRoomId(0);
+        playerEntity.setCurrentRoomNumber(0);
         playerEntity.setFlashLightOn(false);
         return playerRepo.save(playerEntity);
     }

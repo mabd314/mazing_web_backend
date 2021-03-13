@@ -15,6 +15,7 @@ import {startGame,
         chooseGame,
         choosePlayer,
         leaveGame,
+        createGame,
     } from '../redux/actionCreators'
 
 import Play from './Play';
@@ -34,6 +35,7 @@ const mapDispatchToProps=dispatch=>({
     chooseGame: (userName,gameId)=>dispatch(chooseGame(userName,gameId)),
     choosePlayer:userName=>dispatch(choosePlayer(userName)),
     leaveGame: userName=>dispatch(leaveGame(userName)),
+    createGame: (userName,difficulty)=>dispatch(createGame(userName,difficulty)),
 })
 
         
@@ -47,7 +49,7 @@ class Main extends Component{
         return(
             <Switch>
                 <Route path='/play'>
-                    <Play leaveGame={this.props.leaveGame} choosePlayer={this.props.choosePlayer} activePlayer={this.props.activePlayer} chooseGame={this.props.chooseGame} games={this.props.games} fetchGames={this.props.fetchGames} executeCommand={this.props.executeCommand} commandText={this.props.commandText} editCommand={this.props.editCommand} response={this.props.response} startGame={this.props.startGame}></Play>
+                    <Play createGame={this.props.createGame} leaveGame={this.props.leaveGame} choosePlayer={this.props.choosePlayer} activePlayer={this.props.activePlayer} chooseGame={this.props.chooseGame} games={this.props.games} fetchGames={this.props.fetchGames} executeCommand={this.props.executeCommand} commandText={this.props.commandText} editCommand={this.props.editCommand} response={this.props.response} startGame={this.props.startGame}></Play>
                     {/* <GameArea user={this.props.user} executeCommand={this.props.executeCommand} commandText={this.props.commandText} editCommand={this.props.editCommand} response={this.props.response} startGame={this.props.startGame} game={this.props.game}/> */}
                 </Route>
             <Route path='/home'>

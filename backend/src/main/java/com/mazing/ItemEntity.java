@@ -17,6 +17,18 @@ public class ItemEntity {
     private int wallId;
     private String userName;
 
+    public ItemEntity() {
+    }
+
+    public ItemEntity(int price, int keyId, int goldCount, ItemType itemType, int wallId, String userName) {
+        this.price = price;
+        this.keyId = keyId;
+        this.goldCount = goldCount;
+        this.itemType = itemType;
+        this.wallId = wallId;
+        this.userName = userName;
+    }
+
     public int getItemId() {
         return itemId;
     }

@@ -60,8 +60,8 @@ public class Game {
     getGameEntity().save();
   }
 
-  public Room getRoomFromId(int id) {
-    return new Room(Repositories.roomRepo.getOne(id));
+  public Room getRoomFromNumber(int roomNumber) {
+    return new Room(Repositories.roomRepo.getOne(new RoomId(roomNumber,gameId)));
   }
 
   public boolean isHasStarted() {

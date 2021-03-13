@@ -14,10 +14,23 @@ public class PlayerEntity {
     @Enumerated(EnumType.STRING)
     private Direction direction;
     private boolean isFlashLightOn;
-    private int currentRoomId;
+    private int currentRoomNumber;
     private int goldCount;
     private int gameId;
     private boolean inTradeMode;
+
+    public PlayerEntity() {
+    }
+
+    public PlayerEntity(String userName, Direction direction, boolean isFlashLightOn, int currentRoomNumber, int goldCount, int gameId, boolean inTradeMode) {
+        this.userName = userName;
+        this.direction = direction;
+        this.isFlashLightOn = isFlashLightOn;
+        this.currentRoomNumber = currentRoomNumber;
+        this.goldCount = goldCount;
+        this.gameId = gameId;
+        this.inTradeMode = inTradeMode;
+    }
 
     public String getUserName() {
         return userName;
@@ -41,14 +54,6 @@ public class PlayerEntity {
 
     public void setFlashLightOn(boolean flashLightOn) {
         isFlashLightOn = flashLightOn;
-    }
-
-    public int getCurrentRoomId() {
-        return currentRoomId;
-    }
-
-    public void setCurrentRoomId(int currentRoomId) {
-        this.currentRoomId = currentRoomId;
     }
 
     public int getGoldCount() {
@@ -75,7 +80,17 @@ public class PlayerEntity {
         this.inTradeMode = inTradeMode;
     }
 
+    public int getCurrentRoomNumber() {
+        return currentRoomNumber;
+    }
+
+    public void setCurrentRoomNumber(int currentRoomNumber) {
+        this.currentRoomNumber = currentRoomNumber;
+    }
+
     public void save(){
         Repositories.playerRepo.save(this);
     }
+
+
 }

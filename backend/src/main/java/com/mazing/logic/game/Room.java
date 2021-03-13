@@ -8,22 +8,22 @@ import com.mazing.logic.wall.WallType;
 import java.util.Objects;
 
 public class Room {
-    private int id;
+    private int roomNumber;
+    private int gameId;
     private Wall east;
     private Wall west;
     private Wall north;
     private Wall south;
     private boolean isThereLight;
-    private boolean isLightOn;
-    private int gameId;
+    private boolean lightOn;
     private boolean endRoom;
 
     public Room(RoomEntity roomEntity){
-        id=roomEntity.getId();
-        isThereLight=roomEntity.isThereLight();
-        isLightOn=roomEntity.isLightOn();
-        endRoom =roomEntity.isEndRoom();
+        roomNumber=roomEntity.getRoomNumber();
         gameId=roomEntity.getGameId();
+        isThereLight=roomEntity.isThereLight();
+        lightOn =roomEntity.isLightOn();
+        endRoom =roomEntity.isEndRoom();
         WallEntity empty=new WallEntity();
         empty.setWallType(WallType.EMPTY);
         WallEntity eastEntity= Repositories.wallRepo.findById(roomEntity.getEastWallId()).orElse(empty);
@@ -38,11 +38,11 @@ public class Room {
 
     public RoomEntity getRoomEntity(){
         RoomEntity roomEntity=new RoomEntity();
-        roomEntity.setId(id);
-        roomEntity.setLightOn(isLightOn);
+        roomEntity.setRoomNumber(roomNumber);
+        roomEntity.setGameId(gameId);
+        roomEntity.setLightOn(lightOn);
         roomEntity.setThereLight(isThereLight);
         roomEntity.setEndRoom(endRoom);
-        roomEntity.setGameId(gameId);
         roomEntity.setEastWallId(east.getWallId());
         roomEntity.setWestWallId(west.getWallId());
         roomEntity.setSouthWallId(south.getWallId());
@@ -54,8 +54,8 @@ public class Room {
         return gameId;
     }
 
-    public int getId() {
-        return id;
+    public int getRoomNumber() {
+        return roomNumber;
     }
 
     public boolean isEndRoom() {
@@ -63,11 +63,11 @@ public class Room {
     }
 
     public void toggleLight(){
-        isLightOn=!isLightOn;
+        lightOn =!lightOn;
     }
 
     public boolean isLightOn() {
-        return isLightOn;
+        return lightOn;
     }
 
     public Wall getWallAtDirection(Direction direction){
@@ -90,18 +90,17 @@ public class Room {
             "There are no lights in this room");
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return id == room.id;
+        return roomNumber == room.roomNumber && gameId == room.gameId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(roomNumber, gameId);
     }
 
     @Override

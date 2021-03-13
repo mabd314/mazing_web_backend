@@ -48,11 +48,11 @@ public class WallBuilder {
 
   private static Wall buildDoorFromEntity(WallEntity wallEntity) {
     if (wallEntity.isLocked()) {
-      return new Door.Builder(wallEntity.getRoomId1(), wallEntity.getRoomId2())
+      return new Door.Builder(wallEntity.getRoom1Number(), wallEntity.getRoom2Number(),wallEntity.getGameId())
           .lockedWithKey(wallEntity.getLockingKeyId())
           .build();
     }
-    return new Door.Builder(wallEntity.getRoomId1(), wallEntity.getRoomId2())
+    return new Door.Builder(wallEntity.getRoom1Number(), wallEntity.getRoom2Number(),wallEntity.getGameId())
         .build();
   }
 

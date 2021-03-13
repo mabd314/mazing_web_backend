@@ -16,7 +16,7 @@ public class GameSettingsController {
 
     @RequestMapping(value="/games_settings/{gameId}",method = RequestMethod.GET)
     public GameSettingsEntity getGameSettings(@PathVariable int gameId){
-        return gameSettingsRepo.findByGameId(gameId);
+        return gameSettingsRepo.findById(gameId).get();
     }
 
     @RequestMapping(value="/games_settings",method=RequestMethod.POST)
@@ -31,8 +31,7 @@ public class GameSettingsController {
 
     @RequestMapping(value="/games_settings/{gameId}",method = RequestMethod.DELETE)
     public void deleteGameSettings(@PathVariable int gameId){
-        GameSettingsEntity gameSettingsEntity=gameSettingsRepo.findByGameId(gameId);
-        gameSettingsRepo.deleteById(gameSettingsEntity.getGameSettingId());
+        gameSettingsRepo.deleteById(gameId);
     }
 }
 
