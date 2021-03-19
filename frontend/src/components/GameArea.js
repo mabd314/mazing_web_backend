@@ -60,13 +60,8 @@ function GameArea(props){
                 </Col>
             </Row>
             <Row>
-                <Col xs='12'>
+                <Col xs='12' className='mt-5'>
                     <Response response={props.response}/>
-                </Col>
-            </Row>
-            <Row xs='1' className='m-5'>
-                <Col xs={{size:4,offset:4}}>
-                    <Button block outline color="danger" onClick={leaveGameButtonClicked}>Leave</Button>
                 </Col>
             </Row>
             <Row className='m-5'>
@@ -75,6 +70,11 @@ function GameArea(props){
                         <Col xs='12' md='6'><small>{playerName.userName}</small></Col>
                     )
                 })}
+            </Row>
+            <Row xs='1' className='m-5'>
+                <Col xs={{size:4,offset:4}}>
+                    <Button block outline color="danger" onClick={leaveGameButtonClicked}>Leave Game</Button>
+                </Col>
             </Row>
         </Container>
         )
@@ -89,16 +89,16 @@ function GameArea(props){
         <>
             <Start gameId={props.game.gameId} startGame={props.startGame}/>
             <Row className='m-5'>
-                <Col xs={{size:4,offset:4}}>
-                    <Button block outline color="danger" onClick={leaveGameButtonClicked}>Leave</Button>
-                </Col>
-            </Row>
-            <Row className='m-5'>
                 {props.game.playersNames.map(playerName=>{
                     return(
                         <Col xs='12' md='6'><small>{playerName.userName}</small></Col>
                     )
                 })}
+            </Row>
+            <Row className='m-5'>
+                <Col xs={{size:4,offset:4}}>
+                    <Button block outline color="danger" onClick={leaveGameButtonClicked}>Leave Game</Button>
+                </Col>
             </Row>
         </>
     )

@@ -15,7 +15,8 @@ ReactDOM.render(
         domain="moapps.us.auth0.com"
         clientId="ciZkBUWVuSZq6y9Yz7aNDY9VgHNAB5RR"
         audience="https://SpringTest.com"
-        redirectUri="http://localhost:3000/play">
+        redirectUri="http://localhost:3000/play"
+        >
       <App />
     </Auth0Provider>
   </React.StrictMode>,

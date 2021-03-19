@@ -1,23 +1,29 @@
 import react from 'react';
-import response from '../redux/response';
 import {
-    Row,
-    Col,
+    Alert,
+    
 } from 'reactstrap'
 
 function Play(props){
     if(props.response.isLoading)
-    return <h1>Loading...</h1>
+        return null;
     return(
-        <Row>
-        <Col xs='12' className='mt-5'>
-            <p>
-                Type: {props.response.type}
-                <br/>
-                description: {props.response.description}
+        <Alert color={props.response.color}>
+            <h4 className="alert-heading">{props.response.type}</h4>
+            <hr />
+            <p className="mb-0">
+                {props.response.description!==null?props.response.description.split("\n").map(element=>{
+                    return (
+                        <>
+                            <p>
+                                {element}
+                            </p>
+                            <br/>
+                        </>
+                    )
+                }):null}
             </p>
-        </Col>
-        </Row>
+        </Alert>
     )
 }
 

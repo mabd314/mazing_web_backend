@@ -3,6 +3,7 @@ import * as configs from '../requestBodies/configs';
 import * as difficulties from '../util/difficulties';
 import serverBase from './serverBase';
 
+const generalErrorMessage="Something went wrong. Refresh and try again.";
 export const gameStarting=()=>({
     type:actionTypes.GAME_STARTING
 })
@@ -41,8 +42,35 @@ export const responseLoading=()=>({
 
 export const editResponse=(response)=>({
     type:actionTypes.EDIT_RESPONSE,
-    payload:response
+    payload:{
+        description:response.description,
+        type:response.type,
+        color:getColor(response.type)
+    }
 });
+
+const getColor=responseType=>{
+    switch(responseType){
+        case 'FAILURE':
+            return 'danger';
+        case 'SUCCESS':
+            return 'primary';
+        case 'INVALID':
+            return 'danger';
+        case 'LOCKED':
+            return 'warning';
+        case 'EMPTY':
+            return 'warning';
+        case 'UNLOCKED':
+            return 'primary';
+        case 'WON':
+            return 'success';
+        case 'STATUS':
+            return 'info';
+        case 'LOST':
+            return 'danger';
+    }
+}
 
 export const editCommand=(newCommandText)=>({
     type:actionTypes.EDIT_COMMAND,
@@ -73,12 +101,12 @@ export const createGame=(token,difficulty)=>async dispatch=>{
             body: JSON.stringify(data)
         })
         if(response.status>=400)
-            return alert("can not create a game");
+            dispatch(gamesFailed(generalErrorMessage))
         const gameId=await response.json();
         dispatch(fetchGames());
         dispatch(chooseGame(token,gameId));
     }catch(err){
-        alert(err.message);
+        dispatch(gamesFailed("Something went wrong. Refresh and try again. "+err.message))
     }
 }
 
@@ -92,12 +120,12 @@ export const chooseGame=(token,gameId)=>async dispatch=>{
             },  
         })
         if(response.status>=400)
-            return alert("can not enter this game");
+            dispatch(gamesFailed("Something went wrong. Refresh and try again. "))
         const jsonPlayer=await response.json();
         dispatch(getFetchedPlayer(jsonPlayer));
         dispatch(fetchGames());
     }catch(err){
-        alert(err.message);
+        dispatch(gamesFailed("Something went wrong. Refresh and try again. "+err.message))
     }
 }
 
@@ -111,12 +139,12 @@ export const leaveGame=token=>async dispatch=>{
             },  
         })
         if(response.status>=400)
-            return alert("can not leave this game");
+            dispatch(gamesFailed("Something went wrong. Refresh and try again. "));
         const jsonPlayer=await response.json();
         dispatch(getFetchedPlayer(jsonPlayer));
         dispatch(fetchGames());
     }catch(err){
-        alert(err.message);
+        dispatch(gamesFailed("Something went wrong. Refresh and try again. "+err.message));
     }
 }
 
@@ -131,12 +159,12 @@ export const fetchPlayer=(token)=>async dispatch=>{
               },  
         })
         if(response.status>=400)
-            return alert("can not fetch this player");
+            dispatch(gamesFailed("Something went wrong. Refresh and try again. "))
         const jsonPlayer=await response.json();
         dispatch(getFetchedPlayer(jsonPlayer));
         dispatch(fetchGames());
     }catch(err){
-        alert(err.message);
+        dispatch(gamesFailed("Something went wrong. Refresh and try again. "+err.message));
     }
 }
 

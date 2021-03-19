@@ -41,7 +41,7 @@ public class GameService {
     }
 
     public Response executeCommand(String commandQuery){
-        try{
+//        try{
             String userName = playerService.getUserName();
             PlayerEntity playerEntity=playerRepo.getOne(userName);
             Player player=new Player(playerEntity);
@@ -60,9 +60,10 @@ public class GameService {
                 return Console.executeTradingCommand(player,commandQuery);
             else
                 return Console.executeMainCommand(player,commandQuery);
-        }catch (Exception exception) {
-            return new Response(ResponseType.FAILURE, exception.getMessage());
-        }
+//        }catch (Exception exception) {
+//            System.out.println(exception);
+//            return new Response(ResponseType.FAILURE, exception.getMessage());
+//        }
     }
 
     public void startGame(int gameId) {
@@ -82,6 +83,7 @@ public class GameService {
     public int createGame(GameConfigEntity gameConfigEntity) {        GameSettingsConfigEntity gameSettings=gameConfigEntity.getGameSettings();
         GameEntity gameEntity=new GameEntity();
         gameEntity.setSecondsNeeded(gameSettings.getSecondsNeeded());
+        gameEntity.setWinnerName("");
         gameEntity.save();
         int gameId=gameEntity.getGameId();
         GameSettingsEntity gameSettingsEntity=new GameSettingsEntity(gameId,gameSettings.getStartingDirection(),gameSettings.isStartingFlashLightOn(),gameSettings.getStartingCurrentRoomNumber(),gameSettings.getStartingGoldCount());

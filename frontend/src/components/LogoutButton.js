@@ -11,9 +11,12 @@ function LogoutButton() {
   } = useAuth0();
 
   return isAuthenticated && (
-    <Button color='danger' size='small' onClick={() => {
+    <Button color='light' outline className='nav-link' onClick={(event) => {
+      event.preventDefault();
       logout({ returnTo: window.location.origin });
-    }}>Log out</Button>
+    }}>
+    <span className='fa fa-sign-out'></span> logout
+    </Button>
   );
 }
 
