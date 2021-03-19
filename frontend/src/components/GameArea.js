@@ -53,7 +53,7 @@ function GameArea(props){
                 <Col xs='12'>
                     <Form>
                         <FormGroup>
-                            <Input type="textarea" name="commandText" id="commandText" value={props.commandText.text} onChange={commandTextChanged}/>
+                            <Input type="textarea" name="commandText" id="commandText" onChange={commandTextChanged} value={props.commandText.text} autoFocus onFocus={(event)=>{event.target.selectionStart=event.target.value.length}}/>
                         </FormGroup>
                         <Button outline color="primary" size="lg" block onClick={commitButtonClicked}>Execute</Button>
                     </Form>

@@ -40,17 +40,19 @@ public class Painting extends Wall {
 
   @Override
   public Response wallSpecificCheck(Player player) {
-    if (hidden.equals(NoKey.getInstance())) {
-      return new Response(ResponseType.EMPTY, "There is nothing behind this painting");
-    }
-    player.addItem(hidden);
-    hidden.setUserName(player.getUserName());
-    hidden.setWallId(0);
-    hidden.getItemEntity().save();
-    Response status =
-        new Response(ResponseType.SUCCESS, "You found " + hidden + " behind this painting");
-    clear();
-    return status;
+//    synchronized (Painting.this){
+      if (hidden.equals(NoKey.getInstance())) {
+        return new Response(ResponseType.EMPTY, "There is nothing behind this painting");
+      }
+      player.addItem(hidden);
+      hidden.setUserName(player.getUserName());
+      hidden.setWallId(0);
+      hidden.getItemEntity().save();
+      Response status =
+              new Response(ResponseType.SUCCESS, "You found " + hidden + " behind this painting");
+      clear();
+      return status;
+//    }
   }
 
   @Override

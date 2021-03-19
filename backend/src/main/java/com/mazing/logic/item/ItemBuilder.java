@@ -1,4 +1,4 @@
-package com.mazing.logic.map;
+package com.mazing.logic.item;
 
 import com.mazing.entities.ItemEntity;
 import com.mazing.logic.item.*;

@@ -5,7 +5,7 @@ import com.mazing.entities.Response;
 import com.mazing.entities.ResponseType;
 import com.mazing.entities.RoomEntity;
 import com.mazing.entities.WallEntity;
-import com.mazing.logic.map.WallBuilder;
+import com.mazing.logic.wall.WallBuilder;
 import com.mazing.logic.wall.Wall;
 import com.mazing.logic.wall.WallType;
 
@@ -67,7 +67,9 @@ public class Room {
     }
 
     public void toggleLight(){
-        lightOn =!lightOn;
+//        synchronized (Room.class){
+            lightOn =!lightOn;
+//        }
     }
 
     public boolean isLightOn() {

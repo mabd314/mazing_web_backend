@@ -1,9 +1,10 @@
-package com.mazing.logic.map;
+package com.mazing.logic.wall;
 
 import com.mazing.entities.ItemEntity;
 import com.mazing.Repositories;
 import com.mazing.entities.WallEntity;
 import com.mazing.logic.item.Item;
+import com.mazing.logic.item.ItemBuilder;
 import com.mazing.logic.item.Key;
 import com.mazing.logic.item.NoKey;
 import com.mazing.logic.wall.*;
@@ -53,7 +54,8 @@ public class WallBuilder {
           .build();
     }
     return new Door.Builder(wallEntity.getRoom1Number(), wallEntity.getRoom2Number(),wallEntity.getGameId())
-        .build();
+          .unlockedWithKey(wallEntity.getLockingKeyId())
+          .build();
   }
 
   private static Wall buildSellerFromEntity(WallEntity wallEntity) {
@@ -72,6 +74,7 @@ public class WallBuilder {
     }
 
     return new Chest.Builder(items)
+        .unlockedWithKey(wallEntity.getLockingKeyId())
         .build();
   }
 

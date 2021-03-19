@@ -4,7 +4,9 @@ public class BackwardCommand extends MainCommand {
 
   @Override
   public void execute() {
-    setResponse(getPlayer().throughWallAtDirection(getPlayer().oppositeDirection()));
-    getPlayer().getPlayerEntity().save();
+    synchronized (BackwardCommand.this){
+      setResponse(getPlayer().throughWallAtDirection(getPlayer().oppositeDirection()));
+      getPlayer().getPlayerEntity().save();
+    }
   }
 }

@@ -35,17 +35,19 @@ public class Mirror extends Wall {
 
   @Override
   public Response wallSpecificCheck(Player player) {
-    if (hidden.equals(NoKey.getInstance())) {
-      return new Response(ResponseType.EMPTY, "There is nothing behind this mirror");
-    }
-    player.addItem(hidden);
-    hidden.setUserName(player.getUserName());
-    hidden.setWallId(0);
-    hidden.getItemEntity().save();
-    Response status =
-        new Response(ResponseType.SUCCESS, "You found " + hidden + " behind this mirror");
-    clear();
-    return status;
+//    synchronized (Mirror.this){
+      if (hidden.equals(NoKey.getInstance())) {
+        return new Response(ResponseType.EMPTY, "There is nothing behind this mirror");
+      }
+      player.addItem(hidden);
+      hidden.setUserName(player.getUserName());
+      hidden.setWallId(0);
+      hidden.getItemEntity().save();
+      Response status =
+              new Response(ResponseType.SUCCESS, "You found " + hidden + " behind this mirror");
+      clear();
+      return status;
+//    }
   }
 
   @Override

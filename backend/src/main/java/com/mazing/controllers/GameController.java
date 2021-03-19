@@ -41,5 +41,10 @@ public class GameController {
     public int createGame(@RequestBody GameConfigEntity gameConfigEntity){
         return gameService.createGame(gameConfigEntity);
     }
+
+    @RequestMapping(value="/walls",method = RequestMethod.GET)
+    public List<WallEntity> getWalls(){
+        return wallRepo.findAll();
+    }
 }
 

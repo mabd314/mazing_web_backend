@@ -9,7 +9,7 @@ import com.mazing.logic.item.FlashLight;
 import com.mazing.logic.item.Gold;
 import com.mazing.logic.item.Item;
 import com.mazing.logic.item.ItemType;
-import com.mazing.logic.map.ItemBuilder;
+import com.mazing.logic.item.ItemBuilder;
 import com.mazing.logic.wall.Wall;
 import com.mazing.logic.wall.WallType;
 

@@ -13,8 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Door extends Wall {
-
-  public static List<Door> doors = new ArrayList<>();
   private final Key key;
   private int[] connectingRoomsNumbers;
   private boolean isLocked;
@@ -40,14 +38,13 @@ public class Door extends Wall {
       return this;
     }
 
+    public Builder unlockedWithKey(int keyId){
+      this.key=new Key(keyId);
+      return this;
+    }
+
     public Door build() {
-      Door newDoor = new Door(this);
-      int index = doors.indexOf(newDoor);
-      if (index != -1) {
-        return doors.get(index);
-      }
-      doors.add(newDoor);
-      return newDoor;
+      return new Door(this);
     }
   }
 
@@ -56,10 +53,6 @@ public class Door extends Wall {
     gameId=builder.gameId;
     isLocked = builder.isLocked;
     key = builder.key;
-  }
-
-  public static void clear() {
-    doors.clear();
   }
 
   public void toggleLocking() {
@@ -108,15 +101,20 @@ public class Door extends Wall {
 
   @Override
   public Response getThrough(Player player) {
-    if (isLocked) {
-      return new Response(ResponseType.FAILURE, "The door is locked");
-    }
-    player.setCurrentRoomNumber(getRoomNumberAcross(player));
-    if(player.getGame().getRoomFromNumber(player.getCurrentRoomNumber()).isEndRoom()){
-      player.getGame().winGame(player.getUserName());
-      return getWiningResponse(player.getGame());
-    }
-    return new Response(ResponseType.SUCCESS, "You moved through the door");
+//    synchronized (Door.class){
+      if (isLocked) {
+        return new Response(ResponseType.FAILURE, "The door is locked");
+      }
+      if(player.getGame().isHasEnded()){
+        return new Response(ResponseType.FAILURE, "Game Ended");
+      }
+      player.setCurrentRoomNumber(getRoomNumberAcross(player));
+      if(player.getGame().getRoomFromNumber(player.getCurrentRoomNumber()).isEndRoom()){
+        player.getGame().winGame(player.getUserName());
+        return getWiningResponse(player.getGame());
+      }
+      return new Response(ResponseType.SUCCESS, "You moved through the door");
+//    }
   }
 
   @Override
@@ -135,11 +133,6 @@ public class Door extends Wall {
     toggleLocking();
     getWallEntity().save();
     return new Response(ResponseType.SUCCESS, "Door is " + (isLocked ? "locked" : "unlocked"));
-  }
-
-  @Override
-  public String toString() {
-    return "Door";
   }
 
   @Override

@@ -13,10 +13,12 @@ public class CheckCommand extends MainCommand {
 
   @Override
   public void execute() {
-    Wall wall = getPlayer().facingWall();
-    if (wallName.equals(" ")) setResponse(new Response(ResponseType.INVALID, "wrong command"));
-    else setResponse(wall.check(getPlayer(), wallName));
-    wall.getWallEntity().save();
-    getPlayer().getPlayerEntity().save();
+    synchronized (CheckCommand.class){
+      Wall wall = getPlayer().facingWall();
+      if (wallName.equals(" ")) setResponse(new Response(ResponseType.INVALID, "wrong command"));
+      else setResponse(wall.check(getPlayer(), wallName));
+      wall.getWallEntity().save();
+      getPlayer().getPlayerEntity().save();
+    }
   }
 }

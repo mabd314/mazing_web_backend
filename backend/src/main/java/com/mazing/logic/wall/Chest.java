@@ -34,6 +34,11 @@ public class Chest extends Wall {
       return this;
     }
 
+    public Builder unlockedWithKey(int keyId){
+      this.key=new Key(keyId);
+      return this;
+    }
+
     public Chest build() {
       return new Chest(this);
     }
@@ -60,7 +65,9 @@ public class Chest extends Wall {
   }
 
   public void toggleLocking() {
-    isLocked = !isLocked;
+//    synchronized (Chest.class){
+      isLocked = !isLocked;
+//    }
   }
 
   public Key getKey() {
@@ -74,22 +81,24 @@ public class Chest extends Wall {
 
   @Override
   public Response wallSpecificCheck(Player player) {
-    if (isLocked) {
-      return new Response(ResponseType.LOCKED, "Chest is locked, " + key + " is needed to unlock!");
-    }
-    if (inside.isEmpty()) {
-      return new Response(ResponseType.EMPTY, "Chest is empty!");
-    }
-    player.addItems(inside);
-    for(Item item:inside){
-      item.setUserName(player.getUserName());
-      item.setWallId(0);
-      item.getItemEntity().save();
-    }
-    Response status =
-        new Response(ResponseType.SUCCESS, "Chest is unlocked, Items acquired: " + inside);
-    clearInside();
-    return status;
+//    synchronized (Chest.class){
+      if (isLocked) {
+        return new Response(ResponseType.LOCKED, "Chest is locked, " + key + " is needed to unlock!");
+      }
+      if (inside.isEmpty()) {
+        return new Response(ResponseType.EMPTY, "Chest is empty!");
+      }
+      player.addItems(inside);
+      for(Item item:inside){
+        item.setUserName(player.getUserName());
+        item.setWallId(0);
+        item.getItemEntity().save();
+      }
+      Response status =
+              new Response(ResponseType.SUCCESS, "Chest is unlocked, Items acquired: " + inside);
+      clearInside();
+      return status;
+//    }
   }
 
   @Override
