@@ -1,5 +1,7 @@
 package com.mazing;
 
+import com.mazing.repos.*;
+
 public class Repositories {
     public static PlayerRepo playerRepo;
     public static ItemRepo itemRepo;

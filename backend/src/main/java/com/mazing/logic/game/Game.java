@@ -1,6 +1,10 @@
 package com.mazing.logic.game;
 
 import com.mazing.*;
+import com.mazing.entities.GameEntity;
+import com.mazing.entities.Response;
+import com.mazing.entities.ResponseType;
+import com.mazing.entities.RoomId;
 
 import java.util.Objects;
 
@@ -38,7 +42,6 @@ public class Game {
   }
 
   public boolean isTimeOut(){
-    System.out.println((System.currentTimeMillis()-startTime)/1000);
     return (((System.currentTimeMillis()-startTime)/1000)>secondsNeeded);
   }
 

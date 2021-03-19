@@ -1,4 +1,4 @@
-package com.mazing;
+package com.mazing.entities;
 
 public class Response {
 

@@ -1,6 +1,6 @@
 package com.mazing.logic.map;
 
-import com.mazing.ItemEntity;
+import com.mazing.entities.ItemEntity;
 import com.mazing.logic.item.*;
 
 import java.util.ArrayList;

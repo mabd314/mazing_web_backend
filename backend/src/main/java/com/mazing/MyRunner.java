@@ -1,5 +1,6 @@
 package com.mazing;
 
+import com.mazing.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

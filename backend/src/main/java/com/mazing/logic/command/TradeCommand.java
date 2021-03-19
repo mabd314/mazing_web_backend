@@ -1,6 +1,6 @@
 package com.mazing.logic.command;
 
-import com.mazing.ResponseType;
+import com.mazing.entities.ResponseType;
 
 public class TradeCommand extends MainCommand {
 

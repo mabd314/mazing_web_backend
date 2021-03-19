@@ -1,5 +1,6 @@
-package com.mazing;
+package com.mazing.entities;
 
+import com.mazing.Repositories;
 import com.mazing.logic.item.ItemType;
 
 import javax.persistence.*;

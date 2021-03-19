@@ -1,5 +1,6 @@
-package com.mazing;
+package com.mazing.repos;
 
+import com.mazing.entities.ItemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;

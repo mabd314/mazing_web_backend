@@ -1,7 +1,7 @@
 package com.mazing.logic.item;
 
-import com.mazing.ItemEntity;
-import com.mazing.Response;
+import com.mazing.entities.ItemEntity;
+import com.mazing.entities.Response;
 import com.mazing.logic.game.Player;
 import com.mazing.logic.wall.Wall;
 

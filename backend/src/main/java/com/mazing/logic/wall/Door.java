@@ -1,8 +1,8 @@
 package com.mazing.logic.wall;
 
-import com.mazing.Response;
-import com.mazing.ResponseType;
-import com.mazing.WallEntity;
+import com.mazing.entities.Response;
+import com.mazing.entities.ResponseType;
+import com.mazing.entities.WallEntity;
 import com.mazing.logic.game.Game;
 import com.mazing.logic.game.Player;
 import com.mazing.logic.item.Key;

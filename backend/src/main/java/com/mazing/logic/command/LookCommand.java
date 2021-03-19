@@ -1,7 +1,7 @@
 package com.mazing.logic.command;
 
-import com.mazing.Response;
-import com.mazing.ResponseType;
+import com.mazing.entities.Response;
+import com.mazing.entities.ResponseType;
 
 public class LookCommand extends MainCommand {
 

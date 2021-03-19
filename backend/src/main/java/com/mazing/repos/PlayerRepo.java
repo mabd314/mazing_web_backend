@@ -1,6 +1,6 @@
-package com.mazing;
+package com.mazing.repos;
 
-import com.mazing.logic.game.Player;
+import com.mazing.entities.PlayerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

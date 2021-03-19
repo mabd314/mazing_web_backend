@@ -1,6 +1,10 @@
 package com.mazing.logic.game;
 
 import com.mazing.*;
+import com.mazing.entities.GameEntity;
+import com.mazing.entities.ItemEntity;
+import com.mazing.entities.PlayerEntity;
+import com.mazing.entities.Response;
 import com.mazing.logic.item.FlashLight;
 import com.mazing.logic.item.Gold;
 import com.mazing.logic.item.Item;

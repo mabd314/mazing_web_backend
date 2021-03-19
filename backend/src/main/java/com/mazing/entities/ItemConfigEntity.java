@@ -1,4 +1,4 @@
-package com.mazing;
+package com.mazing.entities;
 
 import com.mazing.logic.game.Direction;
 import com.mazing.logic.item.ItemType;

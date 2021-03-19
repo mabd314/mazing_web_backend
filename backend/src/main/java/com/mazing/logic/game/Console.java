@@ -1,6 +1,6 @@
 package com.mazing.logic.game;
 
-import com.mazing.Response;
+import com.mazing.entities.Response;
 import com.mazing.logic.command.Command;
 import com.mazing.logic.command.MainCommand;
 import com.mazing.logic.command.TradingCommand;

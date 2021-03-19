@@ -1,5 +1,6 @@
-package com.mazing;
+package com.mazing.repos;
 
+import com.mazing.entities.WallEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

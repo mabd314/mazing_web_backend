@@ -1,16 +1,29 @@
-package com.mazing;
+package com.mazing.entities;
 
 import com.mazing.logic.game.Direction;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
-public class GameSettingsConfigEntity {
+@Entity
+public class GameSettingsEntity {
+    @Id
+    private int gameId;
+    @Enumerated(EnumType.STRING)
     private Direction startingDirection;
     private boolean startingFlashLightOn;
     private int startingCurrentRoomNumber;
     private int startingGoldCount;
-    private int secondsNeeded;
+
+    public GameSettingsEntity() {
+    }
+
+    public GameSettingsEntity(int gameId, Direction startingDirection, boolean startingFlashLightOn, int startingCurrentRoomNumber, int startingGoldCount) {
+        this.gameId = gameId;
+        this.startingDirection = startingDirection;
+        this.startingFlashLightOn = startingFlashLightOn;
+        this.startingCurrentRoomNumber = startingCurrentRoomNumber;
+        this.startingGoldCount = startingGoldCount;
+    }
 
     public Direction getStartingDirection() {
         return startingDirection;
@@ -44,11 +57,11 @@ public class GameSettingsConfigEntity {
         this.startingGoldCount = startingGoldCount;
     }
 
-    public int getSecondsNeeded() {
-        return secondsNeeded;
+    public int getGameId() {
+        return gameId;
     }
 
-    public void setSecondsNeeded(int secondsNeeded) {
-        this.secondsNeeded = secondsNeeded;
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
     }
 }

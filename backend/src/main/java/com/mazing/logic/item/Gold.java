@@ -1,6 +1,6 @@
 package com.mazing.logic.item;
 
-import com.mazing.ItemEntity;
+import com.mazing.entities.ItemEntity;
 
 public class Gold extends Item {
 

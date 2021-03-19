@@ -1,4 +1,6 @@
-package com.mazing;
+package com.mazing.entities;
+
+import com.mazing.Repositories;
 
 import javax.persistence.*;
 

@@ -1,7 +1,7 @@
 package com.mazing.logic.command;
 
-import com.mazing.Response;
-import com.mazing.ResponseType;
+import com.mazing.entities.Response;
+import com.mazing.entities.ResponseType;
 import com.mazing.logic.wall.Wall;
 
 public class CheckCommand extends MainCommand {

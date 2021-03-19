@@ -1,8 +1,8 @@
 package com.mazing.logic.map;
 
-import com.mazing.ItemEntity;
+import com.mazing.entities.ItemEntity;
 import com.mazing.Repositories;
-import com.mazing.WallEntity;
+import com.mazing.entities.WallEntity;
 import com.mazing.logic.item.Item;
 import com.mazing.logic.item.Key;
 import com.mazing.logic.item.NoKey;

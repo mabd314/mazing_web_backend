@@ -1,6 +1,6 @@
 package com.mazing.logic.command;
 
-import com.mazing.Response;
+import com.mazing.entities.Response;
 import com.mazing.logic.game.Game;
 import com.mazing.logic.game.Player;
 

@@ -1,29 +1,48 @@
-package com.mazing;
+package com.mazing.services;
 
+import com.mazing.entities.*;
 import com.mazing.logic.game.Console;
 import com.mazing.logic.game.Game;
 import com.mazing.logic.game.Player;
 import com.mazing.logic.wall.WallType;
-import com.mazing.security.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import static com.mazing.Repositories.*;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin()
-@RestController
-public class GameController {
+import static com.mazing.Repositories.*;
+
+@Service
+public class GameService {
 
     @Autowired
-    UserService userService;
+    PlayerService playerService;
 
-    @RequestMapping(value="games/execute",method = RequestMethod.POST)
-    public Response executeCommand(@RequestParam String query){
+    public void deleteGameById(int gameId){
+        gameRepo.deleteById(gameId);
+        gameSettingsRepo.deleteById(gameId);
+        List<PlayerEntity> playerEntities = playerRepo.findByGameId(gameId);
+        for(PlayerEntity playerEntity:playerEntities){
+            playerEntity.setGameId(0);
+            playerEntity.setCurrentRoomNumber(0);
+            playerEntity.setFlashLightOn(false);
+            playerEntity.setInTradeMode(false);
+            playerEntity.setGoldCount(0);
+            playerEntity.setDirection(null);
+            itemRepo.deleteByUserName(playerEntity.getUserName());
+        }
+        List<WallEntity> wallEntities=wallRepo.findByGameId(gameId);
+        for(WallEntity wallEntity:wallEntities){
+            itemRepo.deleteByWallId(wallEntity.getWallId());
+            wallRepo.delete(wallEntity);
+        }
+        roomRepo.deleteByGameId(gameId);
+    }
+
+    public Response executeCommand(String commandQuery){
         try{
-            String userName = userService.getUserName();
+            String userName = playerService.getUserName();
             PlayerEntity playerEntity=playerRepo.getOne(userName);
             Player player=new Player(playerEntity);
             Game game=player.getGame();
@@ -38,22 +57,20 @@ public class GameController {
             if(game.isHasEnded())
                 return new Response(ResponseType.LOST,"Player "+game.getWinnerName()+" has won the game");
             if(playerEntity.isInTradeMode())
-                return Console.executeTradingCommand(player,query);
+                return Console.executeTradingCommand(player,commandQuery);
             else
-                return Console.executeMainCommand(player,query);
+                return Console.executeMainCommand(player,commandQuery);
         }catch (Exception exception) {
             return new Response(ResponseType.FAILURE, exception.getMessage());
         }
     }
 
-    @RequestMapping(value="games/{gameId}/start",method = RequestMethod.GET)
-    public void startGame(@PathVariable("gameId") int gameId){
+    public void startGame(int gameId) {
         Game game=new Game(gameRepo.findById(gameId).get());
         game.startGame();
     }
 
-    @RequestMapping(value="games/{gameId}/playersNames",method = RequestMethod.GET)
-    public List<PlayerName> getPlayerNames(@PathVariable int gameId){
+    public List<PlayerName> getPlayerNames(int gameId) {
         List<PlayerEntity> playerEntities = playerRepo.findByGameId(gameId);
         List<PlayerName> playerNames=new ArrayList<>();
         for(PlayerEntity playerEntity: playerEntities){
@@ -62,34 +79,7 @@ public class GameController {
         return playerNames;
     }
 
-    @RequestMapping(value="/games",method = RequestMethod.GET)
-    public List<GameEntity> getGames(){
-        return gameRepo.findAll();
-    }
-
-    @RequestMapping(value="/games/{gameId}",method = RequestMethod.GET)
-    public GameEntity getGame(@PathVariable int gameId){
-        return gameRepo.findById(gameId).get();
-    }
-
-    @RequestMapping(value="/games/",method=RequestMethod.POST)
-    public GameEntity postGame(@RequestBody GameEntity gameEntity){
-        return gameRepo.save(gameEntity);
-    }
-
-    @RequestMapping(value="/games/list",method=RequestMethod.POST)
-    public List<GameEntity> postGames(@RequestBody List<GameEntity> gameEntities){
-        return gameRepo.saveAll(gameEntities);
-    }
-
-    @RequestMapping(value="/games/{gameId}",method = RequestMethod.DELETE)
-    public void deleteGame(@PathVariable int gameId){
-        gameRepo.deleteById(gameId);
-    }
-
-    @RequestMapping(value="/games/create",method = RequestMethod.POST)
-    public int createGame(@RequestBody GameConfigEntity gameConfigEntity){
-        GameSettingsConfigEntity gameSettings=gameConfigEntity.getGameSettings();
+    public int createGame(GameConfigEntity gameConfigEntity) {        GameSettingsConfigEntity gameSettings=gameConfigEntity.getGameSettings();
         GameEntity gameEntity=new GameEntity();
         gameEntity.setSecondsNeeded(gameSettings.getSecondsNeeded());
         gameEntity.save();
@@ -146,4 +136,3 @@ public class GameController {
         return gameId;
     }
 }
-

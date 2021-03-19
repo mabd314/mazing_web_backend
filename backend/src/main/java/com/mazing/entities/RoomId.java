@@ -1,6 +1,4 @@
-package com.mazing;
-
-import com.mazing.logic.game.Direction;
+package com.mazing.entities;
 
 import java.io.Serializable;
 import java.util.Objects;

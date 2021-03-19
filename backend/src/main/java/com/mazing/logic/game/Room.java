@@ -1,6 +1,10 @@
 package com.mazing.logic.game;
 
 import com.mazing.*;
+import com.mazing.entities.Response;
+import com.mazing.entities.ResponseType;
+import com.mazing.entities.RoomEntity;
+import com.mazing.entities.WallEntity;
 import com.mazing.logic.map.WallBuilder;
 import com.mazing.logic.wall.Wall;
 import com.mazing.logic.wall.WallType;
