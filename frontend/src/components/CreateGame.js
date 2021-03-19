@@ -1,5 +1,6 @@
-import react,{useState} from 'react';
+import react,{useEffect, useState} from 'react';
 import * as difficulties from '../util/difficulties';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import {
     Button,
@@ -15,11 +16,17 @@ import {
 function CreateGame(props){
 
     const [difficulty,setDifficulty]=useState("");
+    const {getAccessTokenSilently} = useAuth0();
+
+    const handleCreateGameButtonClick=async()=>{
+        const token=await getAccessTokenSilently();
+        props.createGame(token,difficulty)
+    }
 
     return(
         <Col xs={{size:6,offset:3}}>
             <Form>
-                <Button disabled={difficulty===""} outline color="success" size="lg" block onClick={()=>props.createGame(props.userName,difficulty)}>Create Game</Button>
+                <Button disabled={difficulty===""} outline color="success" size="lg" block onClick={handleCreateGameButtonClick}>Create Game</Button>
                 <Row className='mt-2'>
                     <Col>
                         <FormGroup check>

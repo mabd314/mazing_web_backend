@@ -13,7 +13,7 @@ import {startGame,
         editCommand,
         fetchGames,
         chooseGame,
-        choosePlayer,
+        fetchPlayer,
         leaveGame,
         createGame,
     } from '../redux/actionCreators'
@@ -24,19 +24,19 @@ const mapStateToProps=state=>({
     response:state.response,
     commandText:state.commandText,
     games:state.games,
-    activePlayer:state.activePlayer,
-})
+    activePlayer:state.activePlayer
+});
 
 const mapDispatchToProps=dispatch=>({
     startGame: gameId=>dispatch(startGame(gameId)),
-    executeCommand: (query,userName)=>dispatch(executeCommand(query,userName)),
+    executeCommand: (query,token)=>dispatch(executeCommand(query,token)),
     editCommand: newCommandText=>dispatch(editCommand(newCommandText)),
     fetchGames: ()=>dispatch(fetchGames()),
-    chooseGame: (userName,gameId)=>dispatch(chooseGame(userName,gameId)),
-    choosePlayer:userName=>dispatch(choosePlayer(userName)),
-    leaveGame: userName=>dispatch(leaveGame(userName)),
-    createGame: (userName,difficulty)=>dispatch(createGame(userName,difficulty)),
-})
+    chooseGame: (token,gameId)=>dispatch(chooseGame(token,gameId)),
+    fetchPlayer:token=>dispatch(fetchPlayer(token)),
+    leaveGame: token=>dispatch(leaveGame(token)),
+    createGame: (token,difficulty)=>dispatch(createGame(token,difficulty)),
+});
 
         
 class Main extends Component{
@@ -49,8 +49,20 @@ class Main extends Component{
         return(
             <Switch>
                 <Route path='/play'>
-                    <Play createGame={this.props.createGame} leaveGame={this.props.leaveGame} choosePlayer={this.props.choosePlayer} activePlayer={this.props.activePlayer} chooseGame={this.props.chooseGame} games={this.props.games} fetchGames={this.props.fetchGames} executeCommand={this.props.executeCommand} commandText={this.props.commandText} editCommand={this.props.editCommand} response={this.props.response} startGame={this.props.startGame}></Play>
-                    {/* <GameArea user={this.props.user} executeCommand={this.props.executeCommand} commandText={this.props.commandText} editCommand={this.props.editCommand} response={this.props.response} startGame={this.props.startGame} game={this.props.game}/> */}
+                    <Play 
+                        createGame={this.props.createGame}
+                        leaveGame={this.props.leaveGame}
+                        fetchPlayer={this.props.fetchPlayer}
+                        chooseGame={this.props.chooseGame}
+                        games={this.props.games}
+                        fetchGames={this.props.fetchGames}
+                        executeCommand={this.props.executeCommand}
+                        commandText={this.props.commandText}
+                        editCommand={this.props.editCommand}
+                        response={this.props.response}
+                        startGame={this.props.startGame}
+                        activePlayer={this.props.activePlayer}>
+                    </Play>
                 </Route>
             <Route path='/home'>
                 {/* <Home/> */}

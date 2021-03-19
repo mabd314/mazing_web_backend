@@ -13,8 +13,11 @@ import {
 
 import Start from './Start';
 import Response from './Response';
-import { leaveGame } from '../redux/actionCreators';
+import { useAuth0 } from '@auth0/auth0-react';
+
 function GameArea(props){
+
+    const {getAccessTokenSilently} = useAuth0();
 
     const isKeyClickedIsEnter=(value)=>{
         const numberOfLineBreaks = (value.match(/\n/g)||[]).length;
@@ -25,14 +28,23 @@ function GameArea(props){
 
     const commandTextChanged=event=>{
         if(isKeyClickedIsEnter(event.target.value))
-            buttonClicked();
+            commitButtonClicked();
         else
             props.editCommand(event.target.value)
     }
 
-    const buttonClicked=()=>{
-        props.executeCommand(props.commandText.text,props.activePlayer.player.userName)
+    const commitButtonClicked=async()=>{
+        const token=await getAccessTokenSilently();
+        props.executeCommand(props.commandText.text,token)
     }
+
+    const leaveGameButtonClicked=async()=>{
+        const token=await getAccessTokenSilently();
+        props.leaveGame(token);
+    }
+
+    if(!props.game)
+        leaveGameButtonClicked();
 
     if(props.game.hasStarted)
         return(
@@ -43,7 +55,7 @@ function GameArea(props){
                         <FormGroup>
                             <Input type="textarea" name="commandText" id="commandText" value={props.commandText.text} onChange={commandTextChanged}/>
                         </FormGroup>
-                        <Button outline color="primary" size="lg" block onClick={buttonClicked}>Execute</Button>
+                        <Button outline color="primary" size="lg" block onClick={commitButtonClicked}>Execute</Button>
                     </Form>
                 </Col>
             </Row>
@@ -54,7 +66,7 @@ function GameArea(props){
             </Row>
             <Row xs='1' className='m-5'>
                 <Col xs={{size:4,offset:4}}>
-                    <Button block outline color="danger" onClick={()=>props.leaveGame(props.activePlayer.player.userName)}>Leave</Button>
+                    <Button block outline color="danger" onClick={leaveGameButtonClicked}>Leave</Button>
                 </Col>
             </Row>
             <Row className='m-5'>
@@ -78,7 +90,7 @@ function GameArea(props){
             <Start gameId={props.game.gameId} startGame={props.startGame}/>
             <Row className='m-5'>
                 <Col xs={{size:4,offset:4}}>
-                    <Button block outline color="danger" onClick={()=>props.leaveGame(props.activePlayer.player.userName)}>Leave</Button>
+                    <Button block outline color="danger" onClick={leaveGameButtonClicked}>Leave</Button>
                 </Col>
             </Row>
             <Row className='m-5'>

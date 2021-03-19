@@ -35,7 +35,22 @@ export const gameStartingFinished=()=>({
     type:actionTypes.GAME_STARTING_FINISHED,
 })
 
-export const createGame=(userName,difficulty)=>async dispatch=>{
+export const responseLoading=()=>({
+    type:actionTypes.RESPONSE_LOADING
+});
+
+export const editResponse=(response)=>({
+    type:actionTypes.EDIT_RESPONSE,
+    payload:response
+});
+
+export const editCommand=(newCommandText)=>({
+    type:actionTypes.EDIT_COMMAND,
+    payload:newCommandText
+});
+
+
+export const createGame=(token,difficulty)=>async dispatch=>{
     try{
         let data="";
         switch(difficulty){
@@ -52,7 +67,8 @@ export const createGame=(userName,difficulty)=>async dispatch=>{
         const response=await fetch(serverBase+"/games/create",{
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+token
             },
             body: JSON.stringify(data)
         })
@@ -60,15 +76,21 @@ export const createGame=(userName,difficulty)=>async dispatch=>{
             return alert("can not create a game");
         const gameId=await response.json();
         dispatch(fetchGames());
-        dispatch(chooseGame(userName,gameId));
+        dispatch(chooseGame(token,gameId));
     }catch(err){
         alert(err.message);
     }
 }
 
-export const chooseGame=(userName,gameId)=>async dispatch=>{
+export const chooseGame=(token,gameId)=>async dispatch=>{
     try{
-        const response=await fetch(serverBase+`/players/${userName}/chooseGame/${gameId}`)
+        const response=await fetch(serverBase+`/players/chooseGame/${gameId}`,{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+token
+            },  
+        })
         if(response.status>=400)
             return alert("can not enter this game");
         const jsonPlayer=await response.json();
@@ -79,9 +101,15 @@ export const chooseGame=(userName,gameId)=>async dispatch=>{
     }
 }
 
-export const leaveGame=(userName)=>async dispatch=>{
+export const leaveGame=token=>async dispatch=>{
     try{
-        const response=await fetch(serverBase+`/players/${userName}/leaveGame`)
+        const response=await fetch(serverBase+`/players/leaveGame`,{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+token
+            },  
+        })
         if(response.status>=400)
             return alert("can not leave this game");
         const jsonPlayer=await response.json();
@@ -93,13 +121,20 @@ export const leaveGame=(userName)=>async dispatch=>{
 }
 
 
-export const choosePlayer=(userName)=>async dispatch=>{
+export const fetchPlayer=(token)=>async dispatch=>{
     try{
-        const response=await fetch(serverBase+`/players/${userName}`)
+        const response=await fetch(serverBase+`/players/getPlayer`,{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+token
+              },  
+        })
         if(response.status>=400)
             return alert("can not fetch this player");
         const jsonPlayer=await response.json();
         dispatch(getFetchedPlayer(jsonPlayer));
+        dispatch(fetchGames());
     }catch(err){
         alert(err.message);
     }
@@ -150,14 +185,21 @@ export const getPlayersNamesFromGameId=async gameId=>{
 
 
 
-export const executeCommand=(query,userName)=>async dispatch=>{
+export const executeCommand=(query,token)=>async dispatch=>{
     dispatch(responseLoading());
     try{
-        const response=await fetch(serverBase+`/games/execute/${userName}?`+new URLSearchParams({
+        const response=await fetch(serverBase+`/games/execute?`+new URLSearchParams({
             query
-        }))
+        }),{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+token
+            },  
+        })
         const jsonResponse= await response.json();
         dispatch(editResponse(jsonResponse));
+        dispatch(fetchGames());
     }catch(err){
         dispatch(editResponse({
             type:"Server Error",
@@ -165,19 +207,4 @@ export const executeCommand=(query,userName)=>async dispatch=>{
         }))
     }
 };
-
-export const responseLoading=()=>({
-    type:actionTypes.RESPONSE_LOADING
-});
-
-export const editResponse=(response)=>({
-    type:actionTypes.EDIT_RESPONSE,
-    payload:response
-});
-
-export const editCommand=(newCommandText)=>({
-    type:actionTypes.EDIT_COMMAND,
-    payload:newCommandText
-});
-
 

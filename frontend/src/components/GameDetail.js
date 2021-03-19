@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import react from 'react';
 import {
         Row,
@@ -11,9 +12,17 @@ import {
         Badge,
         Button,
 } from 'reactstrap';
-import activePlayer from '../redux/activePlayer';
+
 
 function GameDetail(props){
+
+    const {getAccessTokenSilently} = useAuth0();
+
+    const enterGameButtonClicked=async()=>{
+        const token=await getAccessTokenSilently();
+        props.chooseGame(token,props.game.gameId)
+    }
+    
     return (
         <Col xs='6' sm='6' md='3' lg='2' key={props.game.gameId} className='my-3' >
             <Card>
@@ -31,7 +40,7 @@ function GameDetail(props){
                         </Row>
                     </CardText>
                 </CardBody>
-                    <Button color="primary" onClick={()=>props.chooseGame(props.activePlayer.player.userName,props.game.gameId)}>Enter Game</Button>
+                    <Button color="primary" onClick={enterGameButtonClicked}>Enter Game</Button>
             </Card>
         </Col>
     )

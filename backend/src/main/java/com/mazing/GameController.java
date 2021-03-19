@@ -4,6 +4,8 @@ import com.mazing.logic.game.Console;
 import com.mazing.logic.game.Game;
 import com.mazing.logic.game.Player;
 import com.mazing.logic.wall.WallType;
+import com.mazing.security.SecurityConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import static com.mazing.Repositories.*;
@@ -15,9 +17,13 @@ import java.util.List;
 @RestController
 public class GameController {
 
-    @RequestMapping(value="games/execute/{userName}",method = RequestMethod.GET)
-    public Response executeCommand(@PathVariable("userName") String userName,@RequestParam String query){
+    @Autowired
+    UserService userService;
+
+    @RequestMapping(value="games/execute",method = RequestMethod.POST)
+    public Response executeCommand(@RequestParam String query){
         try{
+            String userName = userService.getUserName();
             PlayerEntity playerEntity=playerRepo.getOne(userName);
             Player player=new Player(playerEntity);
             Game game=player.getGame();
@@ -27,6 +33,8 @@ public class GameController {
                 return new Response(ResponseType.INVALID,"Game has not started yet.");
             if(game.isHasEnded()&&game.getWinnerName().equals(""))
                 return new Response(ResponseType.LOST,"Time Out, All players Lost");
+            if(game.isHasEnded()&&game.getWinnerName().equals(player.getUserName()))
+                return new Response(ResponseType.WON,"You won the game! You can leave it now.");
             if(game.isHasEnded())
                 return new Response(ResponseType.LOST,"Player "+game.getWinnerName()+" has won the game");
             if(playerEntity.isInTradeMode())
