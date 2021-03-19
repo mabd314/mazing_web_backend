@@ -107,7 +107,12 @@ public class Player {
   }
 
   public boolean removeItem(Item item) {
-    return items.remove(item);
+    int itemIndex=items.indexOf(item);
+    if(itemIndex==-1)
+      return false;
+    Repositories.itemRepo.delete(items.get(itemIndex).getItemEntity());
+    items.remove(itemIndex);
+    return true;
   }
 
   @Transient

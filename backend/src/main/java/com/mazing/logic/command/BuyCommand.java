@@ -11,9 +11,10 @@ public class BuyCommand extends TradingCommand {
 
   @Override
   public void execute() {
-    Item item = Item.getItemFromList(itemName, getPlayer().facingWallTradingList());
-    setResponse(item.buy(getPlayer()));
-    getPlayer().getPlayerEntity().save();
-    item.getItemEntity().save();
+    synchronized (BuyCommand.this){
+      Item item = Item.getItemFromList(itemName, getPlayer().facingWallTradingList());
+      setResponse(item.buy(getPlayer()));
+      getPlayer().getPlayerEntity().save();
+    }
   }
 }

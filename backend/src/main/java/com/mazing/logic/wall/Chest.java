@@ -1,10 +1,12 @@
 package com.mazing.logic.wall;
 
+import com.mazing.Repositories;
 import com.mazing.entities.Response;
 import com.mazing.entities.ResponseType;
 import com.mazing.entities.WallEntity;
 import com.mazing.logic.game.Player;
 import com.mazing.logic.item.Item;
+import com.mazing.logic.item.ItemType;
 import com.mazing.logic.item.Key;
 import com.mazing.logic.item.NoKey;
 
@@ -93,6 +95,8 @@ public class Chest extends Wall {
         item.setUserName(player.getUserName());
         item.setWallId(0);
         item.getItemEntity().save();
+        if(item.getType()==ItemType.GOLD)
+          Repositories.itemRepo.delete(item.getItemEntity());
       }
       Response status =
               new Response(ResponseType.SUCCESS, "Chest is unlocked, Items acquired: " + inside);

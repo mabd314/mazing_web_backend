@@ -1,5 +1,6 @@
 package com.mazing.logic.item;
 
+import com.mazing.Repositories;
 import com.mazing.entities.ItemEntity;
 import com.mazing.entities.Response;
 import com.mazing.entities.ResponseType;
@@ -72,6 +73,8 @@ public abstract class Item {
       player.addItem(this);
       wallId=0;
       userName =player.getUserName();
+      itemId=0;
+      getItemEntity().save();
       return new Response(ResponseType.SUCCESS, "You bought an item: " + this);
     }
     return new Response(ResponseType.FAILURE, "You do not have enough gold to buy this item");
@@ -80,8 +83,6 @@ public abstract class Item {
   public Response sell(Player player) {
     if (player.removeItem(this)) {
       player.getGold().getPaidForItem(this);
-      userName ="";
-      wallId=player.facingWall().getWallId();
       return new Response(
           ResponseType.SUCCESS, "You Sold an item: " + this + " for " + this.getPrice() + " gold");
     }

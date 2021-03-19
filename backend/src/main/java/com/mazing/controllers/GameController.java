@@ -46,5 +46,11 @@ public class GameController {
     public List<WallEntity> getWalls(){
         return wallRepo.findAll();
     }
+
+    @RequestMapping(value="/items",method = RequestMethod.GET)
+    public List<ItemEntity> getItems(){
+        return itemRepo.findAll();
+    }
+
 }
 
