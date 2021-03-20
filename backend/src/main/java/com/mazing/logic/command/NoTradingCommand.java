@@ -7,6 +7,6 @@ public class NoTradingCommand extends TradingCommand {
 
   @Override
   public void execute() {
-    setResponse(new Response(ResponseType.INVALID, "Command not recognized"));
+    setResponse(new Response(ResponseType.INVALID, "Command not recognized\n "+"Remember that you are in a trade, execute the command 'end' to get out"));
   }
 }

@@ -13,8 +13,6 @@ public class UseCommand extends MainCommand {
   public void execute() {
     Item item = Item.getItemFromList(itemName, getPlayer().getItems());
     setResponse(item.use(getPlayer()));
-
-    item.getItemEntity().save();
     getPlayer().getPlayerEntity().save();
   }
 }

@@ -32,6 +32,7 @@ public class FlashLight extends Item {
   @Override
   public Response use(Player player) {
     player.setFlashLightOn(!player.isFlashLightOn());
+    getItemEntity().save();
     return new Response(
         ResponseType.SUCCESS,
         "Your flashlight is " + (player.isFlashLightOn() ? "ON" : "OFF"));
