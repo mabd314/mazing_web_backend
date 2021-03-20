@@ -46,7 +46,7 @@ function CreateGameComponent(props){
                     </Col>
                     <Col>
                         <FormGroup check>
-                            <Input disabled onChange={()=>setDifficulty(difficulties.HARD)} id="hard" type="radio" name="difficulty" />
+                            <Input onChange={()=>setDifficulty(difficulties.HARD)} id="hard" type="radio" name="difficulty" />
                             <Label check for="hard">
                                 Hard
                             </Label>
