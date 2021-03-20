@@ -15,6 +15,7 @@ public class Game {
   private int gameId;
   private int secondsNeeded;
   private String winnerName;
+  private String creator;
 
   public Game(){}
   public Game(GameEntity gameEntity){
@@ -24,6 +25,7 @@ public class Game {
     startTime=gameEntity.getStartTime();
     secondsNeeded=gameEntity.getSecondsNeeded();
     winnerName=gameEntity.getWinnerName();
+    creator=gameEntity.getCreator();
   }
 
   public int getGameId() {
@@ -38,6 +40,7 @@ public class Game {
     gameEntity.setStartTime(startTime);
     gameEntity.setSecondsNeeded(secondsNeeded);
     gameEntity.setWinnerName(winnerName);
+    gameEntity.setCreator(creator);
     return gameEntity;
   }
 
@@ -50,6 +53,10 @@ public class Game {
     hasEnded=false;
     startTime=System.currentTimeMillis();
     getGameEntity().save();
+  }
+
+  public String getCreator() {
+    return creator;
   }
 
   public void winGame(String userName){

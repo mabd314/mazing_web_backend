@@ -1,5 +1,6 @@
 package com.mazing.services;
 
+import com.mazing.entities.GameEntity;
 import com.mazing.entities.GameSettingsEntity;
 import com.mazing.entities.PlayerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,15 +54,35 @@ public class PlayerService {
     public PlayerEntity leaveGame() {
         String userName= getUserName();
         PlayerEntity playerEntity=playerRepo.getOne(userName);
-        List<PlayerEntity> playerEntities=playerRepo.findByGameId(playerEntity.getGameId());
-        if(playerEntities.size()<=1 && gameRepo.findById(playerEntity.getGameId()).isPresent())
-            gameService.deleteGameById(playerEntity.getGameId());
+        int gameId=playerEntity.getGameId();
         playerEntity.setGameId(0);
         playerEntity.setInTradeMode(false);
         playerEntity.setGoldCount(0);
         playerEntity.setDirection(null);
         playerEntity.setCurrentRoomNumber(0);
         playerEntity.setFlashLightOn(false);
+        boolean isThereGame=gameRepo.findById(gameId).isPresent();
+        if(!isThereGame)
+            return playerRepo.save(playerEntity);
+        GameEntity gameEntity=gameRepo.findById(gameId).get();
+        List<PlayerEntity> playerEntities=playerRepo.findByGameId(gameId);
+        if(playerEntities.size()<=1)
+            gameService.deleteGameById(gameId);
+        isThereGame=gameRepo.findById(gameId).isPresent();
+        if(isThereGame){
+            boolean leaverIsCreator=(gameEntity.getCreator().equals(userName));
+            if(leaverIsCreator){
+                String newCreator="";
+                for(PlayerEntity pe:playerEntities){
+                    if(pe.getUserName().equals(userName))
+                        continue;
+                    newCreator=pe.getUserName();
+                    break;
+                }
+                gameEntity.setCreator(newCreator);
+                gameEntity.save();
+            }
+        }
         return playerRepo.save(playerEntity);
     }
 }

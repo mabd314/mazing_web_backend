@@ -17,16 +17,18 @@ public class GameEntity {
     private long startTime;
     private int secondsNeeded;
     private String winnerName;
+    private String creator;
 
     public GameEntity() {
     }
 
-    public GameEntity(boolean hasEnded, boolean hasStarted, long startTime, int secondsNeeded, String winnerName) {
+    public GameEntity(boolean hasEnded, boolean hasStarted, long startTime, int secondsNeeded, String winnerName,String creator) {
         this.hasEnded = hasEnded;
         this.hasStarted = hasStarted;
         this.startTime = startTime;
         this.secondsNeeded = secondsNeeded;
         this.winnerName = winnerName;
+        this.creator=creator;
     }
 
     public int getGameId() {
@@ -79,5 +81,13 @@ public class GameEntity {
 
     public void setWinnerName(String winnerName) {
         this.winnerName = winnerName;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 }

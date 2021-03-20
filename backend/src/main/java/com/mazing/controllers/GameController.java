@@ -22,9 +22,9 @@ public class GameController {
         return gameService.executeCommand(query);
     }
 
-    @RequestMapping(value="games/{gameId}/start",method = RequestMethod.GET)
-    public void startGame(@PathVariable("gameId") int gameId){
-        gameService.startGame(gameId);
+    @RequestMapping(value="games/{gameId}/start",method = RequestMethod.POST)
+    public boolean startGame(@PathVariable("gameId") int gameId){
+        return gameService.startGame(gameId);
     }
 
     @RequestMapping(value="games/{gameId}/playersNames",method = RequestMethod.GET)
@@ -40,16 +40,6 @@ public class GameController {
     @RequestMapping(value="/games/create",method = RequestMethod.POST)
     public int createGame(@RequestBody GameConfigEntity gameConfigEntity){
         return gameService.createGame(gameConfigEntity);
-    }
-
-    @RequestMapping(value="/walls",method = RequestMethod.GET)
-    public List<WallEntity> getWalls(){
-        return wallRepo.findAll();
-    }
-
-    @RequestMapping(value="/items",method = RequestMethod.GET)
-    public List<ItemEntity> getItems(){
-        return itemRepo.findAll();
     }
 
 }

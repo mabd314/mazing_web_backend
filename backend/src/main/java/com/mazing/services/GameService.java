@@ -66,9 +66,13 @@ public class GameService {
 //        }
     }
 
-    public void startGame(int gameId) {
+    public boolean startGame(int gameId) {
+        String userName=playerService.getUserName();
         Game game=new Game(gameRepo.findById(gameId).get());
+        if(!game.getCreator().equals(userName))
+            return false;
         game.startGame();
+        return true;
     }
 
     public List<PlayerName> getPlayerNames(int gameId) {
@@ -80,11 +84,15 @@ public class GameService {
         return playerNames;
     }
 
-    public int createGame(GameConfigEntity gameConfigEntity) {        GameSettingsConfigEntity gameSettings=gameConfigEntity.getGameSettings();
+    public int createGame(GameConfigEntity gameConfigEntity) {
+        String userName=playerService.getUserName();
+        GameSettingsConfigEntity gameSettings=gameConfigEntity.getGameSettings();
         GameEntity gameEntity=new GameEntity();
         gameEntity.setSecondsNeeded(gameSettings.getSecondsNeeded());
         gameEntity.setWinnerName("");
+        gameEntity.setCreator(userName);
         gameEntity.save();
+
         int gameId=gameEntity.getGameId();
         GameSettingsEntity gameSettingsEntity=new GameSettingsEntity(gameId,gameSettings.getStartingDirection(),gameSettings.isStartingFlashLightOn(),gameSettings.getStartingCurrentRoomNumber(),gameSettings.getStartingGoldCount());
         gameSettingsRepo.save(gameSettingsEntity);
