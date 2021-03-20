@@ -169,10 +169,16 @@ export const fetchPlayer=(token)=>async dispatch=>{
 }
 
 
-export const startGame=(gameId)=>async dispatch=>{
+export const startGame=(gameId,token)=>async dispatch=>{
     dispatch(gameStarting());
     try{
-        const response= await fetch(serverBase+`/games/${gameId}/start`);
+        const response= await fetch(serverBase+`/games/${gameId}/start`,{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+token
+              },  
+        });
         if(response.status>=400)
             return dispatch(gameFailed("Failed To Start The Game"));
         dispatch(gameStartingFinished());

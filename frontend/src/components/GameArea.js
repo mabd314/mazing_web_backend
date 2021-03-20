@@ -14,6 +14,7 @@ import {
 import Start from './Start';
 import Response from './Response';
 import { useAuth0 } from '@auth0/auth0-react';
+import PlayersNames from './PlayersNames';
 
 function GameArea(props){
 
@@ -64,13 +65,7 @@ function GameArea(props){
                     <Response response={props.response}/>
                 </Col>
             </Row>
-            <Row className='m-5'>
-                {props.game.playersNames.map(playerName=>{
-                    return(
-                        <Col xs='12' md='6'><small>{playerName.userName}</small></Col>
-                    )
-                })}
-            </Row>
+            <PlayersNames game={props.game} />
             <Row xs='1' className='m-5'>
                 <Col xs={{size:4,offset:4}}>
                     <Button block outline color="danger" onClick={leaveGameButtonClicked}>Leave Game</Button>
@@ -87,14 +82,8 @@ function GameArea(props){
 
     return (
         <>
-            <Start gameId={props.game.gameId} startGame={props.startGame}/>
-            <Row className='m-5'>
-                {props.game.playersNames.map(playerName=>{
-                    return(
-                        <Col xs='12' md='6'><small>{playerName.userName}</small></Col>
-                    )
-                })}
-            </Row>
+            <Start game={props.game} startGame={props.startGame}/>
+            <PlayersNames game={props.game} />
             <Row className='m-5'>
                 <Col xs={{size:4,offset:4}}>
                     <Button block outline color="danger" onClick={leaveGameButtonClicked}>Leave Game</Button>

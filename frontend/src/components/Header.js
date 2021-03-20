@@ -27,6 +27,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 function Header (props){
     const [isNavOpen,setIsNavOpen]=useState(false);
     const toggleNav=()=>setIsNavOpen(!isNavOpen);
+    const {isAuthenticated}=useAuth0();
     return(
         <Navbar color='light' expand='sm' light fixed='top'>
             <NavbarBrand href='/home'>
@@ -58,12 +59,7 @@ function Header (props){
                 </Nav>
                 <Nav className='ml-auto' navbar>
                     <NavItem>
-                        <LoginButton/>
-                    </NavItem>
-                </Nav>
-                <Nav className='ml-auto' navbar>
-                    <NavItem>
-                        <LogoutButton/>
+                        {isAuthenticated?<LogoutButton/>:<LoginButton/>}
                     </NavItem>
                 </Nav>
             </Collapse>

@@ -8,15 +8,19 @@ function LogoutButton() {
   const {
     isAuthenticated,
     logout,
+    user
   } = useAuth0();
 
   return isAuthenticated && (
-    <Button color='light' outline className='nav-link' onClick={(event) => {
-      event.preventDefault();
-      logout({ returnTo: window.location.origin });
-    }}>
-    <span className='fa fa-sign-out'></span> logout
-    </Button>
+    <>
+      <small>{user.email}</small>
+      <Button color='light' outline className='nav-link' onClick={(event) => {
+        event.preventDefault();
+        logout({ returnTo: window.location.origin });
+      }}>
+      <span className='fa fa-sign-out'></span> logout
+      </Button>
+    </>
   );
 }
 

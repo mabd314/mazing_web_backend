@@ -33,7 +33,7 @@ const mapStateToProps=state=>({
 });
 
 const mapDispatchToProps=dispatch=>({
-    startGame: gameId=>dispatch(startGame(gameId)),
+    startGame: (gameId,token)=>dispatch(startGame(gameId,token)),
     executeCommand: (query,token)=>dispatch(executeCommand(query,token)),
     editCommand: newCommandText=>dispatch(editCommand(newCommandText)),
     fetchGames: ()=>dispatch(fetchGames()),
