@@ -32,6 +32,7 @@ public class Seller extends Wall {
     WallEntity wallEntity=new WallEntity();
     wallEntity.setWallId(getWallId());
     wallEntity.setWallType(WallType.SELLER);
+    wallEntity.setGameId(getGameId());
     return wallEntity;
   }
 

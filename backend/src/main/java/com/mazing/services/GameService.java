@@ -19,7 +19,7 @@ public class GameService {
     @Autowired
     PlayerService playerService;
 
-    public void deleteGameById(int gameId){
+    public synchronized void deleteGameById(int gameId){
         gameRepo.deleteById(gameId);
         gameSettingsRepo.deleteById(gameId);
         List<PlayerEntity> playerEntities = playerRepo.findByGameId(gameId);

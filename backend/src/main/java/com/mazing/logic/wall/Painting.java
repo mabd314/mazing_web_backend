@@ -21,11 +21,12 @@ public class Painting extends Wall {
 
   @Override
   public WallEntity getWallEntity() {
-    WallEntity wallEntity=new WallEntity();
-    wallEntity.setWallType(WallType.PAINTING);
-    wallEntity.setWallId(getWallId());
-    wallEntity.setHiddenKeyId(hidden.getKeyId());
-    return wallEntity;
+      WallEntity wallEntity=new WallEntity();
+      wallEntity.setWallType(WallType.PAINTING);
+      wallEntity.setWallId(getWallId());
+      wallEntity.setHiddenKeyId(hidden.getKeyId());
+      wallEntity.setGameId(getGameId());
+      return wallEntity;
   }
 
   @Override

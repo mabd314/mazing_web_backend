@@ -14,6 +14,7 @@ import java.util.Objects;
 public abstract class Wall {
 
   private int wallId;
+  private int gameId;
 
   public Wall(){}
   public abstract WallEntity getWallEntity();
@@ -28,6 +29,14 @@ public abstract class Wall {
 
   public void setWallId(int wallId) {
     this.wallId = wallId;
+  }
+
+  public int getGameId() {
+    return gameId;
+  }
+
+  public void setGameId(int gameId) {
+    this.gameId = gameId;
   }
 
   public abstract WallType getType();

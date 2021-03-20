@@ -19,26 +19,31 @@ public class WallBuilder {
       case DOOR -> {
         Wall wall=buildDoorFromEntity(wallEntity);
         wall.setWallId(wallEntity.getWallId());
+        wall.setGameId(wallEntity.getGameId());
         return wall;
       }
       case SELLER -> {
         Wall wall=buildSellerFromEntity(wallEntity);
         wall.setWallId(wallEntity.getWallId());
+        wall.setGameId(wallEntity.getGameId());
         return wall;
       }
       case CHEST -> {
         Wall wall=buildChestFromEntity(wallEntity);
         wall.setWallId(wallEntity.getWallId());
+        wall.setGameId(wallEntity.getGameId());
         return wall;
       }
       case PAINTING -> {
         Wall wall= buildPaintingFromEntity(wallEntity);
         wall.setWallId(wallEntity.getWallId());
+        wall.setGameId(wallEntity.getGameId());
         return wall;
       }
       case MIRROR -> {
         Wall wall= buildMirrorFromEntity(wallEntity);
         wall.setWallId(wallEntity.getWallId());
+        wall.setGameId(wallEntity.getGameId());
         return wall;
       }
       default -> {

@@ -59,6 +59,7 @@ public class Chest extends Wall {
     wallEntity.setWallType(WallType.CHEST);
     wallEntity.setLocked(isLocked);
     wallEntity.setLockingKeyId(key.getKeyId());
+    wallEntity.setGameId(getGameId());
     return wallEntity;
   }
 

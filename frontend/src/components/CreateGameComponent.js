@@ -13,7 +13,7 @@ import {
 } from 'reactstrap'
 
 
-function CreateGame(props){
+function CreateGameComponent(props){
 
     const [difficulty,setDifficulty]=useState("");
     const {getAccessTokenSilently} = useAuth0();
@@ -38,7 +38,7 @@ function CreateGame(props){
                     </Col>
                     <Col>
                         <FormGroup check>
-                            <Input disabled onChange={()=>setDifficulty(difficulties.MEDIUM)} id="medium" type="radio" name="difficulty"/>
+                            <Input onChange={()=>setDifficulty(difficulties.MEDIUM)} id="medium" type="radio" name="difficulty"/>
                             <Label check for="medium">
                                 Medium
                             </Label>
@@ -58,4 +58,4 @@ function CreateGame(props){
     )
 }
 
-export default CreateGame;
+export default CreateGameComponent;

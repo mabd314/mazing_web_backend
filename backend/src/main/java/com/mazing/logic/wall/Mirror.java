@@ -20,12 +20,13 @@ public class Mirror extends Wall {
   }
 
   @Override
-  public WallEntity getWallEntity() {
-    WallEntity wallEntity=new WallEntity();
-    wallEntity.setWallType(WallType.MIRROR);
-    wallEntity.setWallId(getWallId());
-    wallEntity.setHiddenKeyId(hidden.getKeyId());
-    return wallEntity;
+  public WallEntity getWallEntity(){
+      WallEntity wallEntity=new WallEntity();
+      wallEntity.setWallType(WallType.MIRROR);
+      wallEntity.setWallId(getWallId());
+      wallEntity.setHiddenKeyId(hidden.getKeyId());
+      wallEntity.setGameId(getGameId());
+      return wallEntity;
   }
 
   @Override

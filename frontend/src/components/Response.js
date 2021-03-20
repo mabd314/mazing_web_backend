@@ -18,7 +18,9 @@ function Play(props){
                             <p>
                                 {element}
                             </p>
-                            <br/>
+                            <div style={{lineHeight:'10%'}}>
+                                <br/>
+                            </div>
                         </>
                     )
                 }):null}

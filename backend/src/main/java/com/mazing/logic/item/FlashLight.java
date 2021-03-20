@@ -5,6 +5,8 @@ import com.mazing.entities.Response;
 import com.mazing.entities.ResponseType;
 import com.mazing.logic.game.Player;
 
+import java.util.Objects;
+
 public class FlashLight extends Item {
 
   public static FlashLight getInstance() {
@@ -33,5 +35,16 @@ public class FlashLight extends Item {
     return new Response(
         ResponseType.SUCCESS,
         "Your flashlight is " + (player.isFlashLightOn() ? "ON" : "OFF"));
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+      return Objects.hash(this.getClass());
   }
 }

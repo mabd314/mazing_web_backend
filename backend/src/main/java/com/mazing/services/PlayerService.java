@@ -2,6 +2,7 @@ package com.mazing.services;
 
 import com.mazing.entities.GameEntity;
 import com.mazing.entities.GameSettingsEntity;
+import com.mazing.entities.ItemEntity;
 import com.mazing.entities.PlayerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,38 +52,43 @@ public class PlayerService {
         return playerRepo.save(playerEntity);
     }
 
-    public PlayerEntity leaveGame() {
+    public synchronized PlayerEntity leaveGame() {
         String userName= getUserName();
         PlayerEntity playerEntity=playerRepo.getOne(userName);
         int gameId=playerEntity.getGameId();
+        if(isPlayerLastPlayer(gameId))
+            gameService.deleteGameById(gameId);
+        else if(isPlayerCreator(gameId,userName))
+            assignAnotherCreator(gameId,userName);
         playerEntity.setGameId(0);
         playerEntity.setInTradeMode(false);
         playerEntity.setGoldCount(0);
         playerEntity.setDirection(null);
         playerEntity.setCurrentRoomNumber(0);
         playerEntity.setFlashLightOn(false);
-        boolean isThereGame=gameRepo.findById(gameId).isPresent();
-        if(!isThereGame)
-            return playerRepo.save(playerEntity);
+        itemRepo.deleteByUserName(userName); //edit to drop or divide.
+        return playerRepo.save(playerEntity);
+    }
+
+    private boolean isPlayerLastPlayer(int gameId){
+        return playerRepo.findByGameId(gameId).size()==1;
+    }
+
+    private boolean isPlayerCreator(int gameId,String userName){
+        return gameRepo.findById(gameId).get().getCreator().equals(userName);
+    }
+
+    private void assignAnotherCreator(int gameId,String userName){
         GameEntity gameEntity=gameRepo.findById(gameId).get();
         List<PlayerEntity> playerEntities=playerRepo.findByGameId(gameId);
-        if(playerEntities.size()<=1)
-            gameService.deleteGameById(gameId);
-        isThereGame=gameRepo.findById(gameId).isPresent();
-        if(isThereGame){
-            boolean leaverIsCreator=(gameEntity.getCreator().equals(userName));
-            if(leaverIsCreator){
-                String newCreator="";
-                for(PlayerEntity pe:playerEntities){
-                    if(pe.getUserName().equals(userName))
-                        continue;
-                    newCreator=pe.getUserName();
-                    break;
-                }
-                gameEntity.setCreator(newCreator);
-                gameEntity.save();
-            }
+        String newCreator="";
+        for(PlayerEntity playerEntity:playerEntities) {
+            if (playerEntity.getUserName().equals(userName))
+                continue;
+            newCreator = playerEntity.getUserName();
+            break;
         }
-        return playerRepo.save(playerEntity);
+        gameEntity.setCreator(newCreator);
+        gameEntity.save();
     }
 }

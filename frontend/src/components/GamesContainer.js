@@ -5,7 +5,7 @@ import {
     Row
 } from 'reactstrap'
 
-import CreateGame from './CreateGame';
+import CreateGameComponent from './CreateGameComponent';
 import GameDetail from './GameDetail';
 
 
@@ -21,7 +21,7 @@ function GamesContainer(props){
                 })}
             </Row>
             <Row className='m-5'>
-                <CreateGame userName={props.activePlayer.player.userName} createGame={props.createGame}></CreateGame>
+                <CreateGameComponent userName={props.activePlayer.player.userName} createGame={props.createGame}></CreateGameComponent>
             </Row>
         </Container>
     )

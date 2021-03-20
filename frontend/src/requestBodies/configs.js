@@ -67,8 +67,7 @@ export const easyConfig= {
                 "room1Number":1,
                 "room2Number":2,
                 "roomNumber":1,
-                "wallDirection":"EAST",
-                "gameId":1
+                "wallDirection":"EAST"
             },
             {
                 "wallType":"DOOR",
@@ -78,8 +77,7 @@ export const easyConfig= {
                 "room1Number":2,
                 "room2Number":3,
                 "roomNumber":2,
-                "wallDirection":"EAST",
-                "gameId":1
+                "wallDirection":"EAST"
             },
             {
                 "wallType":"SELLER",
@@ -89,8 +87,7 @@ export const easyConfig= {
                 "room1Number":0,
                 "room2Number":0,
                 "roomNumber":2,
-                "wallDirection":"NORTH",
-                "gameId":1
+                "wallDirection":"NORTH"
             },
             {
                 "wallType":"CHEST",
@@ -100,8 +97,7 @@ export const easyConfig= {
                 "room1Number":0,
                 "room2Number":0,
                 "roomNumber":1,
-                "wallDirection":"WEST",
-                "gameId":1
+                "wallDirection":"WEST"
             },
             {
                 "wallType":"MIRROR",
@@ -111,8 +107,7 @@ export const easyConfig= {
                 "room1Number":0,
                 "room2Number":0,
                 "roomNumber":1,
-                "wallDirection":"NORTH",
-                "gameId":1
+                "wallDirection":"NORTH"
             },
             {
                 "wallType":"PAINTING",
@@ -122,15 +117,218 @@ export const easyConfig= {
                 "room1Number":0,
                 "room2Number":0,
                 "roomNumber":1,
-                "wallDirection":"SOUTH",
-                "gameId":1
+                "wallDirection":"SOUTH"
             }
-        
         ]
 }
 
 export const mediumConfig={
-    "medium":"medium"
+    "gameSettings":
+        {
+            "startingDirection":"NORTH",
+            "startingFlashLightOn":false,
+            "startingCurrentRoomNumber":1,
+            "startingGoldCount":0,
+            "secondsNeeded":900
+        },
+    "rooms":
+        [
+            {
+                "roomNumber":1,
+                "thereLight":true,
+                "lightOn":true,
+                "endRoom":false
+            },
+            {
+                "roomNumber":2,
+                "thereLight":true,
+                "lightOn":false,
+                "endRoom":false
+        
+            },
+            {
+                "roomNumber":3,
+                "thereLight":false,
+                "lightOn":false,
+                "endRoom":false
+            },
+            {
+                "roomNumber":4,
+                "thereLight":true,
+                "lightOn":true,
+                "endRoom":false
+            },
+            {
+                "roomNumber":5,
+                "thereLight":true,
+                "lightOn":true,
+                "endRoom":false
+            },
+            {
+                "roomNumber":6,
+                "thereLight":true,
+                "lightOn":true,
+                "endRoom":true
+            }
+        ],
+    "walls":
+        [ 
+            {
+                "wallType":"DOOR",
+                "locked":true,
+                "lockingKeyId":1,
+                "hiddenKeyId":0,
+                "room1Number":1,
+                "room2Number":3,
+                "roomNumber":1,
+                "wallDirection":"EAST"
+            },
+            {
+                "wallType":"PAINTING",
+                "locked":false,
+                "lockingKeyId":0,
+                "hiddenKeyId":1,
+                "room1Number":0,
+                "room2Number":0,
+                "roomNumber":1,
+                "wallDirection":"NORTH"
+            },
+            {
+                "wallType":"DOOR",
+                "locked":false,
+                "lockingKeyId":0,
+                "hiddenKeyId":0,
+                "room1Number":1,
+                "room2Number":2,
+                "roomNumber":1,
+                "wallDirection":"SOUTH"
+            },
+            {
+                "wallType":"DOOR",
+                "locked":false,
+                "lockingKeyId":0,
+                "hiddenKeyId":0,
+                "room1Number":2,
+                "room2Number":4,
+                "roomNumber":2,
+                "wallDirection":"EAST"
+            },
+            {
+                "wallType":"CHEST",
+                "locked":true,
+                "lockingKeyId":2,
+                "hiddenKeyId":0,
+                "room1Number":0,
+                "room2Number":0,
+                "roomNumber":2,
+                "wallDirection":"WEST"
+            },
+            {
+                "wallType":"DOOR",
+                "locked":true,
+                "lockingKeyId":3,
+                "hiddenKeyId":0,
+                "room1Number":3,
+                "room2Number":6,
+                "roomNumber":3,
+                "wallDirection":"EAST"
+            },
+            {
+                "wallType":"DOOR",
+                "locked":true,
+                "lockingKeyId":4,
+                "hiddenKeyId":0,
+                "room1Number":4,
+                "room2Number":5,
+                "roomNumber":4,
+                "wallDirection":"EAST"
+            },
+            {
+                "wallType":"SELLER",
+                "locked":false,
+                "lockingKeyId":0,
+                "hiddenKeyId":0,
+                "room1Number":0,
+                "room2Number":0,
+                "roomNumber":4,
+                "wallDirection":"NORTH"
+            },
+            {
+                "wallType":"MIRROR",
+                "locked":false,
+                "lockingKeyId":0,
+                "hiddenKeyId":2,
+                "room1Number":0,
+                "room2Number":0,
+                "roomNumber":4,
+                "wallDirection":"SOUTH"
+            },
+            {
+                "wallType":"CHEST",
+                "locked":false,
+                "lockingKeyId":0,
+                "hiddenKeyId":0,
+                "room1Number":0,
+                "room2Number":0,
+                "roomNumber":5,
+                "wallDirection":"EAST"
+            },
+            {
+                "wallType":"MIRROR",
+                "locked":false,
+                "lockingKeyId":0,
+                "hiddenKeyId":0,
+                "room1Number":0,
+                "room2Number":0,
+                "roomNumber":5,
+                "wallDirection":"NORTH"
+            },
+            {
+                "wallType":"PAINTING",
+                "locked":false,
+                "lockingKeyId":0,
+                "hiddenKeyId":0,
+                "room1Number":0,
+                "room2Number":0,
+                "roomNumber":5,
+                "wallDirection":"SOUTH"
+            }
+        ],
+        "items":
+        [
+            {
+                "itemType":"GOLD",
+                "wallDirection":"WEST",
+                "roomNumber":2,
+                "goldCount":10,
+                "keyId":0,
+                "price":0
+            },
+            {
+                "itemType":"FLASHLIGHT",
+                "wallDirection":"NORTH",
+                "roomNumber":4,
+                "goldCount":0,
+                "keyId":0,
+                "price":5
+            },
+            {
+                "itemType":"KEY",
+                "wallDirection":"NORTH",
+                "roomNumber":4,
+                "goldCount":0,
+                "keyId":4,
+                "price":5
+            },
+            {
+                "itemType":"KEY",
+                "wallDirection":"EAST",
+                "roomNumber":5,
+                "goldCount":0,
+                "keyId":3,
+                "price":0
+            },
+        ]
 };
 
 export const hardConfig={

@@ -91,6 +91,7 @@ public class Door extends Wall {
     wallEntity.setRoom2Number(connectingRoomsNumbers[1]);
     wallEntity.setGameId(gameId);
     wallEntity.setWallType(WallType.DOOR);
+    wallEntity.setGameId(getGameId());
     return wallEntity;
   }
 
