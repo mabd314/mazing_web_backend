@@ -78,10 +78,14 @@ public class Room {
 
     public Wall getWallAtDirection(Direction direction){
         switch(direction){
-            case EAST->{return east; }
-            case WEST->{return west;}
-            case NORTH->{return north;}
-            default->{return south;}
+            case EAST:
+                return east;
+            case WEST:
+                return west;
+            case NORTH:
+                return north;
+            default:
+                return south;
         }
     }
 

@@ -11,12 +11,17 @@ public abstract class TradingCommand implements Command {
 
   public static TradingCommand getCommand(String command,String arg){
     switch(command.toLowerCase()){
-      case "buy" -> {return new BuyCommand(arg);}
-      case "sell" ->{return new SellCommand(arg);}
-      case "end" ->{return new EndTradingCommand();}
-      case "list"->{return new ListCommand();}
+      case "buy":
+        return new BuyCommand(arg);
+    case "sell":
+      return new SellCommand(arg);
+      case "end":
+        return new EndTradingCommand();
+      case "list":
+        return new ListCommand();
 //      case "help"->{return new TradingHelpCommand();}
-      default -> {return new NoTradingCommand();}
+      default:
+        return new NoTradingCommand();
     }
   }
 

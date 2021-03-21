@@ -15,40 +15,35 @@ public class WallBuilder {
 
 
   public static Wall buildWallFromWallEntity(WallEntity wallEntity) {
+    Wall wall;
     switch (wallEntity.getWallType()) {
-      case DOOR -> {
-        Wall wall=buildDoorFromEntity(wallEntity);
+      case DOOR:
+        wall=buildDoorFromEntity(wallEntity);
         wall.setWallId(wallEntity.getWallId());
         wall.setGameId(wallEntity.getGameId());
         return wall;
-      }
-      case SELLER -> {
-        Wall wall=buildSellerFromEntity(wallEntity);
+      case SELLER:
+        wall=buildSellerFromEntity(wallEntity);
         wall.setWallId(wallEntity.getWallId());
         wall.setGameId(wallEntity.getGameId());
         return wall;
-      }
-      case CHEST -> {
-        Wall wall=buildChestFromEntity(wallEntity);
+      case CHEST:
+        wall=buildChestFromEntity(wallEntity);
         wall.setWallId(wallEntity.getWallId());
         wall.setGameId(wallEntity.getGameId());
         return wall;
-      }
-      case PAINTING -> {
-        Wall wall= buildPaintingFromEntity(wallEntity);
+      case PAINTING:
+        wall= buildPaintingFromEntity(wallEntity);
         wall.setWallId(wallEntity.getWallId());
         wall.setGameId(wallEntity.getGameId());
         return wall;
-      }
-      case MIRROR -> {
-        Wall wall= buildMirrorFromEntity(wallEntity);
+      case MIRROR:
+        wall= buildMirrorFromEntity(wallEntity);
         wall.setWallId(wallEntity.getWallId());
         wall.setGameId(wallEntity.getGameId());
         return wall;
-      }
-      default -> {
+      default:
         return Empty.getInstance();
-      }
     }
   }
 

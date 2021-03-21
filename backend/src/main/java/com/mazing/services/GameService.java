@@ -110,20 +110,34 @@ public class GameService {
             int wallId=wallEntity.getWallId();
             RoomEntity roomEntity=roomRepo.getOne(new RoomId(wall.getRoomNumber(),gameId));
             switch (wall.getWallDirection()){
-                case EAST -> roomEntity.setEastWallId(wallId);
-                case WEST -> roomEntity.setWestWallId(wallId);
-                case NORTH -> roomEntity.setNorthWallId(wallId);
-                case SOUTH -> roomEntity.setSouthWallId(wallId);
+                case EAST:
+                    roomEntity.setEastWallId(wallId);
+                    break;
+                case WEST:
+                    roomEntity.setWestWallId(wallId);
+                    break;
+                case NORTH:
+                    roomEntity.setNorthWallId(wallId);
+                    break;
+                case SOUTH:
+                    roomEntity.setSouthWallId(wallId);
             }
             roomEntity.save();
             if(wall.getWallType()== WallType.DOOR){
                 int otherRoomNumber=wall.getRoomNumber()==wall.getRoom1Number()?wall.getRoom2Number():wall.getRoom1Number();
                 RoomEntity otherRoomEntity=roomRepo.getOne(new RoomId(otherRoomNumber,gameId));
                 switch (wall.getWallDirection()){
-                    case EAST -> otherRoomEntity.setWestWallId(wallId);
-                    case WEST -> otherRoomEntity.setEastWallId(wallId);
-                    case NORTH -> otherRoomEntity.setSouthWallId(wallId);
-                    case SOUTH -> otherRoomEntity.setNorthWallId(wallId);
+                    case EAST:
+                        otherRoomEntity.setWestWallId(wallId);
+                        break;
+                    case WEST:
+                        otherRoomEntity.setEastWallId(wallId);
+                        break;
+                    case NORTH:
+                        otherRoomEntity.setSouthWallId(wallId);
+                        break;
+                    case SOUTH:
+                        otherRoomEntity.setNorthWallId(wallId);
                 }
                 otherRoomEntity.save();
             }
@@ -135,10 +149,17 @@ public class GameService {
             RoomEntity roomEntity=roomRepo.getOne(new RoomId(item.getRoomNumber(),gameId));
             int wallId=0;
             switch (item.getWallDirection()){
-                case WEST -> wallId=roomEntity.getWestWallId();
-                case EAST -> wallId=roomEntity.getEastWallId();
-                case NORTH -> wallId=roomEntity.getNorthWallId();
-                case SOUTH -> wallId=roomEntity.getSouthWallId();
+                case WEST:
+                    wallId=roomEntity.getWestWallId();
+                    break;
+                case EAST:
+                    wallId=roomEntity.getEastWallId();
+                    break;
+                case NORTH:
+                    wallId=roomEntity.getNorthWallId();
+                    break;
+                case SOUTH:
+                    wallId=roomEntity.getSouthWallId();
             }
             itemEntity.setWallId(wallId);
             itemEntity.save();

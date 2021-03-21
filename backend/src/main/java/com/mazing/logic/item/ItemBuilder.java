@@ -19,10 +19,14 @@ public class ItemBuilder {
 
   public static Item buildItemFromEntity(ItemEntity itemEntity) {
     switch (itemEntity.getItemType()) {
-      case KEY->{return buildKeyFromEntity(itemEntity); }
-      case FLASHLIGHT->{return buildFlashLightFromEntity(itemEntity); }
-      case GOLD->{return buildGoldFromEntity(itemEntity); }
-      default -> {return NoItem.getInstance();}
+      case KEY:
+        return buildKeyFromEntity(itemEntity);
+      case FLASHLIGHT:
+        return buildFlashLightFromEntity(itemEntity);
+      case GOLD:
+        return buildGoldFromEntity(itemEntity);
+      default:
+        return NoItem.getInstance();
     }
   }
 
