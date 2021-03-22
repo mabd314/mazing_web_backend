@@ -42,5 +42,10 @@ public class GameController {
         return gameService.createGame(gameConfigEntity);
     }
 
+    @RequestMapping(value="/games/{gameId}",method= RequestMethod.DELETE)
+    public boolean deleteGame(@PathVariable int gameId){
+        return gameService.authorizedDeleteGameById(gameId);
+    }
+
 }
 

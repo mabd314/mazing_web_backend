@@ -6,6 +6,7 @@ import com.mazing.logic.game.Game;
 import com.mazing.logic.game.Player;
 import com.mazing.logic.wall.WallType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -165,5 +166,12 @@ public class GameService {
             itemEntity.save();
         }
         return gameId;
+    }
+
+    public boolean authorizedDeleteGameById(int gameId) {
+        if(!playerService.userHasPermission("delete:games"))
+            return false;
+        deleteGameById(gameId);
+        return true;
     }
 }

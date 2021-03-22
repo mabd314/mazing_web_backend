@@ -3,6 +3,7 @@ package com.mazing.logic.command;
 import com.mazing.entities.Response;
 import com.mazing.entities.ResponseType;
 import com.mazing.logic.wall.Wall;
+import com.mazing.logic.wall.WallType;
 
 public class CheckCommand extends MainCommand {
   String wallName;
@@ -17,7 +18,8 @@ public class CheckCommand extends MainCommand {
       Wall wall = getPlayer().facingWall();
       if (wallName.equals(" ")) setResponse(new Response(ResponseType.INVALID, "wrong command"));
       else setResponse(wall.check(getPlayer(), wallName));
-      wall.getWallEntity().save();
+      if(wall.getType()!= WallType.EMPTY)
+        wall.getWallEntity().save();
       getPlayer().getPlayerEntity().save();
     }
   }

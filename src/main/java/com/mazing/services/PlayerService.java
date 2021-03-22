@@ -27,10 +27,17 @@ public class PlayerService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Jwt jwt = (Jwt) authentication.getPrincipal();
         String userName=jwt.getClaimAsString(audience+"/username");
-        System.out.println(jwt.getClaims());
-        System.out.println(jwt.getAudience());
-        System.out.println(userName);
         return userName;
+    }
+
+    public boolean userHasPermission(String permission){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        List<String> permissions=jwt.getClaimAsStringList("permissions");
+        System.out.println(permissions);
+        if(permissions==null || permissions.size()==0)
+            return false;
+        return permissions.contains(permission);
     }
 
     public PlayerEntity getActivePlayer() {
