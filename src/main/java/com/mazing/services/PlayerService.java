@@ -26,7 +26,10 @@ public class PlayerService {
     public String getUserName(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Jwt jwt = (Jwt) authentication.getPrincipal();
-        String userName=jwt.getClaimAsString(audience+"/email");
+        String userName=jwt.getClaimAsString(audience+"/username");
+        System.out.println(jwt.getClaims());
+        System.out.println(jwt.getAudience());
+        System.out.println(userName);
         return userName;
     }
 
